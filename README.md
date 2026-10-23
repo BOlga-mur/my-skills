@@ -15,3 +15,5 @@
 ```sh
 git clone https://github.com/BOlga-mur/my-skills /tmp/my-skills && mkdir -p ~/.claude/skills && cp -r /tmp/my-skills/.claude/skills/* ~/.claude/skills/
 ```
+
+Для облачных сессий Claude Code: вставьте содержимое `setup.sh` в Setup script окружения.
