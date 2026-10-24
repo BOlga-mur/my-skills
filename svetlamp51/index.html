@@ -704,29 +704,29 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
       <p>Чаще всего за лампой приходят с вопросом о цоколе. Выберите свой или принесите старую лампу в зал.</p>
     </div>
     <div class="sockets" role="group" aria-label="Цоколи">
-      <button class="socket" type="button" aria-pressed="true" data-s="E27">E27</button>
-      <button class="socket" type="button" aria-pressed="false" data-s="E14">E14</button>
-      <button class="socket" type="button" aria-pressed="false" data-s="GU10">GU10</button>
+      <button class="socket" type="button" aria-pressed="true" data-s="GX53">GX53</button>
       <button class="socket" type="button" aria-pressed="false" data-s="GU5.3">GU5.3</button>
+      <button class="socket" type="button" aria-pressed="false" data-s="GU10">GU10</button>
+      <button class="socket" type="button" aria-pressed="false" data-s="E14">E14</button>
+      <button class="socket" type="button" aria-pressed="false" data-s="E27">E27</button>
       <button class="socket" type="button" aria-pressed="false" data-s="G9">G9</button>
       <button class="socket" type="button" aria-pressed="false" data-s="G4">G4</button>
       <button class="socket" type="button" aria-pressed="false" data-s="T8">T8</button>
-      <button class="socket" type="button" aria-pressed="false" data-s="GX53">GX53</button>
     </div>
     <div class="socket-card" aria-live="polite">
       <div class="socket-figure" id="sfig"></div>
       <div class="socket-info">
-        <h3 id="sname">E27</h3>
-        <p class="sub" id="ssub">Обычная резьба, 27 мм</p>
-        <p class="desc" id="sdesc">Самый частый цоколь в квартире: люстры, торшеры, настольные лампы.</p>
+        <h3 id="sname">GX53</h3>
+        <p class="sub" id="ssub">Плоская «таблетка», 53 мм между штырьками</p>
+        <p class="desc" id="sdesc">Лампа в форме диска ⌀ 75 мм. Вставляется и поворачивается. Удобна в тонких потолках.</p>
       </div>
       <div class="socket-facts">
         <dl>
-        <div><dt>Где стоит</dt><dd id="swhere">Люстры, торшеры, настольные лампы</dd></div>
-        <div><dt>Какие лампы</dt><dd id="slamps">Груша, шар, филаментные</dd></div>
+        <div><dt>Где стоит</dt><dd id="swhere">Натяжные и подвесные потолки</dd></div>
+        <div><dt>Какие лампы</dt><dd id="slamps">Таблетка ⌀ 75 мм</dd></div>
         <div><dt>Напряжение</dt><dd id="svolt">220 В</dd></div>
         </dl>
-        <a class="btn btn-ink" id="slink" href="#catalog">Лампы E27<svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+        <a class="btn btn-ink" id="slink" href="#catalog">Лампы GX53<svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
       </div>
     </div>
   </div>
@@ -1032,7 +1032,7 @@ document.querySelectorAll('[data-tab]').forEach(a => a.addEventListener('click',
     if (animate) { card.classList.remove('swap'); void card.offsetWidth; card.classList.add('swap'); }
   }
   btns.forEach(b => b.addEventListener('click', () => show(b.dataset.s, true)));
-  show('E27', false);
+  show('GX53', false);
 })();
 
 /* ---------- Catalog panel ---------- */
@@ -1056,9 +1056,9 @@ document.querySelectorAll('[data-tab]').forEach(a => a.addEventListener('click',
   const items = [
     ['Магнитные треки', 'Освещение', '#catalog'], ['Люстры', 'Освещение', '#catalog'], ['Подвесные светильники', 'Освещение', '#catalog'],
     ['Точечные светильники', 'Освещение', '#catalog'], ['Светодиодные ленты', 'Освещение', '#catalog'], ['Бра и торшеры', 'Освещение', '#catalog'],
-    ['Уличный свет', 'Освещение', '#catalog'], ['Лампы E27', 'Цоколь', '#sockets'], ['Лампы E14', 'Цоколь', '#sockets'], ['Лампы GU10', 'Цоколь', '#sockets'],
-    ['Лампы GU5.3', 'Цоколь', '#sockets'], ['Лампы G9', 'Цоколь', '#sockets'], ['Лампы G4', 'Цоколь', '#sockets'], ['Лампы T8', 'Цоколь', '#sockets'],
-    ['Лампы GX53', 'Цоколь', '#sockets'], ['Натяжные потолки', 'Направление', '#directions'], ['Окна ПВХ', 'Монтаж окон', '#directions'],
+    ['Уличный свет', 'Освещение', '#catalog'], ['Лампы GX53', 'Цоколь', '#sockets'], ['Лампы GU5.3', 'Цоколь', '#sockets'], ['Лампы GU10', 'Цоколь', '#sockets'],
+    ['Лампы E14', 'Цоколь', '#sockets'], ['Лампы E27', 'Цоколь', '#sockets'], ['Лампы G9', 'Цоколь', '#sockets'], ['Лампы G4', 'Цоколь', '#sockets'],
+    ['Лампы T8', 'Цоколь', '#sockets'], ['Натяжные потолки', 'Направление', '#directions'], ['Окна ПВХ', 'Монтаж окон', '#directions'],
     ['Москитные сетки', 'Направление', '#directions'], ['Антимошка', 'Москитные сетки', '#directions'], ['Электроинструмент', 'Инструмент', '#directions'],
     ['Выставочный зал', 'Адрес и часы', '#showroom']
   ];
