@@ -276,6 +276,12 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 .tile.big:hover .more svg { transform: translateX(4px); }
 .tile.dark-soft { background: var(--surface); }
 .tile.dark-soft:hover { background: var(--surface-2); }
+.tiles { grid-auto-flow: dense; }
+.tile.wide { grid-column: span 2; }
+.cat-group + .cat-group { margin-top: clamp(40px, 5vw, 72px); }
+.cat-group .group-title { font-size: clamp(1.25rem, 1.1rem + 0.6vw, 1.625rem); margin-bottom: 16px; }
+.tiles-compact { grid-auto-rows: minmax(160px, auto); }
+.tiles-compact .tile .pic { width: 44%; max-width: 110px; }
 
 /* ---------- Recommended ---------- */
 .cards { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
@@ -355,6 +361,9 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 @media (max-width: 1100px) {
   .catpanel .wrap { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .tiles { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .tile.big { grid-column: 1 / -1; grid-row: auto; }
+  .tile.big .pic { max-width: 560px; align-self: center; }
+  .tiles-compact .tile.wide { grid-column: 1 / -1; }
   .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .sockets { grid-template-columns: repeat(4, minmax(0, 1fr)); }
   .socket-card { grid-template-columns: minmax(180px, 0.7fr) minmax(0, 1.3fr); }
@@ -437,6 +446,12 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
   .tile p { display: none; }
   .tile.big { grid-column: 1 / -1; grid-row: auto; }
   .tile.big p { display: block; }
+  /* Phone: short tiles, name on the left and the drawing on the right, so 18 tiles stay one scroll */
+  .tiles, .tiles-compact { grid-auto-rows: minmax(84px, auto); }
+  .tile:not(.big) { flex-direction: row; align-items: center; gap: 8px; padding: 12px 12px 12px 14px; }
+  .tile:not(.big) h3 { font-size: 0.9375rem; line-height: 1.2; }
+  .tile:not(.big) .pic { align-self: center; flex: none; width: 48px; height: 48px; max-width: none; }
+  .tiles-compact .tile.wide { grid-column: 1 / -1; }
   .cards { grid-template-columns: 1fr; }
   .card { display: grid; grid-template-columns: 120px minmax(0, 1fr); }
   .card-pic { aspect-ratio: auto; padding: 18px; }
@@ -531,6 +546,17 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
     <symbol id="d-tool" viewBox="0 0 120 120"><g fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 40h46l8 10v12H20Z"/><path d="M74 54h18M92 50v8"/><path d="M36 62l-4 40h22l6-40"/><path d="M48 62v14"/></g></symbol>
     <symbol id="d-track" viewBox="0 0 120 120"><g fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M6 24h108"/><path d="M6 32h108"/><path d="M24 32v16h14V32ZM68 32v10h28v-10"/><path d="M31 48v12a10 10 0 0 0 0 0"/><rect x="22" y="58" width="18" height="30" rx="2"/></g><g fill="currentColor"><rect x="68" y="42" width="28" height="6" rx="1"/></g></symbol>
     <symbol id="d-psu" viewBox="0 0 120 120"><g fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><rect x="14" y="40" width="92" height="44" rx="4"/><path d="M28 52v20M38 52v20M48 52v20M58 52v20"/><path d="M106 54h8M106 70h8M6 54h8M6 70h8"/><path d="M82 52l-6 10h8l-6 10"/></g></symbol>
+    <symbol id="d-smart" viewBox="0 0 120 120"><g fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M16 58L60 22l44 36"/><path d="M28 50v56h64V50"/><path d="M42 76a26 26 0 0 1 36 0"/><path d="M50 85a14 14 0 0 1 20 0"/></g><circle cx="60" cy="94" r="3.5" fill="currentColor"/></symbol>
+    <symbol id="d-switch" viewBox="0 0 120 120"><g fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><rect x="22" y="18" width="76" height="84" rx="8"/><rect x="44" y="36" width="32" height="48" rx="5"/><path d="M44 60h32"/><path d="M52 48h16" stroke-width="2"/></g></symbol>
+    <symbol id="d-electric" viewBox="0 0 120 120"><g fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M44 14v20M76 14v20"/><path d="M32 34h56v16a28 28 0 0 1-56 0Z"/><path d="M60 78v10c0 12 8 18 22 18h24"/></g></symbol>
+    <symbol id="d-floor" viewBox="0 0 120 120"><g fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M8 92h104"/><path d="M14 106h84a7 7 0 0 0 0-14"/><path d="M38 70c-6-7 6-13 0-20s6-13 0-20M60 70c-6-7 6-13 0-20s6-13 0-20M82 70c-6-7 6-13 0-20s6-13 0-20"/></g></symbol>
+    <symbol id="d-sealant" viewBox="0 0 120 120"><g fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><rect x="12" y="42" width="66" height="36" rx="4"/><path d="M26 42v36"/><path d="M78 48l28 10v4l-28 10"/></g></symbol>
+    <symbol id="d-foam" viewBox="0 0 120 120"><g fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><rect x="38" y="40" width="40" height="70" rx="8"/><path d="M46 40V30h24v10"/><path d="M58 30V20h24l14 6"/><path d="M38 60h40" stroke-width="2"/></g></symbol>
+    <symbol id="d-cosmofen" viewBox="0 0 120 120"><g fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M16 46l8 14-8 14h64V46Z"/><path d="M80 52h12v16H80"/><path d="M92 56h16v8H92"/></g></symbol>
+    <symbol id="d-cornice" viewBox="0 0 120 120"><g fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M8 22h104"/><path d="M28 30c-4 28 4 50 0 80M48 30c4 28-4 50 0 80M72 30c-4 28 4 50 0 80M92 30c4 28-4 50 0 80"/></g><g fill="currentColor"><circle cx="8" cy="22" r="5"/><circle cx="112" cy="22" r="5"/></g></symbol>
+    <symbol id="d-screw" viewBox="0 0 120 120"><g fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M38 18h44l-8 14H46Z"/><path d="M50 32v56l10 18 10-18V32"/><path d="M50 44l20 7M50 58l20 7M50 72l20 7"/></g></symbol>
+    <symbol id="d-hatch" viewBox="0 0 120 120"><g fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><rect x="14" y="14" width="92" height="92" rx="3"/><rect x="28" y="28" width="64" height="64" rx="2"/></g><circle cx="80" cy="60" r="4" fill="currentColor"/></symbol>
+    <symbol id="d-bell" viewBox="0 0 120 120"><g fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M60 14v8"/><path d="M34 80V56a26 26 0 0 1 52 0v24l10 10H24Z"/><path d="M50 98a10 10 0 0 0 20 0"/></g></symbol>
     <symbol id="d-gx53" viewBox="0 0 120 120"><g fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="60" cy="54" rx="44" ry="14"/><path d="M16 54v10c0 8 20 14 44 14s44-6 44-14V54"/><path d="M42 42v-12M78 42v-12"/></g></symbol>
   </defs>
 </svg>
@@ -718,41 +744,55 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
     <div class="section-head reveal">
       <h2 id="cat-title">Каталог</h2>
     </div>
-    <div class="tiles stagger">
-      <a class="tile big" href="#" style="--i:0">
-        <div>
-          <h3>Магнитные треки</h3>
-          <p>Шинопровод в потолке и модули на магнитах: споты, линейные и поворотные. Переставляете свет рукой, без электрика.</p>
-        </div>
-        <svg class="pic" viewBox="0 0 520 200" aria-hidden="true">
-          <g fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M10 30h500M10 44h500"/>
-            <rect x="60" y="44" width="34" height="22" rx="3"/>
-            <path d="M77 66v14"/>
-            <rect x="58" y="80" width="38" height="56" rx="4"/>
-            <rect x="170" y="44" width="150" height="16" rx="3"/>
-            <rect x="390" y="44" width="34" height="22" rx="3"/>
-            <path d="M407 66l14 22"/>
-            <rect x="404" y="86" width="40" height="52" rx="4" transform="rotate(-28 424 112)"/>
-          </g>
-          <path d="M60 136 L30 196 L124 196 L96 136Z" fill="#ffd38a" opacity=".38"/>
-          <rect x="170" y="56" width="150" height="4" fill="#f3ad3c"/>
-          <path d="M170 60 L140 196 L350 196 L320 60Z" fill="#ffd38a" opacity=".2"/>
-        </svg>
-        <span class="more">Смотреть треки и модули<svg aria-hidden="true"><use href="#i-arrow"/></svg></span>
-      </a>
-      <a class="tile" href="#" style="--i:1"><div><h3>Люстры</h3><p>Потолочные и подвесные</p></div><svg class="pic" aria-hidden="true"><use href="#d-chandelier"/></svg></a>
-      <a class="tile" href="#" style="--i:2"><div><h3>Подвесные светильники</h3><p>Над столом и стойкой</p></div><svg class="pic" aria-hidden="true"><use href="#d-pendant"/></svg></a>
-      <a class="tile" href="#" style="--i:3"><div><h3>Точечные светильники</h3><p>Под натяжной потолок</p></div><svg class="pic" aria-hidden="true"><use href="#d-spot"/></svg></a>
-      <a class="tile" href="#sockets" style="--i:4"><div><h3>Лампы</h3><p>Все цоколи из подбора</p></div><svg class="pic" aria-hidden="true"><use href="#d-bulb"/></svg></a>
-      <a class="tile" href="#" style="--i:5"><div><h3>Светодиодные ленты</h3><p>Ленты, профили, блоки питания</p></div><svg class="pic" aria-hidden="true"><use href="#d-strip"/></svg></a>
-      <a class="tile" href="#" style="--i:6"><div><h3>Бра и торшеры</h3><p>Свет для чтения</p></div><svg class="pic" aria-hidden="true"><use href="#d-sconce"/></svg></a>
-      <a class="tile" href="#" style="--i:7"><div><h3>Уличный свет</h3><p>Фасад, крыльцо, участок</p></div><svg class="pic" aria-hidden="true"><use href="#d-street"/></svg></a>
-      <a class="tile" href="#" style="--i:8"><div><h3>Блоки питания</h3><p>Для лент, треков и ламп на 12, 24 и 48&nbsp;В</p></div><svg class="pic" aria-hidden="true"><use href="#d-psu"/></svg></a>
-      <a class="tile dark-soft" href="https://svetlamp51.ru/material-dlya-natyazhnyh-potolkov" style="--i:9"><div><h3>Натяжные потолки</h3><p>Профили, комплектующие, карнизы</p></div><svg class="pic" aria-hidden="true"><use href="#d-ceiling"/></svg></a>
-      <a class="tile dark-soft" href="https://svetlamp51.ru/material-dlya-montazha-okon" style="--i:10"><div><h3>Монтаж окон</h3><p>Подоконники, сэндвич-панели и водоотливы</p></div><svg class="pic" aria-hidden="true"><use href="#d-window"/></svg></a>
-      <a class="tile dark-soft" href="https://svetlamp51.ru/moskitnaya-setka" style="--i:11"><div><h3>Москитные сетки</h3><p>По размеру проёма</p></div><svg class="pic" aria-hidden="true"><use href="#d-net"/></svg></a>
-      <a class="tile dark-soft" href="https://svetlamp51.ru/raznoe-dlya-montazha" style="--i:12"><div><h3>Разное</h3><p>Расходные материалы, инструменты и химия</p></div><svg class="pic" aria-hidden="true"><use href="#d-tool"/></svg></a>
+    <div class="cat-group">
+      <h3 class="group-title">Свет и электрика</h3>
+      <div class="tiles stagger">
+        <a class="tile big" href="https://svetlamp51.ru/trekovye-svetilniki" style="--i:0">
+          <div>
+            <h3>Трековые системы</h3>
+            <p>Шинопровод и светильники для него: споты, линейные и поворотные модули. Свет направляете туда, где он нужен.</p>
+          </div>
+          <svg class="pic" viewBox="0 0 520 200" aria-hidden="true">
+            <g fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M10 30h500M10 44h500"/>
+              <rect x="60" y="44" width="34" height="22" rx="3"/>
+              <path d="M77 66v14"/>
+              <rect x="58" y="80" width="38" height="56" rx="4"/>
+              <rect x="170" y="44" width="150" height="16" rx="3"/>
+              <rect x="390" y="44" width="34" height="22" rx="3"/>
+              <path d="M407 66l14 22"/>
+              <rect x="404" y="86" width="40" height="52" rx="4" transform="rotate(-28 424 112)"/>
+            </g>
+            <path d="M60 136 L30 196 L124 196 L96 136Z" fill="#ffd38a" opacity=".38"/>
+            <rect x="170" y="56" width="150" height="4" fill="#f3ad3c"/>
+            <path d="M170 60 L140 196 L350 196 L320 60Z" fill="#ffd38a" opacity=".2"/>
+          </svg>
+          <span class="more">Смотреть трековые системы<svg aria-hidden="true"><use href="#i-arrow"/></svg></span>
+        </a>
+        <a class="tile wide" href="https://svetlamp51.ru/Ljustry" style="--i:1"><div><h3>Люстры</h3><p>Потолочные и подвесные</p></div><svg class="pic" aria-hidden="true"><use href="#d-chandelier"/></svg></a>
+        <a class="tile wide" href="https://svetlamp51.ru/vstraivaemye-svetilniki" style="--i:2"><div><h3>Светильники</h3><p>Встраиваемые и накладные</p></div><svg class="pic" aria-hidden="true"><use href="#d-spot"/></svg></a>
+        <a class="tile" href="https://svetlamp51.ru/lampy" style="--i:3"><div><h3>Лампы</h3><p>Все цоколи из подбора</p></div><svg class="pic" aria-hidden="true"><use href="#d-bulb"/></svg></a>
+        <a class="tile" href="#" style="--i:4"><div><h3>Светодиодные ленты</h3><p>Ленты и профили</p></div><svg class="pic" aria-hidden="true"><use href="#d-strip"/></svg></a>
+        <a class="tile" href="#" style="--i:5"><div><h3>Блоки питания</h3><p>Для лент, треков и ламп на 12, 24 и 48&nbsp;В</p></div><svg class="pic" aria-hidden="true"><use href="#d-psu"/></svg></a>
+        <a class="tile" href="https://svetlamp51.ru/ulichnoe-osveshhenie" style="--i:6"><div><h3>Уличный свет</h3><p>Фасад, крыльцо, участок</p></div><svg class="pic" aria-hidden="true"><use href="#d-street"/></svg></a>
+        <a class="tile" href="https://svetlamp51.ru/umnyj-dom" style="--i:7"><div><h3>Умный дом</h3><p>Реле, датчики, умные розетки</p></div><svg class="pic" aria-hidden="true"><use href="#d-smart"/></svg></a>
+        <a class="tile" href="https://svetlamp51.ru/upravlenie-svetom" style="--i:8"><div><h3>Управление светом</h3><p>Выключатели, диммеры, датчики движения</p></div><svg class="pic" aria-hidden="true"><use href="#d-switch"/></svg></a>
+        <a class="tile" href="https://svetlamp51.ru/elektrika" style="--i:9"><div><h3>Электрика</h3><p>Кабель, розетки, автоматы</p></div><svg class="pic" aria-hidden="true"><use href="#d-electric"/></svg></a>
+        <a class="tile" href="https://svetlamp51.ru/teplyj-po" style="--i:10"><div><h3>Тёплый пол</h3><p>Кабель, маты, терморегуляторы</p></div><svg class="pic" aria-hidden="true"><use href="#d-floor"/></svg></a>
+      </div>
+    </div>
+    <div class="cat-group">
+      <h3 class="group-title">Монтаж и ремонт</h3>
+      <div class="tiles tiles-compact stagger">
+        <a class="tile dark-soft wide" href="https://svetlamp51.ru/germetiki" style="--i:0"><div><h3>Герметики, клей, жидкие гвозди, очистители</h3></div><svg class="pic" aria-hidden="true"><use href="#d-sealant"/></svg></a>
+        <a class="tile dark-soft" href="https://svetlamp51.ru/pena-montazhnaya-klej-pena" style="--i:1"><div><h3>Пена монтажная, клей-пена</h3></div><svg class="pic" aria-hidden="true"><use href="#d-foam"/></svg></a>
+        <a class="tile dark-soft" href="https://svetlamp51.ru/kosmofeny" style="--i:2"><div><h3>Космофены</h3></div><svg class="pic" aria-hidden="true"><use href="#d-cosmofen"/></svg></a>
+        <a class="tile dark-soft" href="https://svetlamp51.ru/karnizy" style="--i:3"><div><h3>Карнизы</h3></div><svg class="pic" aria-hidden="true"><use href="#d-cornice"/></svg></a>
+        <a class="tile dark-soft" href="https://svetlamp51.ru/krepezh" style="--i:4"><div><h3>Крепёж</h3></div><svg class="pic" aria-hidden="true"><use href="#d-screw"/></svg></a>
+        <a class="tile dark-soft" href="https://svetlamp51.ru/lyuki" style="--i:5"><div><h3>Люки</h3></div><svg class="pic" aria-hidden="true"><use href="#d-hatch"/></svg></a>
+        <a class="tile dark-soft" href="https://svetlamp51.ru/dovodchiki-dvernoj-zvonok-cifry" style="--i:6"><div><h3>Доводчики, дверной звонок, цифры</h3></div><svg class="pic" aria-hidden="true"><use href="#d-bell"/></svg></a>
+      </div>
+    </div>
     </div>
   </div>
 </section>
