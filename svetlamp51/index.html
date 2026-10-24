@@ -207,6 +207,8 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 /* ---------- Directions ---------- */
 .directions { padding-block: 4px 24px; }
 .dirs { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px; }
+.dirs li { display: flex; }
+.dirs .dir { flex: 1; }
 .dir {
   display: flex; flex-direction: column; justify-content: center; gap: 4px;
   min-height: 76px; padding: 14px 18px; border-radius: var(--radius);
