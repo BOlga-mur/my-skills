@@ -62,7 +62,7 @@ showroom = showroom.replace('<p class="lead">', '<p class="lead showroom-lead">'
 
 fit = '''<script>
 /* Size the hero before the first paint; svetlamp.js keeps it in step on resize */
-(function () { var h = document.querySelector('.sl .hero'); if (h) document.documentElement.style.setProperty('--above', Math.round(h.getBoundingClientRect().top + window.scrollY) + 'px'); })();
+(function () { var h = document.querySelector('.sl .hero'); if (!h) return; var a = Math.round(h.getBoundingClientRect().top + window.scrollY); document.documentElement.style.setProperty('--above', a + 'px'); h.style.height = (window.innerHeight - a) + 'px'; })();
 </script>
 
 '''
@@ -74,7 +74,30 @@ home_tpl = ('<?php echo $header; ?>\n'
 assert 'class="btn ' not in home_tpl
 open(os.path.join(THEME, 'template/common/home.tpl'), 'w', encoding='utf-8').write(home_tpl)
 
+# ---------- svetlamp.js ----------
+script = s[s.rindex('<script>') + 8:s.rindex('</script>')]
+
+
+def block(title):
+    a = script.index('/* ---------- ' + title)
+    return script[a:script.index('})();', a) + 5]
+
+
+# Each part checks that its element exists: the header and footer appear on every page, the rest only on the home page
+parts = [
+    block('Hero fits').replace("  const hero = document.querySelector('.hero');\n", "  const hero = document.querySelector('.sl .hero');\n  if (!hero) return;\n"),
+    block('Colour temperature').replace("  const input = document.getElementById('kelvin');\n", "  const input = document.getElementById('kelvin');\n  if (!input) return;\n"),
+    block('Sockets').replace("  const card = document.querySelector('.socket-card');\n", "  const card = document.querySelector('.socket-card');\n  if (!card) return;\n")
+        .replace("$('slink').firstChild.textContent = 'Лампы ' + key;", "$('slink').firstChild.textContent = 'Лампы ' + key;\n    $('slink').href = $('slink').dataset.search + encodeURIComponent(key);"),
+    block('Catalog panel').replace("  const panel = document.getElementById('catpanel');\n", "  const panel = document.getElementById('catpanel');\n  if (!btn || !panel) return;\n"),
+    block('Reveal on scroll'),
+]
+for p in parts[:4]:
+    assert 'return;' in p
+open(os.path.join(THEME, 'javascript/svetlamp.js'), 'w', encoding='utf-8').write(
+    '/* SvetLamp theme: hero sizing, colour temperature, socket picker, catalog panel, scroll reveal. */\n\n' + '\n\n'.join(parts) + '\n')
+
 # ---------- svetlamp.css ----------
 subprocess.check_call([sys.executable, os.path.join(TOOLS, 'build_css.py'), MOCK,
                        os.path.join(THEME, 'stylesheet/svetlamp.css')])
-print('header.tpl, home.tpl and svetlamp.css rebuilt from', MOCK)
+print('header.tpl, home.tpl, svetlamp.js and svetlamp.css rebuilt from', MOCK)

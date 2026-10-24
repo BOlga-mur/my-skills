@@ -84,7 +84,7 @@
 
 <script>
 /* Size the hero before the first paint; svetlamp.js keeps it in step on resize */
-(function () { var h = document.querySelector('.sl .hero'); if (h) document.documentElement.style.setProperty('--above', Math.round(h.getBoundingClientRect().top + window.scrollY) + 'px'); })();
+(function () { var h = document.querySelector('.sl .hero'); if (!h) return; var a = Math.round(h.getBoundingClientRect().top + window.scrollY); document.documentElement.style.setProperty('--above', a + 'px'); h.style.height = (window.innerHeight - a) + 'px'; })();
 </script>
 
 <!-- Catalog -->

@@ -901,9 +901,20 @@ document.documentElement.classList.add('js');
 (function () {
   const hero = document.querySelector('.hero');
   const root = document.documentElement;
-  function fit() { root.style.setProperty('--above', Math.round(hero.getBoundingClientRect().top + window.scrollY) + 'px'); }
+  function fit() {
+    const above = Math.round(hero.getBoundingClientRect().top + window.scrollY);
+    root.style.setProperty('--above', above + 'px');
+    // The height is also set on the element itself: the shop's other styles cannot override it there
+    hero.style.height = (window.innerHeight - above) + 'px';
+  }
   fit();
-  window.addEventListener('resize', fit);
+  // Phones resize the window while the address bar hides on scroll; refit only on a real change of size
+  let lastW = window.innerWidth, lastH = window.innerHeight;
+  window.addEventListener('resize', () => {
+    if (window.innerWidth === lastW && Math.abs(window.innerHeight - lastH) < 120) return;
+    lastW = window.innerWidth; lastH = window.innerHeight;
+    fit();
+  });
   if (document.fonts) document.fonts.ready.then(fit);
   if ('ResizeObserver' in window) new ResizeObserver(fit).observe(document.querySelector('.directions'));
 })();
