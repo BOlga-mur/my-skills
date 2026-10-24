@@ -78,6 +78,20 @@ body.sl-body .sl-chips { list-style: none; margin: 0 0 24px; padding: 0; display
 body.sl-body .sl-chips a { display: inline-block; padding: 9px 16px; border-radius: 999px; background: #fff; color: var(--ink) !important; text-decoration: none; font-size: 14px; font-weight: 500; transition: background-color 160ms var(--ease), color 160ms var(--ease); }
 body.sl-body .sl-chips a:hover { background: var(--btn); color: #fff !important; }
 
+/* Subcategories: tiles like the catalog on the home page */
+body.sl-body .sl-subcats { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; margin: 0 0 clamp(28px, 3vw, 40px); }
+body.sl-body .sl-subcat { display: flex; flex-direction: column; justify-content: space-between; gap: 16px; min-height: 128px; padding: 20px 22px; border-radius: 14px; background: #fff; color: var(--ink) !important; text-decoration: none !important; font-family: 'Onest', sans-serif; font-size: 18px; font-weight: 600; line-height: 1.25; letter-spacing: -0.01em; transition: background-color 220ms var(--ease); }
+body.sl-body .sl-subcat:hover { background: #fbfaf7; }
+body.sl-body .sl-subcat svg { align-self: flex-end; width: 22px; height: 22px; color: #8a5300; transition: transform 200ms var(--ease); }
+body.sl-body .sl-subcat:hover svg { transform: translateX(4px); }
+@media (max-width: 767px) {
+  body.sl-body .sl-subcats { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+  body.sl-body .sl-subcat { min-height: 84px; padding: 14px; font-size: 15px; gap: 8px; }
+  body.sl-body .sl-subcat svg { width: 18px; height: 18px; }
+  /* Sorting and page size each get a full row, so the select text is readable */
+  body.sl-body #content .col-xs-6:has(#input-sort), body.sl-body #content .col-xs-6:has(#input-limit) { width: 100%; }
+}
+
 /* Toolbar above the products: view switch, compare, sorting, page size */
 body.sl-body #list-view, body.sl-body #grid-view { width: 44px; height: 44px; padding: 0; }
 body.sl-body .btn-group > #list-view { border-radius: var(--radius) 0 0 var(--radius); }

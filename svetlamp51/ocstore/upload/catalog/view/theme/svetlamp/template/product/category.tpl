@@ -21,11 +21,11 @@
       <?php } ?>
       <?php if ($categories) { ?>
       <h3><?php echo $text_refine; ?></h3>
-      <ul class="sl-chips">
+      <div class="sl-subcats">
         <?php foreach ($categories as $category) { ?>
-        <li><a href="<?php echo $category['href']; ?>"><?php echo $category['name']; ?></a></li>
+        <a class="sl-subcat" href="<?php echo $category['href']; ?>"><span><?php echo $category['name']; ?></span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
         <?php } ?>
-      </ul>
+      </div>
       <?php } ?>
       <?php if ($products) { ?>
       <div class="row">
