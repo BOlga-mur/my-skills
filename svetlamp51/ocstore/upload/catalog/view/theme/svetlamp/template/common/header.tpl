@@ -55,14 +55,13 @@
 <?php
 require_once __DIR__ . '/svetlamp_links.php';
 
-$sl_search = 'index.php?route=product/search&search=';
-$sl_map = sl_category_map($categories);
+// Name, caption, link: the shop's address of the section (SEO Pro), relative to <base>
 $sl_directions = array(
-	array('Натяжные потолки', 'профили, комплектующие, карнизы', array('Натяжные потолки', 'потолки')),
-	array('Монтаж окон', 'подоконники, сэндвич-панели и водоотливы', array('Монтаж окон', 'окна', 'подоконники')),
-	array('Освещение и электрика', 'лампы, светильники, лента, кабель, управление светом', array('Освещение и электрика', 'освещение', 'светильники', 'электрика')),
-	array('Разное', 'расходные материалы, инструменты и химия', array('Разное', 'расходные материалы', 'расходники', 'инструмент', 'химия')),
-	array('Москитные сетки', 'защита от пыли и насекомых', array('Москитные сетки', 'москитные', 'сетки'))
+	array('Натяжные потолки', 'профили, комплектующие, карнизы', 'material-dlya-natyazhnyh-potolkov'),
+	array('Монтаж окон', 'подоконники, сэндвич-панели и водоотливы', 'material-dlya-montazha-okon'),
+	array('Освещение и электрика', 'лампы, светильники, лента, кабель, управление светом', 'osveshchenie'),
+	array('Разное', 'расходные материалы, инструменты и химия', 'raznoe-dlya-montazha'),
+	array('Москитные сетки', 'защита от пыли и насекомых', 'moskitnaya-setka')
 );
 ?>
 <div class="sl sl-top">
@@ -142,7 +141,7 @@ $sl_directions = array(
   <div class="wrap">
     <ul class="dirs">
       <?php foreach ($sl_directions as $direction_item) { ?>
-      <li><a class="dir" href="<?php echo sl_link($sl_map, $sl_search, $direction_item[2]); ?>"><span class="dir-name"><?php echo $direction_item[0]; ?></span><span class="dir-desc"><?php echo $direction_item[1]; ?></span></a></li>
+      <li><a class="dir" href="<?php echo $direction_item[2]; ?>"><span class="dir-name"><?php echo $direction_item[0]; ?></span><span class="dir-desc"><?php echo $direction_item[1]; ?></span></a></li>
       <?php } ?>
     </ul>
   </div>
