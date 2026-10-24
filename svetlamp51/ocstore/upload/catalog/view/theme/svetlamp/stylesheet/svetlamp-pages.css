@@ -1,0 +1,188 @@
+/* SvetLamp theme: the shop's inner pages (categories, product, search, articles, contacts, account)
+   in the home page's look. Works on the stock ocStore 2.3 / Bootstrap 3 markup, so modules keep working.
+   Colours and sizes come from the tokens in svetlamp.css. Everything is scoped to body.sl-body and
+   stays out of the .sl blocks (header, home page, footer), which have their own styles. */
+
+/* ---------- Page ---------- */
+body.sl-body { background: var(--bg); color: var(--ink); font-size: 15px; line-height: 1.55; }
+body.sl-body:not(.common-home) .sl .footer { margin-top: clamp(48px, 6vw, 96px); }
+
+/* Same width and side margins as the header */
+body.sl-body > .container,
+body.sl-body > div > .container,
+body.sl-body .container[id] { width: auto; max-width: var(--max); padding-left: var(--gutter); padding-right: var(--gutter); }
+
+/* ---------- Breadcrumbs ---------- */
+body.sl-body .breadcrumb { margin: 24px 0 8px; padding: 0; background: none; border: 0; border-radius: 0; font-size: 14px; line-height: 1.4; }
+body.sl-body .breadcrumb > li { padding: 0; text-shadow: none; position: static; white-space: normal; }
+body.sl-body .breadcrumb > li:after { display: none; }
+body.sl-body .breadcrumb > li + li:before { content: "›"; padding: 0 10px; color: var(--muted); }
+body.sl-body .breadcrumb > li > a { color: var(--muted); text-decoration: none; }
+body.sl-body .breadcrumb > li > a:hover { color: var(--ink); }
+body.sl-body .breadcrumb > li:last-child > a { color: var(--ink); }
+body.sl-body .breadcrumb .fa-home { font-size: 16px; }
+
+/* ---------- Type ---------- */
+body.sl-body #content h1,
+body.sl-body #content h2,
+body.sl-body #content h3,
+body.sl-body #content h4 { font-family: var(--font); color: var(--ink); font-weight: 600; letter-spacing: -0.02em; }
+body.sl-body #content h1 { font-size: clamp(26px, 18px + 1.8vw, 42px); line-height: 1.1; margin: 8px 0 20px; }
+body.sl-body #content h2 { font-size: clamp(22px, 17px + 1vw, 30px); line-height: 1.15; }
+body.sl-body #content h3 { font-size: 20px; line-height: 1.2; margin: 24px 0 12px; }
+body.sl-body #content a { color: #8a5300; }
+body.sl-body #content a:hover { color: var(--ink); }
+body.sl-body #content hr { border-top: 2px solid var(--surface); margin: 24px 0; }
+body.sl-body #content p,
+body.sl-body #content li { font-size: 15px; }
+
+/* ---------- Buttons and form fields ---------- */
+body.sl-body .btn { border-radius: var(--radius); border: 0; font-weight: 600; text-shadow: none; box-shadow: none; background-image: none; transition: background-color 160ms var(--ease); }
+body.sl-body .btn-primary { background: var(--btn); color: #fff; }
+body.sl-body .btn-primary:hover, body.sl-body .btn-primary:focus, body.sl-body .btn-primary:active { background: var(--btn-hover); color: #fff; }
+body.sl-body .btn-default { background: #fff; color: var(--ink); }
+body.sl-body .btn-default:hover, body.sl-body .btn-default:focus { background: var(--surface); color: var(--ink); }
+body.sl-body .btn-default.active { background: var(--btn); color: #fff; box-shadow: none; }
+body.sl-body .btn-lg { padding: 13px 24px; font-size: 16px; }
+body.sl-body .form-control { height: 44px; border: 2px solid var(--surface-2); border-radius: var(--radius); box-shadow: none; font-size: 15px; color: var(--ink); background: #fff; }
+body.sl-body textarea.form-control { height: auto; }
+body.sl-body .form-control:focus { border-color: var(--btn); box-shadow: 0 0 0 3px rgba(243, 173, 60, 0.35); }
+body.sl-body .input-group-addon { background: var(--surface); border: 0; color: var(--muted); font-size: 14px; border-radius: var(--radius) 0 0 var(--radius); }
+body.sl-body .input-group .form-control:last-child { border-radius: 0 var(--radius) var(--radius) 0; }
+body.sl-body .input-group-btn > .btn { height: 44px; }
+body.sl-body .alert { border: 0; border-radius: var(--radius); }
+body.sl-body label { font-weight: 500; }
+
+/* ---------- Left column: categories and the OCFilter panel ---------- */
+body.sl-body #column-left .list-group,
+body.sl-body #column-right .list-group { margin-bottom: 16px; border-radius: 14px; overflow: hidden; background: #fff; }
+body.sl-body #column-left .list-group-item,
+body.sl-body #column-right .list-group-item { border: 0; border-radius: 0; margin: 0; padding: 11px 16px; background: #fff; color: var(--ink); font-size: 15px; line-height: 1.35; }
+body.sl-body #column-left .list-group-item + .list-group-item,
+body.sl-body #column-right .list-group-item + .list-group-item { box-shadow: 0 -2px 0 var(--bg); }
+body.sl-body #column-left a.list-group-item:hover,
+body.sl-body #column-right a.list-group-item:hover { background: var(--surface); color: var(--ink); }
+body.sl-body #column-left .list-group-item.active,
+body.sl-body #column-right .list-group-item.active { background: var(--btn); color: #fff; }
+body.sl-body .panel { border: 0; border-radius: 14px; background: #fff; box-shadow: none; margin-bottom: 16px; overflow: hidden; }
+body.sl-body .panel-default > .panel-heading { background: #fff; border: 0; color: var(--ink); font-weight: 600; font-size: 16px; padding: 16px 16px 6px; }
+body.sl-body .panel .list-group { margin: 0; border-radius: 0; }
+body.sl-body .panel .list-group-item { background: transparent; }
+body.sl-body .panel .list-group-item + .list-group-item { box-shadow: none; }
+body.sl-body .panel-body { padding: 16px; }
+body.sl-body #ocfilter .option-name { font-weight: 600; color: var(--ink); margin-bottom: 6px; }
+body.sl-body #ocfilter label { font-weight: 400; color: var(--muted); }
+
+/* ---------- Category: "Уточнить поиск" as chips ---------- */
+body.sl-body .sl-chips { list-style: none; margin: 0 0 24px; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+body.sl-body .sl-chips a { display: inline-block; padding: 9px 16px; border-radius: 999px; background: #fff; color: var(--ink) !important; text-decoration: none; font-size: 14px; font-weight: 500; transition: background-color 160ms var(--ease), color 160ms var(--ease); }
+body.sl-body .sl-chips a:hover { background: var(--btn); color: #fff !important; }
+
+/* Toolbar above the products: view switch, compare, sorting, page size */
+body.sl-body #list-view, body.sl-body #grid-view { width: 44px; height: 44px; padding: 0; }
+body.sl-body .btn-group > #list-view { border-radius: var(--radius) 0 0 var(--radius); }
+body.sl-body .btn-group > #grid-view { border-radius: 0 var(--radius) var(--radius) 0; margin-left: 2px; }
+body.sl-body #compare-total { display: inline-flex; align-items: center; min-height: 44px; color: var(--ink); text-decoration: none; }
+body.sl-body #compare-total:hover { color: #8a5300; }
+
+/* ---------- Product cards (categories, search, specials, related) ---------- */
+body.sl-body .product-thumb { border: 0; border-radius: 14px; background: #fff; overflow: hidden; margin-bottom: 20px; transition: transform 240ms var(--ease); }
+body.sl-body .product-thumb:hover { transform: translateY(-4px); }
+body.sl-body .product-thumb .image { padding: 16px 16px 0; text-align: center; }
+body.sl-body .product-thumb .image img { margin: 0 auto; border-radius: 10px; }
+body.sl-body .product-thumb .caption { padding: 4px 18px 0; display: block; }  /* the shop's stylesheet makes it a centred flex box */
+body.sl-body .product-grid .product-thumb .caption { min-height: 0; }
+body.sl-body .product-thumb h4 { margin: 12px 0 6px; font-size: 16px; line-height: 1.3; letter-spacing: -0.01em; }
+body.sl-body .product-thumb h4 a { color: var(--ink) !important; text-decoration: none; font-weight: 600; }
+body.sl-body .product-thumb h4 a:hover { color: #8a5300 !important; }
+body.sl-body .product-thumb .caption p { color: var(--muted); font-size: 14px; }
+body.sl-body .product-thumb .price { color: var(--ink); font-size: 18px; font-weight: 600; margin: 10px 0 4px; justify-content: flex-start; flex-wrap: wrap; gap: 0 10px; }
+body.sl-body .product-thumb .price-old { margin-left: 0; }
+body.sl-body .price-new { color: var(--ink); font-weight: 600; }
+body.sl-body .price-old { color: var(--muted); font-weight: 400; font-size: 14px; }
+body.sl-body .price-tax { display: none; }
+body.sl-body .rating .fa-stack { width: 16px; height: 16px; line-height: 16px; font-size: 13px; }
+body.sl-body .rating .fa-star { color: #f3ad3c; }
+body.sl-body .rating .fa-star-o { color: var(--surface-2); }
+/* Only "в закладки" and "в сравнение" remain: two small square buttons */
+body.sl-body .product-thumb .button-group { display: flex; gap: 6px; border: 0; background: transparent; padding: 10px 18px 18px; overflow: visible; }
+body.sl-body .product-thumb .button-group button { flex: none; width: 40px; height: 40px; float: none; border: 0; border-radius: var(--radius); background: var(--surface); color: var(--ink); line-height: 40px; font-weight: 400; transition: background-color 160ms var(--ease), color 160ms var(--ease); }
+body.sl-body .product-thumb .button-group button + button { border-left: 0; }
+body.sl-body .product-thumb .button-group button:hover { background: var(--btn); color: #fff; }
+/* List view: picture on the left */
+body.sl-body .product-list .product-thumb .image { padding: 16px; }
+body.sl-body .product-list .product-thumb .button-group { border-left: 0; }
+
+/* Cards in a row share one height, so the buttons line up (browsers without :has keep the stock layout) */
+body.sl-body #content .row:has(> div > .product-thumb) { display: flex; flex-wrap: wrap; }
+body.sl-body #content .row:has(> div > .product-thumb) > div { display: flex; }
+body.sl-body #content .row:has(> div > .product-thumb) > .clearfix { display: none; }
+body.sl-body #content .row > div > .product-thumb { flex: 1; width: 100%; }
+body.sl-body #content .row > div:not(.product-list) > .product-thumb { display: flex; flex-direction: column; }
+/* Category cards wrap caption and buttons in one more div; related products do not */
+body.sl-body #content .row > div:not(.product-list) > .product-thumb > div:not(.image):not(.caption):not(.button-group) { flex: 1; display: flex; flex-direction: column; }
+body.sl-body #content .row > div:not(.product-list) > .product-thumb .caption { flex: 1; }
+
+/* One alignment inside a card: everything on the left */
+body.sl-body .product-thumb .caption,
+body.sl-body .product-thumb h4,
+body.sl-body .product-thumb .price,
+body.sl-body .product-thumb .rating { text-align: left !important; }
+
+/* Pagination */
+body.sl-body .pagination { margin: 8px 0 24px; }
+body.sl-body .pagination > li > a,
+body.sl-body .pagination > li > span { display: inline-flex; align-items: center; justify-content: center; min-width: 40px; height: 40px; margin-right: 4px; padding: 0 12px; border: 0; border-radius: var(--radius) !important; background: #fff; color: var(--ink); font-weight: 500; }
+body.sl-body .pagination > li > a:hover { background: var(--surface); color: var(--ink); }
+body.sl-body .pagination > .active > a,
+body.sl-body .pagination > .active > span,
+body.sl-body .pagination > .active > span:hover { background: var(--btn); color: #fff; }
+
+/* ---------- Product page ---------- */
+body.sl-body .thumbnails { margin-left: -8px; }
+body.sl-body .thumbnails > li { margin-left: 8px; }
+body.sl-body .thumbnail { border: 0; border-radius: 14px; background: #fff; padding: 16px; }
+body.sl-body .image-additional a { padding: 6px; border-radius: 10px; }
+body.sl-body[class*="product-product"] #content .btn-group .btn { width: 44px; height: 44px; padding: 0; }
+body.sl-body[class*="product-product"] #content h1 { font-size: clamp(24px, 16px + 1.3vw, 34px); }
+body.sl-body[class*="product-product"] #content .list-unstyled { color: var(--muted); }
+body.sl-body[class*="product-product"] #content .list-unstyled a { color: var(--ink); }
+body.sl-body[class*="product-product"] #content .list-unstyled h2 { font-size: clamp(28px, 22px + 1vw, 36px); margin: 16px 0 4px; }
+body.sl-body[class*="product-product"] .rating p { color: var(--muted); }
+/* Tabs: Описание / Характеристики / Отзывы as pills; the text sits on a white card */
+body.sl-body .nav-tabs { border: 0; display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
+body.sl-body .nav-tabs > li { float: none; margin: 0; }
+body.sl-body .nav-tabs > li > a { margin: 0; border: 0; border-radius: var(--radius); padding: 10px 18px; background: #fff; color: var(--ink) !important; font-weight: 600; font-size: 15px; text-decoration: none; }
+body.sl-body .nav-tabs > li > a:hover { background: var(--surface); border: 0; }
+body.sl-body .nav-tabs > li.active > a,
+body.sl-body .nav-tabs > li.active > a:hover,
+body.sl-body .nav-tabs > li.active > a:focus { background: var(--btn); color: #fff !important; border: 0; }
+body.sl-body .tab-content { background: #fff; border-radius: 14px; padding: clamp(16px, 2.5vw, 28px); margin-bottom: 24px; }
+body.sl-body .tab-content table,
+body.sl-body[class*="information-information"] #content table { border: 0 !important; width: 100%; max-width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 15px; }
+body.sl-body .tab-content td, body.sl-body .tab-content th,
+body.sl-body[class*="information-information"] #content td, body.sl-body[class*="information-information"] #content th { border: 0 !important; padding: 10px 14px; text-align: left !important; vertical-align: top; }
+body.sl-body .tab-content tr:nth-child(odd) td,
+body.sl-body[class*="information-information"] #content tr:nth-child(odd) td { background: var(--bg); }
+body.sl-body .tab-content thead td, body.sl-body .tab-content thead th { background: var(--surface) !important; font-weight: 600; }
+body.sl-body .table-bordered { border: 0; }
+
+/* ---------- Articles and contacts ---------- */
+body.sl-body[class*="information-information"] #content { max-width: 80ch; }
+body.sl-body[class*="information-information"] #content p,
+body.sl-body[class*="information-information"] #content li { font-size: 16px; }
+body.sl-body.information-contact .panel-body { padding: clamp(16px, 2.5vw, 28px); }
+body.sl-body.information-contact .panel-body strong { color: var(--ink); }
+
+/* ---------- Phones ---------- */
+@media (max-width: 767px) {
+  body.sl-body .breadcrumb { margin-top: 16px; }
+  body.sl-body .product-thumb .caption { padding: 4px 14px 0; }
+  body.sl-body .product-thumb .button-group { padding: 8px 14px 14px; }
+  body.sl-body #ocfilter-mobile .navbar { border: 0; border-radius: 14px; background: #fff; }
+  /* Product page: name, price and stock first, then photos and the description */
+  body.sl-body[class*="product-product"] #content .row:has(> div > .thumbnails) { display: flex; flex-direction: column; }
+  body.sl-body[class*="product-product"] #content .row:has(> div > .thumbnails) > div:not(:has(> .thumbnails)) { order: -1; }
+  /* Narrow cards: name and price are enough */
+  body.sl-body .product-thumb .caption > p:not(.price) { display: none; }
+}
