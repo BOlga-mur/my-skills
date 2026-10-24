@@ -99,7 +99,7 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 
 /* ---------- Header ---------- */
 .header { background: var(--bg); position: relative; z-index: 30; }
-.header-row { display: grid; grid-template-columns: auto auto minmax(0, 1fr); align-items: center; gap: 16px; padding-block: 18px; }
+.header-row { display: grid; grid-template-columns: auto auto minmax(0, 1fr); align-items: center; gap: 16px; padding-block: 18px 20px; }
 .logo { display: inline-flex; align-items: center; gap: 12px; text-decoration: none; margin-right: clamp(0px, 2vw, 24px); }
 .logo-mark { width: 44px; height: 44px; border-radius: var(--radius); background: var(--night); display: grid; place-items: center; }
 .logo-mark svg { width: 28px; height: 28px; }
@@ -138,16 +138,6 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 .suggest a:hover, .suggest a.active { background: var(--surface); }
 .suggest .empty { padding: 12px 14px; color: var(--muted); }
 
-.mainnav { background: var(--bg); }
-.mainnav ul { display: flex; gap: 4px; overflow-x: auto; scrollbar-width: none; padding-bottom: 14px; margin-inline: -12px; }
-.mainnav ul::-webkit-scrollbar { display: none; }
-.mainnav a {
-  display: block; white-space: nowrap; padding: 10px 12px; border-radius: 8px;
-  text-decoration: none; font-weight: 500; transition: background-color 160ms var(--ease);
-}
-.mainnav a:hover { background: var(--surface); }
-.mainnav a.hl { color: #8a5300; }
-
 /* Catalog drop panel */
 .catpanel {
   position: absolute; left: 0; right: 0; top: 100%;
@@ -164,24 +154,24 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 
 /* ---------- Hero ---------- */
 .hero { background: var(--night); color: var(--night-ink); overflow: hidden; position: relative; }
-.hero .wrap { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); gap: 40px; align-items: center; min-height: min(720px, calc(100svh - 192px)); padding-block: clamp(32px, 4vw, 56px); }
+.hero .wrap { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); gap: 40px; align-items: center; min-height: min(600px, calc(100svh - 136px)); padding-block: clamp(28px, 3vw, 44px); }
 .hero h1 { font-size: var(--step-display); line-height: 1; letter-spacing: -0.035em; }
 .hero h1 .ln { white-space: nowrap; }
-.hero-lead { font-size: var(--step-lead); color: var(--night-muted); max-width: 40ch; margin-top: 32px; line-height: 1.45; }
-.hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 40px; }
+.hero-lead { font-size: var(--step-lead); color: var(--night-muted); max-width: 40ch; margin-top: 24px; line-height: 1.45; }
+.hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
 .hero-actions .btn { min-height: 58px; padding-inline: 28px; font-size: 1.0625rem; }
 
 .lampstage { position: relative; display: grid; gap: 12px; }
-.lampstage svg.lamp { width: 100%; height: auto; max-height: min(46svh, 420px); overflow: visible; }
+.lampstage svg.lamp { width: 100%; height: auto; max-height: min(36svh, 320px); overflow: visible; }
 .lamp .cone { transition: opacity 300ms var(--ease); }
 .kelvin {
-  background: var(--night-2); border-radius: 14px; padding: 20px 22px 22px;
+  background: var(--night-2); border-radius: 14px; padding: 16px 22px 14px;
 }
 .kelvin-top { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; }
 .kelvin-value { font-size: clamp(1.75rem, 1.4rem + 1.4vw, 2.5rem); font-weight: 600; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; line-height: 1; }
 .kelvin-name { font-weight: 600; color: var(--glow); text-align: right; }
 .kelvin-note { color: var(--night-muted); margin-top: 6px; min-height: 1.55em; font-size: 0.9375rem; }
-.range { position: relative; margin-top: 16px; height: 44px; }
+.range { position: relative; margin-top: 8px; height: 44px; }
 .range input {
   -webkit-appearance: none; appearance: none; width: 100%; height: 44px; margin: 0; background: transparent; cursor: grab; position: relative; z-index: 2;
 }
@@ -201,7 +191,7 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 .range input::-moz-range-thumb { width: 30px; height: 30px; border: 0; border-radius: 50%; background: var(--night); border: 4px solid #fff; }
 .range input:focus-visible { outline: none; }
 .range input:focus-visible::-webkit-slider-thumb { border-color: var(--accent); }
-.ticks { position: relative; height: 40px; margin-top: 4px; }
+.ticks { position: relative; height: 40px; margin-top: 0; }
 .ticks button {
   position: absolute; top: 0; transform: translateX(-50%);
   background: none; border: 0; padding: 8px 10px; min-height: 40px; cursor: pointer;
@@ -213,15 +203,19 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 .ticks button:last-child { transform: none; left: auto !important; right: 0; }
 
 /* ---------- Directions (tabs) ---------- */
-.tabs { display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; padding: 6px; background: var(--surface); border-radius: 14px; margin-bottom: 28px; }
-.tabs::-webkit-scrollbar { display: none; }
+.tabs { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px; margin-bottom: 24px; }
 .tab {
-  flex: 1 0 auto; border: 0; background: transparent; cursor: pointer; white-space: nowrap;
-  min-height: 52px; padding: 0 20px; border-radius: var(--radius); font-weight: 600; color: var(--muted);
-  transition: background-color 200ms var(--ease), color 200ms var(--ease);
+  display: flex; flex-direction: column; align-items: flex-start; justify-content: center; gap: 4px; text-align: left;
+  min-height: 84px; padding: 14px 18px; border: 0; border-radius: var(--radius); cursor: pointer;
+  background: #fff; color: var(--ink);
+  transition: background-color 200ms var(--ease), color 200ms var(--ease), transform 160ms var(--ease);
 }
-.tab:hover { color: var(--ink); }
-.tab[aria-selected="true"] { background: var(--bg); color: var(--ink); }
+.tab:hover { background: var(--surface); }
+.tab:active { transform: scale(0.98); }
+.tab-name { font-weight: 600; font-size: 1.0625rem; line-height: 1.2; }
+.tab-desc { font-size: var(--step-small); color: var(--muted); line-height: 1.35; }
+.tab[aria-selected="true"] { background: var(--ink); color: var(--bg); }
+.tab[aria-selected="true"] .tab-desc { color: #b9c3cb; }
 .tabpanel { display: grid; grid-template-columns: minmax(0, 1fr) minmax(280px, 380px); gap: clamp(20px, 3vw, 40px); align-items: stretch; }
 .tabpanel[hidden] { display: none; }
 .tabpanel.enter .subs li { animation: rise 420ms var(--ease) both; }
@@ -334,14 +328,13 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 .showroom-pic svg { width: 100%; height: auto; }
 
 /* ---------- Footer ---------- */
-.footer { background: #0a1118; color: var(--night-muted); padding-block: 56px 32px; }
+.footer { background: var(--surface); color: var(--muted); padding-block: 56px 32px; }
 .footer-grid { display: grid; grid-template-columns: 1.2fr 1fr 1fr; gap: 40px; }
-.footer .logo-text { color: var(--night-ink); }
-.footer .logo-text small { color: var(--night-muted); }
-.footer h2 { font-size: 1rem; color: var(--night-ink); margin-bottom: 14px; letter-spacing: 0; }
-.footer a { text-decoration: none; color: var(--night-ink); }
-.footer a:hover { color: var(--accent); }
-.footer .phone { font-size: clamp(1.75rem, 1.4rem + 1.4vw, 2.5rem); font-weight: 600; letter-spacing: -0.03em; color: var(--night-ink); display: inline-block; margin-top: 4px; }
+.footer .logo-text { color: var(--ink); }
+.footer h2 { font-size: 1rem; color: var(--ink); margin-bottom: 14px; letter-spacing: 0; }
+.footer a { text-decoration: none; color: var(--ink); }
+.footer a:hover { color: #8a5300; }
+.footer .phone { font-size: clamp(1.75rem, 1.4rem + 1.4vw, 2.5rem); font-weight: 600; letter-spacing: -0.03em; color: var(--ink); display: inline-block; margin-top: 4px; }
 .footer li { padding: 4px 0; }
 .footer-bottom { margin-top: 48px; padding-top: 24px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; font-size: var(--step-small); }
 
@@ -392,6 +385,7 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
   .hero .wrap { grid-template-columns: 1fr; min-height: 0; gap: 32px; }
   .lampstage { max-width: 560px; }
   .tabpanel { grid-template-columns: 1fr; }
+  .tabs { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .section-head { grid-template-columns: 1fr; }
   .section-head p { justify-self: start; }
   .showroom-grid { grid-template-columns: 1fr; }
@@ -414,8 +408,8 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
   .catpanel-close { display: inline-flex !important; }
   .hero-actions .btn { flex: 1 1 100%; }
   .subs { grid-template-columns: 1fr; }
-  .tabs { display: grid; grid-template-columns: 1fr 1fr; }
-  .tab { padding: 0 12px; white-space: normal; line-height: 1.2; }
+  .tabs { grid-template-columns: 1fr 1fr; gap: 6px; }
+  .tab { min-height: 76px; padding: 12px 14px; }
   .tab:last-child { grid-column: 1 / -1; }
   .subs a { min-height: 64px; }
   .sockets { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; }
@@ -509,20 +503,6 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
       <div class="suggest" id="suggest" role="listbox" aria-label="Подсказки"></div>
     </form>
   </div>
-  <nav class="mainnav" aria-label="Разделы">
-    <div class="wrap">
-      <ul>
-        <li><a href="#directions" data-tab="ceil">Натяжные потолки</a></li>
-        <li><a href="#directions" data-tab="win">Монтаж окон</a></li>
-        <li><a href="#directions" data-tab="light">Освещение</a></li>
-        <li><a href="#catalog" class="hl">Магнитные треки</a></li>
-        <li><a href="#sockets">Лампы по цоколю</a></li>
-        <li><a href="#directions" data-tab="net">Москитные сетки</a></li>
-        <li><a href="#directions" data-tab="tool">Инструмент</a></li>
-        <li><a href="#showroom">Выставочный зал</a></li>
-      </ul>
-    </div>
-  </nav>
   <div class="catpanel" id="catpanel">
     <button class="btn btn-soft catpanel-close" type="button">Закрыть</button>
     <div class="wrap">
@@ -617,22 +597,19 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 </section>
 
 <!-- Directions -->
-<section class="section" id="directions" aria-labelledby="dir-title">
+<section class="section" id="directions" aria-labelledby="dir-title" style="padding-top:clamp(32px, 4vw, 64px)">
   <div class="wrap">
-    <div class="section-head reveal">
-      <h2 id="dir-title">Направления</h2>
-      <p>Свет, потолок и окна в одной комнате связаны. Удобно выбирать их в одном месте.</p>
-    </div>
+    <h2 id="dir-title" class="visually-hidden">Направления</h2>
 
     <div class="tabs" role="tablist" aria-label="Направления">
-      <button class="tab" role="tab" id="t-ceil" aria-controls="p-ceil" aria-selected="true" data-key="ceil">Натяжные потолки</button>
-      <button class="tab" role="tab" id="t-win" aria-controls="p-win" aria-selected="false" tabindex="-1" data-key="win">Монтаж окон</button>
-      <button class="tab" role="tab" id="t-light" aria-controls="p-light" aria-selected="false" tabindex="-1" data-key="light">Освещение</button>
-      <button class="tab" role="tab" id="t-net" aria-controls="p-net" aria-selected="false" tabindex="-1" data-key="net">Москитные сетки</button>
-      <button class="tab" role="tab" id="t-tool" aria-controls="p-tool" aria-selected="false" tabindex="-1" data-key="tool">Инструмент</button>
+      <button class="tab" role="tab" id="t-light" aria-controls="p-light" aria-selected="true" data-key="light"><span class="tab-name">Освещение</span><span class="tab-desc">лампы, светильники, лента</span></button>
+      <button class="tab" role="tab" id="t-ceil" aria-controls="p-ceil" aria-selected="false" tabindex="-1" data-key="ceil"><span class="tab-name">Натяжные потолки</span><span class="tab-desc">профили и комплектующие</span></button>
+      <button class="tab" role="tab" id="t-win" aria-controls="p-win" aria-selected="false" tabindex="-1" data-key="win"><span class="tab-name">Монтаж окон</span><span class="tab-desc">комплектующие</span></button>
+      <button class="tab" role="tab" id="t-tool" aria-controls="p-tool" aria-selected="false" tabindex="-1" data-key="tool"><span class="tab-name">Инструмент</span><span class="tab-desc">для монтажа</span></button>
+      <button class="tab" role="tab" id="t-net" aria-controls="p-net" aria-selected="false" tabindex="-1" data-key="net"><span class="tab-name">Москитные сетки</span><span class="tab-desc">защита от пыли и насекомых</span></button>
     </div>
 
-    <div class="tabpanel" role="tabpanel" id="p-ceil" aria-labelledby="t-ceil" tabindex="0">
+    <div class="tabpanel" role="tabpanel" id="p-ceil" aria-labelledby="t-ceil" tabindex="0" hidden>
       <ul class="subs">
         <li><a href="#"><span class="t">Матовые полотна<span>Без бликов, как ровная побелка</span></span><svg aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
         <li><a href="#"><span class="t">Глянцевые полотна<span>Отражают свет, комната кажется выше</span></span><svg aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
@@ -666,7 +643,7 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
       </aside>
     </div>
 
-    <div class="tabpanel" role="tabpanel" id="p-light" aria-labelledby="t-light" tabindex="0" hidden>
+    <div class="tabpanel" role="tabpanel" id="p-light" aria-labelledby="t-light" tabindex="0">
       <ul class="subs">
         <li><a href="#catalog"><span class="t">Люстры<span>Потолочные и на подвесе</span></span><svg aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
         <li><a href="#catalog"><span class="t">Точечные светильники<span>Встраиваемые и накладные</span></span><svg aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
@@ -760,7 +737,6 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
   <div class="wrap">
     <div class="section-head reveal">
       <h2 id="cat-title">Каталог</h2>
-      <p>Всё, что есть в зале на Молодёжном. Наличие уточняйте по телефону <span style="white-space:nowrap">70-78-87</span>.</p>
     </div>
     <div class="tiles stagger">
       <a class="tile big" href="#" style="--i:0">
@@ -806,7 +782,7 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
   <div class="wrap">
     <div class="section-head reveal">
       <h2 id="rec-title">Рекомендуем</h2>
-      <p>Что чаще всего берут в зале этой зимой.</p>
+      <p>Это чаще всего покупают зимой.</p>
     </div>
     <ul class="cards stagger">
       <li style="--i:0"><a class="card" href="#">
