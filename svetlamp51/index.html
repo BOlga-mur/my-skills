@@ -147,6 +147,8 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
   display: none;
 }
 .catpanel.open { display: block; animation: drop 260ms var(--ease) both; }
+/* A long menu scrolls inside itself instead of running past the screen */
+.catpanel { max-height: calc(100vh - 140px); max-height: calc(100svh - 140px); overflow-y: auto; overscroll-behavior: contain; }
 @keyframes drop { from { opacity: 0; transform: translateY(-8px); } }
 .catpanel .wrap { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 32px; padding-block: 32px 40px; }
 .catpanel h3 { font-size: 1.0625rem; margin-bottom: 12px; }
@@ -401,7 +403,7 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
   .search-field { min-height: 52px; }
   .search input { height: 48px; font-size: 1rem; }
   .search .btn { display: none; }
-  .catpanel { position: fixed; top: 0; bottom: 0; overflow-y: auto; z-index: 50; }
+  .catpanel { position: fixed; top: 0; bottom: 0; max-height: none; overflow-y: auto; z-index: 50; }
   .catpanel .wrap { grid-template-columns: 1fr 1fr; gap: 24px; padding-top: 72px; }
   .catpanel-close { display: inline-flex !important; }
   .topbar .tb-long, .topbar .tb-mail { display: none; }
@@ -604,7 +606,7 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
       <div><h3><a href="https://svetlamp51.ru/osveshchenie">Освещение</a></h3><ul><li><a href="https://svetlamp51.ru/trekovye-svetilniki">Трековые системы</a></li><li><a href="https://svetlamp51.ru/Ljustry">Люстры</a></li><li><a href="https://svetlamp51.ru/vstraivaemye-svetilniki">Светильники</a></li><li><a href="https://svetlamp51.ru/lampy">Лампы</a></li><li><a href="https://svetlamp51.ru/ulichnoe-osveshhenie">Уличный свет</a></li><li><a href="https://svetlamp51.ru/svetodiodnaja-lenta">Светодиодная лента</a></li><li><a href="https://svetlamp51.ru/bloki-pitanija">Блоки питания</a></li></ul></div>
       <div><h3><a href="https://svetlamp51.ru/elektrika">Электрика</a></h3><ul><li><a href="https://svetlamp51.ru/kabel-i-provod">Кабель и провод</a></li><li><a href="https://svetlamp51.ru/upravlenie-svetom">Управление светом</a></li><li><a href="https://svetlamp51.ru/umnyj-dom">Умный дом</a></li><li><a href="https://svetlamp51.ru/teplyj-po">Тёплый пол</a></li></ul></div>
       <div><h3><a href="https://svetlamp51.ru/material-dlya-natyazhnyh-potolkov">Материалы для монтажа натяжных потолков</a></h3><ul><li><a href="https://svetlamp51.ru/baget">Багет</a></li><li><a href="https://svetlamp51.ru/komplektuyushchie-dlya-profilya">Комплектующие для профиля</a></li><li><a href="https://svetlamp51.ru/lenta-maskirovochnaya">Лента маскировочная</a></li><li><a href="https://svetlamp51.ru/platformy">Платформы</a></li><li><a href="https://svetlamp51.ru/termokolca-termokvadraty">Термокольца, термоквадраты</a></li><li><a href="https://svetlamp51.ru/obvody-dlya-trub">Обводы для труб</a></li><li><a href="https://svetlamp51.ru/plastikovye-listy">Пластиковые листы</a></li><li><a href="https://svetlamp51.ru/karnizy">Карнизы</a></li></ul></div>
-      <div><h3><a href="https://svetlamp51.ru/material-dlya-montazha-okon">Материалы для монтажа окон</a></h3><ul><li><a href="https://svetlamp51.ru/mini-roleta">Мини Ролеты</a></li><li><a href="https://svetlamp51.ru/moskitnaya-setka">Москитные сетки</a></li></ul></div>
+      <div><h3><a href="https://svetlamp51.ru/material-dlya-montazha-okon">Материалы для монтажа окон</a></h3><ul><li><a href="https://svetlamp51.ru/podokonnik-pvh">Подоконник ПВХ</a></li><li><a href="https://svetlamp51.ru/podokonnik-myoller">Подоконник Moeller</a></li><li><a href="https://svetlamp51.ru/sendvich-paneli">Сэндвич-панели</a></li><li><a href="https://svetlamp51.ru/vodootlivy-dlya-okon">Водоотливы для окон</a></li><li><a href="https://svetlamp51.ru/torcevye-nakladki">Торцевые накладки</a></li><li><a href="https://svetlamp51.ru/plastikovye-ugolki-na-okna">Пластиковые уголки на окна</a></li><li><a href="https://svetlamp51.ru/nashchelnik">Нащельник</a></li><li><a href="https://svetlamp51.ru/uplotnitel-dlya-okon">Уплотнитель для окон</a></li><li><a href="https://svetlamp51.ru/furnitura-dlya-okon">Фурнитура для окон</a></li><li><a href="https://svetlamp51.ru/lenta-dlya-montazha-okon-po-gostu">Лента для монтажа окон по ГОСТу</a></li><li><a href="https://svetlamp51.ru/mini-roleta">Мини Ролеты</a></li><li><a href="https://svetlamp51.ru/moskitnaya-setka">Москитные сетки</a></li></ul></div>
       <div><h3><a href="https://svetlamp51.ru/raznoe-dlya-montazha">Монтаж и ремонт</a></h3><ul><li><a href="https://svetlamp51.ru/germetiki">Герметики, клей, жидкие гвозди, очистители</a></li><li><a href="https://svetlamp51.ru/pena-montazhnaya-klej-pena">Пена монтажная, клей-пена</a></li><li><a href="https://svetlamp51.ru/kosmofeny">Космофены</a></li><li><a href="https://svetlamp51.ru/krepezh">Крепёж</a></li><li><a href="https://svetlamp51.ru/dovodchiki-dvernoj-zvonok-cifry">Доводчики, дверной звонок, цифры</a></li><li><a href="https://svetlamp51.ru/lyuki">Люки</a></li><li><a href="https://svetlamp51.ru/raznoe-dlya-montazha">Разное</a></li></ul></div>
     </div>
   </div>
