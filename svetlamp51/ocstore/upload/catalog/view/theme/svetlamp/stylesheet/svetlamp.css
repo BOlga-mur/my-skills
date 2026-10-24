@@ -56,6 +56,10 @@ body.common-home { background: var(--bg); }
 .sl .footer { margin: 0; border: 0; }
 /* Shop pages: the header band keeps its own ground on white inner pages */
 .sl.sl-top { background: var(--bg); }
+/* The shop sells in the showroom. Modules (Купить в 1 клик, cart) insert buy buttons on their own,
+   through OCMOD or script, into any theme: keep every one of them hidden, on every page */
+#button-cart, #cart, .btn.order, button.order, .button.order, [data-target="#order"], #order.modal,
+button[onclick*="cart.add"], input[onclick*="cart.add"] { display: none !important; }
 /* Product photos from the shop sit on the card's ground; white photo backgrounds blend in */
 .sl .card-pic img { width: 100%; height: 100%; object-fit: contain; mix-blend-mode: multiply; }
 
