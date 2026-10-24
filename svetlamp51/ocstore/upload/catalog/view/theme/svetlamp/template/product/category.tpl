@@ -1,4 +1,6 @@
 <?php echo $header; ?>
+<?php // SvetLamp: no left column on category pages (filter and category list removed), products use the full width
+$column_left = ''; ?>
 <div class="container">
   <ul class="breadcrumb">
     <?php foreach ($breadcrumbs as $breadcrumb) { ?>
