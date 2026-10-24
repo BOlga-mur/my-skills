@@ -156,21 +156,24 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 
 /* ---------- Hero ---------- */
 .hero { background: var(--night); color: var(--night-ink); overflow: hidden; position: relative; }
-.hero .wrap { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); gap: 40px; align-items: center; min-height: min(600px, calc(100svh - 136px)); padding-block: clamp(28px, 3vw, 44px); }
-.hero h1 { font-size: var(--step-display); line-height: 1; letter-spacing: -0.035em; }
+/* The hero fills exactly what is left of the first screen: --above is the height of the top bar, header and directions, measured in script */
+.hero { height: calc(100vh - var(--above, 240px)); height: calc(100svh - var(--above, 240px)); min-height: 280px; }
+.hero .wrap { height: 100%; display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); grid-template-rows: minmax(0, 1fr); gap: clamp(24px, 3vw, 40px); align-items: center; padding-block: clamp(14px, 3.6vh, 44px); }
+.lbl-short { display: none; }
+.hero h1 { font-size: clamp(1.625rem, min(1.2rem + 3.6vw, 8.4vh), 4.5rem); line-height: 1; letter-spacing: -0.035em; }
 .hero h1 .ln { white-space: nowrap; }
-.hero-lead { font-size: var(--step-lead); color: var(--night-muted); max-width: 40ch; margin-top: 24px; line-height: 1.45; }
-.hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
-.hero-actions .btn { min-height: 58px; padding-inline: 28px; font-size: 1.0625rem; }
+.hero-lead { font-size: clamp(0.9375rem, min(1.05rem + 0.4vw, 2.5vh), 1.375rem); color: var(--night-muted); max-width: 40ch; margin-top: clamp(10px, 2.6vh, 24px); line-height: 1.45; }
+.hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: clamp(14px, 3.4vh, 32px); }
+.hero-actions .btn { min-height: clamp(46px, 6.4vh, 58px); padding-inline: 28px; font-size: 1.0625rem; }
 
-.lampstage { position: relative; display: grid; gap: 12px; }
-.lampstage svg.lamp { width: 100%; height: auto; max-height: min(36svh, 320px); overflow: visible; }
+.lampstage { position: relative; height: 100%; min-height: 0; display: flex; flex-direction: column; justify-content: center; gap: clamp(6px, 1.4vh, 12px); }
+.lampstage svg.lamp { flex: 0 1 auto; min-height: 0; width: 100%; height: auto; max-height: 420px; overflow: visible; }
 .lamp .cone { transition: opacity 300ms var(--ease); }
 .kelvin {
-  background: var(--night-2); border-radius: 14px; padding: 16px 22px 14px;
+  flex: none; background: var(--night-2); border-radius: 14px; padding: clamp(10px, 1.8vh, 16px) 22px clamp(8px, 1.4vh, 14px);
 }
 .kelvin-top { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; }
-.kelvin-value { font-size: clamp(1.75rem, 1.4rem + 1.4vw, 2.5rem); font-weight: 600; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; line-height: 1; }
+.kelvin-value { font-size: clamp(1.375rem, min(1.4rem + 1.4vw, 4.4vh), 2.5rem); font-weight: 600; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; line-height: 1; }
 .kelvin-name { font-weight: 600; color: var(--glow); text-align: right; }
 .kelvin-note { color: var(--night-muted); margin-top: 6px; min-height: 1.55em; font-size: 0.9375rem; }
 .range { position: relative; margin-top: 8px; height: 44px; }
@@ -365,8 +368,11 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
   .topbar .tb-hide { display: none; }
   .header-row { grid-template-columns: auto auto; justify-content: space-between; }
   .header-row .search { grid-column: 1 / -1; }
-  .hero .wrap { grid-template-columns: 1fr; min-height: 0; gap: 32px; }
-  .lampstage { max-width: 560px; }
+  .hero .wrap { grid-template-columns: 1fr; grid-template-rows: auto minmax(0, 1fr); align-items: stretch; gap: clamp(12px, 2.6vh, 28px); }
+  .hero .wrap > :first-child { align-self: end; }
+  .lampstage { flex-direction: row; align-items: center; gap: 16px; }
+  .lampstage svg.lamp { flex: 0 1 42%; width: 42%; height: 100%; max-height: 360px; }
+  .kelvin { flex: 1 1 0; min-width: 0; }
   .dirs { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .section-head { grid-template-columns: 1fr; }
   .section-head p { justify-self: start; }
@@ -388,10 +394,34 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
   .catpanel { position: fixed; top: 0; bottom: 0; overflow-y: auto; z-index: 50; }
   .catpanel .wrap { grid-template-columns: 1fr 1fr; gap: 24px; padding-top: 72px; }
   .catpanel-close { display: inline-flex !important; }
-  .hero-actions .btn { flex: 1 1 100%; }
-  .dirs { grid-template-columns: 1fr 1fr; gap: 6px; }
-  .dir { min-height: 72px; padding: 12px 14px; }
-  .dirs li:last-child { grid-column: 1 / -1; }
+  .topbar .tb-long, .topbar .tb-mail { display: none; }
+  .topbar .tb-right { margin-left: auto; }
+  .topbar .tb-addr { flex-basis: auto; }
+  .topbar .wrap { min-height: 34px; padding-block: 6px; }
+  .header-row { padding-block: 10px 12px; gap: 10px; }
+  .catalog-btn { min-height: 44px; }
+  .hero .wrap { padding-block: clamp(12px, 2.4vh, 24px); }
+  .hero-actions { flex-wrap: nowrap; gap: 8px; }
+  .hero-actions .btn { flex: 1 1 0; min-width: 0; min-height: 48px; padding-inline: 12px; font-size: 0.9375rem; white-space: normal; line-height: 1.15; text-align: center; }
+  .hero-actions .btn svg { width: 18px; height: 18px; }
+  .lbl-long { display: none; }
+  .lbl-short { display: inline; }
+  .lampstage { flex-direction: column; align-items: stretch; gap: 8px; }
+  .lampstage svg.lamp { flex: 1 1 0; width: 100%; height: auto; min-height: 40px; max-height: 260px; }
+  .kelvin { flex: none; padding: 10px 14px 6px; border-radius: 12px; }
+  .kelvin-name { font-size: 0.9375rem; }
+  .kelvin-note { display: none; }
+  .range { margin-top: 0; height: 40px; }
+  .range input { height: 40px; }
+  .range input::-webkit-slider-thumb { margin-top: 4px; }
+  .ticks { display: flex; justify-content: space-between; height: 36px; }
+  .ticks button { position: static; transform: none; font-size: 0.875rem; padding: 6px 10px; min-height: 36px; }
+  .directions { padding-block: 0 12px; }
+  .dirs { display: flex; gap: 6px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; margin-inline: calc(var(--gutter) * -1); padding-inline: var(--gutter); scroll-padding-inline: var(--gutter); }
+  .dirs::-webkit-scrollbar { display: none; }
+  .dirs li { flex: 0 0 auto; width: 236px; scroll-snap-align: start; }
+  .dir { min-height: 64px; padding: 10px 12px; }
+  .dir-name { font-size: 1rem; }
   .sockets { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; }
   .socket { min-height: 56px; font-size: 1.0625rem; }
   .socket-card { grid-template-columns: 1fr; }
@@ -414,6 +444,57 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
   .contacts div { grid-template-columns: 1fr; gap: 2px; }
   .showroom-actions .btn { flex: 1 1 100%; }
   .footer-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 640px) and (max-height: 760px) {
+  .hero-lead { display: none; }
+}
+@media (max-width: 640px) and (max-height: 600px) {
+  .hero { min-height: 0; }
+  .ticks { display: none; }
+  .kelvin { padding-bottom: 8px; }
+}
+/* Phones held sideways: everything above the hero shrinks to one line each so the hero still fits */
+@media (orientation: landscape) and (max-height: 500px) {
+  .topbar .tb-hide, .topbar .tb-long, .topbar .tb-mail { display: none; }
+  .topbar .tb-addr { flex-basis: auto; }
+  .topbar .tb-right { margin-left: auto; }
+  .topbar .wrap { min-height: 30px; padding-block: 4px; }
+  .header-row { grid-template-columns: auto auto minmax(0, 1fr); justify-content: stretch; padding-block: 8px; gap: 10px; }
+  .header-row .search { grid-column: auto; }
+  .logo-text small { display: none; }
+  .logo-mark { width: 40px; height: 40px; }
+  .catalog-btn { min-height: 44px; }
+  .search-field { min-height: 44px; }
+  .search input { height: 40px; }
+  .search .btn { min-height: 34px; }
+  .directions { padding-block: 0 8px; }
+  .dirs { display: flex; gap: 6px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; margin-inline: calc(var(--gutter) * -1); padding-inline: var(--gutter); scroll-padding-inline: var(--gutter); }
+  .dirs::-webkit-scrollbar { display: none; }
+  .dirs li { flex: 0 0 auto; width: 236px; scroll-snap-align: start; }
+  .dir { min-height: 0; padding: 8px 12px; }
+  .dir-name { font-size: 0.9375rem; }
+  .dir-desc { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .hero { min-height: 0; }
+  .hero .wrap { grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); grid-template-rows: minmax(0, 1fr); align-items: center; gap: 20px; padding-block: 10px; }
+  .hero .wrap > :first-child { align-self: center; }
+  .hero h1 { font-size: clamp(1.5rem, 7vh, 2.25rem); }
+  .hero-lead { display: none; }
+  .hero-actions { flex-wrap: nowrap; gap: 8px; margin-top: 12px; }
+  .hero-actions .btn { flex: 1 1 0; min-width: 0; min-height: 44px; padding-inline: 12px; font-size: 0.9375rem; white-space: normal; line-height: 1.15; text-align: center; }
+  .lbl-long { display: none; }
+  .lbl-short { display: inline; }
+  .lampstage { flex-direction: column; align-items: stretch; gap: 6px; }
+  .lampstage svg.lamp { flex: 1 1 0; width: 100%; height: auto; min-height: 0; max-height: none; }
+  .kelvin { flex: none; padding: 8px 14px; }
+  .kelvin-value { font-size: 1.375rem; }
+  .kelvin-note, .ticks { display: none; }
+  .range { margin-top: 0; height: 36px; }
+  .range input { height: 36px; }
+  .range input::-webkit-slider-thumb { margin-top: 2px; }
+}
+@media (max-width: 360px) {
+  .topbar svg { display: none; }
+  .topbar .wrap { gap: 4px 12px; }
 }
 .catpanel-close { display: none; position: absolute; top: 12px; right: var(--gutter); }
 </style>
@@ -452,11 +533,11 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 <!-- Top bar -->
 <div class="topbar">
   <div class="wrap">
-    <span class="tb-item tb-addr"><svg aria-hidden="true"><use href="#i-pin"/></svg>Мурманск, проезд Молодёжный, 12, корпус 1</span>
+    <span class="tb-item tb-addr"><svg aria-hidden="true"><use href="#i-pin"/></svg><span><span class="tb-long">Мурманск, проезд </span>Молодёжный, 12, корпус 1</span></span>
     <span class="tb-item tb-hide"><svg aria-hidden="true"><use href="#i-clock"/></svg>пн–сб 9:00–18:00</span>
     <span class="tb-right">
       <a class="tb-item" href="tel:+79113007887"><svg aria-hidden="true"><use href="#i-phone"/></svg>+7 911 300-78-87</a>
-      <a class="tb-item" href="mailto:707887@bk.ru"><svg aria-hidden="true"><use href="#i-mail"/></svg>707887@bk.ru</a>
+      <a class="tb-item tb-mail" href="mailto:707887@bk.ru"><svg aria-hidden="true"><use href="#i-mail"/></svg>707887@bk.ru</a>
     </span>
   </div>
 </div>
@@ -502,7 +583,7 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
     <ul class="dirs">
       <li><a class="dir" href="#"><span class="dir-name">Натяжные потолки</span><span class="dir-desc">профили и комплектующие</span></a></li>
       <li><a class="dir" href="#"><span class="dir-name">Монтаж окон</span><span class="dir-desc">комплектующие</span></a></li>
-      <li><a class="dir" href="#"><span class="dir-name">Освещение и электрика</span><span class="dir-desc">лампы, светильники, лента</span></a></li>
+      <li><a class="dir" href="#"><span class="dir-name">Освещение и электрика</span><span class="dir-desc">лампы, светильники, лента, кабель, управление светом</span></a></li>
       <li><a class="dir" href="#"><span class="dir-name">Инструмент</span><span class="dir-desc">для монтажа</span></a></li>
       <li><a class="dir" href="#"><span class="dir-name">Москитные сетки</span><span class="dir-desc">защита от пыли и насекомых</span></a></li>
     </ul>
@@ -516,8 +597,8 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
       <h1 id="hero-title"><span class="ln">Свет для долгой</span> <span class="ln">полярной ночи</span></h1>
       <p class="hero-lead">Лампы, люстры, споты и магнитные треки в выставочном зале на Молодёжном. Здесь же натяжные потолки, окна и москитные сетки.</p>
       <div class="hero-actions">
-        <a class="btn btn-accent" href="#catalog">Открыть каталог<svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
-        <a class="btn btn-ghost-night" href="#sockets">Подобрать лампу по цоколю</a>
+        <a class="btn btn-accent" href="#catalog"><span class="lbl-long">Открыть каталог</span><span class="lbl-short">Каталог</span><svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+        <a class="btn btn-ghost-night" href="#sockets"><span class="lbl-long">Подобрать лампу по цоколю</span><span class="lbl-short">Подбор по цоколю</span></a>
       </div>
     </div>
 
@@ -760,6 +841,17 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 
 <script>
 document.documentElement.classList.add('js');
+
+/* ---------- Hero fits the first screen ---------- */
+(function () {
+  const hero = document.querySelector('.hero');
+  const root = document.documentElement;
+  function fit() { root.style.setProperty('--above', Math.round(hero.getBoundingClientRect().top + window.scrollY) + 'px'); }
+  fit();
+  window.addEventListener('resize', fit);
+  if (document.fonts) document.fonts.ready.then(fit);
+  if ('ResizeObserver' in window) new ResizeObserver(fit).observe(document.querySelector('.directions'));
+})();
 
 /* ---------- Colour temperature ---------- */
 (function () {
