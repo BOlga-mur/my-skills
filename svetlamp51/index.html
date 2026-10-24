@@ -162,7 +162,7 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 .lbl-short { display: none; }
 .hero h1 { font-size: clamp(1.625rem, min(1.2rem + 3.6vw, 8.4vh), 4.5rem); line-height: 1; letter-spacing: -0.035em; }
 .hero h1 .ln { white-space: nowrap; }
-.hero-lead { font-size: clamp(0.9375rem, min(1.05rem + 0.4vw, 2.5vh), 1.375rem); color: var(--night-muted); max-width: 40ch; margin-top: clamp(10px, 2.6vh, 24px); line-height: 1.45; }
+.hero-lead { font-size: clamp(0.9375rem, min(1.05rem + 0.4vw, 2.5vh), 1.375rem); color: var(--night-muted); max-width: 48ch; margin-top: clamp(10px, 2.6vh, 24px); line-height: 1.45; }
 .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: clamp(14px, 3.4vh, 32px); }
 .hero-actions .btn { min-height: clamp(46px, 6.4vh, 58px); padding-inline: 28px; font-size: 1.0625rem; }
 
@@ -453,6 +453,11 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
   .ticks { display: none; }
   .kelvin { padding-bottom: 8px; }
 }
+/* Narrow desktops: the second hero button takes its short label so both stay on one row */
+@media (min-width: 901px) and (max-width: 1200px) {
+  .hero-actions .btn + .btn .lbl-long { display: none; }
+  .hero-actions .btn + .btn .lbl-short { display: inline; }
+}
 /* Phones held sideways: everything above the hero shrinks to one line each so the hero still fits */
 @media (orientation: landscape) and (max-height: 500px) {
   .topbar .tb-hide, .topbar .tb-long, .topbar .tb-mail { display: none; }
@@ -595,7 +600,7 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
   <div class="wrap">
     <div>
       <h1 id="hero-title"><span class="ln">Свет для долгой</span> <span class="ln">полярной ночи</span></h1>
-      <p class="hero-lead">Лампы, люстры, споты и магнитные треки в выставочном зале на Молодёжном. Здесь же натяжные потолки, окна и москитные сетки.</p>
+      <p class="hero-lead">Лампы, люстры, споты и магнитные треки в выставочном зале в Мурманске. Здесь же Вы найдёте всё для монтажа натяжных потолков, ремонта окон и москитные сетки для защиты от пыли и насекомых.</p>
       <div class="hero-actions">
         <a class="btn btn-accent" href="#catalog"><span class="lbl-long">Открыть каталог</span><span class="lbl-short">Каталог</span><svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
         <a class="btn btn-ghost-night" href="#sockets"><span class="lbl-long">Подобрать лампу по цоколю</span><span class="lbl-short">Подбор по цоколю</span></a>
