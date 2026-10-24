@@ -278,6 +278,7 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 .tile.dark-soft:hover { background: var(--surface-2); }
 .tiles { grid-auto-flow: dense; }
 .tile.wide { grid-column: span 2; }
+#catalog .section-head { margin-bottom: clamp(16px, 2vw, 28px); }
 .cat-group + .cat-group { margin-top: clamp(40px, 5vw, 72px); }
 .cat-group .group-title { font-size: clamp(1.25rem, 1.1rem + 0.6vw, 1.625rem); margin-bottom: 16px; }
 .tiles-compact { grid-auto-rows: minmax(160px, auto); }
@@ -557,6 +558,7 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
     <symbol id="d-screw" viewBox="0 0 120 120"><g fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M38 18h44l-8 14H46Z"/><path d="M50 32v56l10 18 10-18V32"/><path d="M50 44l20 7M50 58l20 7M50 72l20 7"/></g></symbol>
     <symbol id="d-hatch" viewBox="0 0 120 120"><g fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><rect x="14" y="14" width="92" height="92" rx="3"/><rect x="28" y="28" width="64" height="64" rx="2"/></g><circle cx="80" cy="60" r="4" fill="currentColor"/></symbol>
     <symbol id="d-bell" viewBox="0 0 120 120"><g fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M60 14v8"/><path d="M34 80V56a26 26 0 0 1 52 0v24l10 10H24Z"/><path d="M50 98a10 10 0 0 0 20 0"/></g></symbol>
+    <symbol id="d-cable" viewBox="0 0 120 120"><g fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><circle cx="56" cy="54" r="38"/><circle cx="56" cy="54" r="24"/><circle cx="56" cy="54" r="9"/><path d="M94 54c0 28 8 46 20 52"/></g></symbol>
     <symbol id="d-gx53" viewBox="0 0 120 120"><g fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="60" cy="54" rx="44" ry="14"/><path d="M16 54v10c0 8 20 14 44 14s44-6 44-14V54"/><path d="M42 42v-12M78 42v-12"/></g></symbol>
   </defs>
 </svg>
@@ -703,7 +705,7 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 
 
 <!-- Catalog -->
-<section class="section" id="catalog" aria-labelledby="cat-title">
+<section class="section" id="catalog" aria-labelledby="cat-title" style="padding-top:clamp(32px, 3.5vw, 56px)">
   <div class="wrap">
     <div class="section-head reveal">
       <h2 id="cat-title">Каталог</h2>
@@ -733,15 +735,17 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
           </svg>
           <span class="more">Смотреть трековые системы<svg aria-hidden="true"><use href="#i-arrow"/></svg></span>
         </a>
-        <a class="tile wide" href="https://svetlamp51.ru/svetodiodnaja-lenta" style="--i:1"><div><h3>Лента, блоки и профиль</h3></div><svg class="pic" aria-hidden="true"><use href="#d-strip"/></svg></a>
-        <a class="tile wide" href="https://svetlamp51.ru/vstraivaemye-svetilniki" style="--i:2"><div><h3>Светильники</h3><p>Встраиваемые и накладные</p></div><svg class="pic" aria-hidden="true"><use href="#d-spot"/></svg></a>
-        <a class="tile" href="https://svetlamp51.ru/lampy" style="--i:3"><div><h3>Лампы</h3><p>Все цоколи из подбора</p></div><svg class="pic" aria-hidden="true"><use href="#d-bulb"/></svg></a>
-        <a class="tile wide" href="https://svetlamp51.ru/Ljustry" style="--i:4"><div><h3>Люстры</h3></div><svg class="pic" aria-hidden="true"><use href="#d-chandelier"/></svg></a>
-        <a class="tile" href="https://svetlamp51.ru/ulichnoe-osveshhenie" style="--i:5"><div><h3>Уличный свет</h3><p>Фасад, крыльцо, участок</p></div><svg class="pic" aria-hidden="true"><use href="#d-street"/></svg></a>
-        <a class="tile" href="https://svetlamp51.ru/umnyj-dom" style="--i:6"><div><h3>Умный дом</h3><p>Реле, датчики, умные розетки</p></div><svg class="pic" aria-hidden="true"><use href="#d-smart"/></svg></a>
-        <a class="tile" href="https://svetlamp51.ru/upravlenie-svetom" style="--i:7"><div><h3>Управление светом</h3><p>Выключатели, диммеры, датчики движения</p></div><svg class="pic" aria-hidden="true"><use href="#d-switch"/></svg></a>
-        <a class="tile" href="https://svetlamp51.ru/elektrika" style="--i:8"><div><h3>Электрика</h3><p>Кабель, розетки, автоматы</p></div><svg class="pic" aria-hidden="true"><use href="#d-electric"/></svg></a>
-        <a class="tile" href="https://svetlamp51.ru/teplyj-po" style="--i:9"><div><h3>Тёплый пол</h3><p>Кабель, маты, терморегуляторы</p></div><svg class="pic" aria-hidden="true"><use href="#d-floor"/></svg></a>
+        <a class="tile" href="https://svetlamp51.ru/svetodiodnaja-lenta" style="--i:1"><div><h3>Светодиодная лента</h3></div><svg class="pic" aria-hidden="true"><use href="#d-strip"/></svg></a>
+        <a class="tile" href="#" style="--i:2"><div><h3>Блоки питания</h3></div><svg class="pic" aria-hidden="true"><use href="#d-psu"/></svg></a>
+        <a class="tile wide" href="https://svetlamp51.ru/vstraivaemye-svetilniki" style="--i:3"><div><h3>Светильники</h3><p>Встраиваемые и накладные</p></div><svg class="pic" aria-hidden="true"><use href="#d-spot"/></svg></a>
+        <a class="tile" href="https://svetlamp51.ru/lampy" style="--i:4"><div><h3>Лампы</h3><p>Все цоколи из подбора</p></div><svg class="pic" aria-hidden="true"><use href="#d-bulb"/></svg></a>
+        <a class="tile" href="https://svetlamp51.ru/Ljustry" style="--i:5"><div><h3>Люстры</h3></div><svg class="pic" aria-hidden="true"><use href="#d-chandelier"/></svg></a>
+        <a class="tile" href="https://svetlamp51.ru/ulichnoe-osveshhenie" style="--i:6"><div><h3>Уличный свет</h3><p>Фасад, крыльцо, участок</p></div><svg class="pic" aria-hidden="true"><use href="#d-street"/></svg></a>
+        <a class="tile" href="https://svetlamp51.ru/umnyj-dom" style="--i:7"><div><h3>Умный дом</h3><p>Реле, датчики, умные розетки</p></div><svg class="pic" aria-hidden="true"><use href="#d-smart"/></svg></a>
+        <a class="tile" href="https://svetlamp51.ru/upravlenie-svetom" style="--i:8"><div><h3>Управление светом</h3><p>Выключатели, диммеры, датчики движения</p></div><svg class="pic" aria-hidden="true"><use href="#d-switch"/></svg></a>
+        <a class="tile" href="https://svetlamp51.ru/elektrika" style="--i:9"><div><h3>Электрика</h3><p>Кабель, розетки, автоматы</p></div><svg class="pic" aria-hidden="true"><use href="#d-electric"/></svg></a>
+        <a class="tile" href="https://svetlamp51.ru/kabel-i-provod" style="--i:10"><div><h3>Кабель и провод</h3></div><svg class="pic" aria-hidden="true"><use href="#d-cable"/></svg></a>
+        <a class="tile" href="https://svetlamp51.ru/teplyj-po" style="--i:11"><div><h3>Тёплый пол</h3><p>Кабель, маты, терморегуляторы</p></div><svg class="pic" aria-hidden="true"><use href="#d-floor"/></svg></a>
       </div>
     </div>
     <div class="cat-group">
