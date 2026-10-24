@@ -324,8 +324,12 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 .contacts a { text-decoration: none; }
 .contacts a:hover { color: var(--accent); }
 .showroom-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
-.showroom-pic { border-radius: 14px; overflow: hidden; background: var(--night-2); }
-.showroom-pic svg { width: 100%; height: auto; }
+.showroom-map { position: relative; border-radius: 14px; overflow: hidden; background: var(--night-2); aspect-ratio: 4 / 3; }
+.showroom-map iframe, .showroom-map > div:not(.map-empty) { position: absolute; inset: 0; width: 100% !important; height: 100% !important; border: 0; }
+.map-empty { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; text-align: center; padding: 24px; color: var(--night-muted); }
+.map-empty svg { width: 40px; height: 40px; color: var(--accent); margin-bottom: 6px; }
+.map-empty p { color: var(--night-ink); font-weight: 600; font-size: 1.25rem; }
+.map-empty span { font-size: 0.9375rem; }
 
 /* ---------- Footer ---------- */
 .footer { background: var(--surface); color: var(--muted); padding-block: 56px 32px; }
@@ -826,51 +830,17 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
         <a class="btn btn-ghost-night" href="tel:+79113007887"><svg aria-hidden="true"><use href="#i-phone"/></svg>Позвонить</a>
       </div>
     </div>
-    <div class="showroom-pic">
-      <svg viewBox="0 0 640 480" role="img" aria-labelledby="sr-title">
-        <title id="sr-title">Витрина выставочного зала вечером: светятся подвесы и споты</title>
-        <rect width="640" height="480" fill="#172431"/>
-        <rect x="0" y="380" width="640" height="100" fill="#0e1720"/>
-        <!-- snow line -->
-        <path d="M0 380 Q160 366 320 378 T640 374 V392 H0Z" fill="#dfe6ec"/>
-        <!-- building -->
-        <rect x="60" y="70" width="520" height="310" fill="#22323f"/>
-        <rect x="60" y="70" width="520" height="22" fill="#2b3a47"/>
-        <!-- sign -->
-        <rect x="220" y="100" width="200" height="40" rx="4" fill="#0e1720"/>
-        <text x="320" y="127" text-anchor="middle" font-family="Onest, sans-serif" font-weight="700" font-size="20" fill="#f3ad3c">СветЛамп</text>
-        <!-- window -->
-        <rect x="96" y="160" width="448" height="200" fill="#2c2419"/>
-        <rect x="96" y="160" width="448" height="200" fill="#ffb46b" opacity=".18"/>
-        <g fill="#ffcf8f">
-          <ellipse cx="170" cy="230" rx="60" ry="40" opacity=".35"/>
-          <ellipse cx="320" cy="240" rx="80" ry="50" opacity=".3"/>
-          <ellipse cx="470" cy="230" rx="60" ry="40" opacity=".35"/>
-        </g>
-        <g stroke="#0e1720" stroke-width="2">
-          <path d="M170 160v44M320 160v30M470 160v44"/>
-        </g>
-        <path d="M150 204h40l8 18h-56Z" fill="#0e1720"/>
-        <circle cx="170" cy="224" r="6" fill="#fff4e0"/>
-        <path d="M300 190h40l14 28h-68Z" fill="#0e1720"/>
-        <circle cx="320" cy="220" r="7" fill="#fff4e0"/>
-        <path d="M450 204h40l8 18h-56Z" fill="#0e1720"/>
-        <circle cx="470" cy="224" r="6" fill="#e9f0ff"/>
-        <!-- track with spots -->
-        <rect x="120" y="168" width="400" height="5" fill="#0e1720"/>
-        <rect x="240" y="173" width="10" height="12" fill="#0e1720"/><rect x="390" y="173" width="10" height="12" fill="#0e1720"/>
-        <!-- counter -->
-        <rect x="200" y="310" width="240" height="50" fill="#22323f"/>
-        <rect x="200" y="310" width="240" height="4" fill="#ffcf8f" opacity=".7"/>
-        <!-- mullions -->
-        <g fill="#2b3a47"><rect x="96" y="160" width="448" height="6"/><rect x="316" y="160" width="8" height="200"/><rect x="96" y="354" width="448" height="6"/></g>
-        <!-- door -->
-        <rect x="560" y="210" width="0" height="0"/>
-        <!-- light on snow -->
-        <ellipse cx="320" cy="386" rx="230" ry="12" fill="#ffcf8f" opacity=".35"/>
-        <!-- stars / snow -->
-        <g fill="#dfe6ec" opacity=".8"><circle cx="40" cy="40" r="2"/><circle cx="120" cy="24" r="1.5"/><circle cx="260" cy="44" r="1.5"/><circle cx="380" cy="20" r="2"/><circle cx="520" cy="40" r="1.5"/><circle cx="610" cy="22" r="2"/><circle cx="600" cy="140" r="1.5"/><circle cx="24" cy="180" r="1.5"/><circle cx="30" cy="300" r="2"/><circle cx="612" cy="290" r="1.5"/></g>
-      </svg>
+    <div class="showroom-map" id="map">
+      <!--
+        КАРТА. Вставьте сюда код для сайта из Яндекс Карт вместо блока <div class="map-empty">…</div>.
+        Где взять: yandex.ru/maps → найдите адрес → «Поделиться» → «Виджет с картой» → скопируйте код <iframe …>.
+        Ширину и высоту в коде можно не менять: блок сам растянет карту на всё место.
+      -->
+      <div class="map-empty">
+        <svg aria-hidden="true"><use href="#i-pin"/></svg>
+        <p>Здесь будет карта</p>
+        <span>Вставьте код Яндекс Карт</span>
+      </div>
     </div>
   </div>
 </section>
