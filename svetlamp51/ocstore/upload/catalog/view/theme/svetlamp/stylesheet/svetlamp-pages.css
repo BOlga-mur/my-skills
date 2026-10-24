@@ -19,7 +19,8 @@ body.sl-body .breadcrumb > li:after { display: none; }
 body.sl-body .breadcrumb > li + li:before { content: "›"; padding: 0 10px; color: var(--muted); }
 body.sl-body .breadcrumb > li > a { color: var(--muted); text-decoration: none; }
 body.sl-body .breadcrumb > li > a:hover { color: var(--ink); }
-body.sl-body .breadcrumb > li:last-child > a { color: var(--ink); }
+/* The current page is already the H1 right below, so the last crumb is not repeated */
+body.sl-body .breadcrumb > li:last-child:not(:first-child) { display: none; }
 body.sl-body .breadcrumb .fa-home { font-size: 16px; }
 
 /* ---------- Type ---------- */
