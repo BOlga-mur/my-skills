@@ -364,7 +364,7 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
   .tiles { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .tile.big { grid-column: 1 / -1; grid-row: auto; }
   .tile.big .pic { max-width: 560px; align-self: center; }
-  .tiles-compact .tile.wide { grid-column: 1 / -1; }
+  .tiles-compact .tile.wide { grid-column: auto; }
   .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .sockets { grid-template-columns: repeat(4, minmax(0, 1fr)); }
   .socket-card { grid-template-columns: minmax(180px, 0.7fr) minmax(0, 1.3fr); }
@@ -559,6 +559,7 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
     <symbol id="d-hatch" viewBox="0 0 120 120"><g fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><rect x="14" y="14" width="92" height="92" rx="3"/><rect x="28" y="28" width="64" height="64" rx="2"/></g><circle cx="80" cy="60" r="4" fill="currentColor"/></symbol>
     <symbol id="d-bell" viewBox="0 0 120 120"><g fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M60 14v8"/><path d="M34 80V56a26 26 0 0 1 52 0v24l10 10H24Z"/><path d="M50 98a10 10 0 0 0 20 0"/></g></symbol>
     <symbol id="d-cable" viewBox="0 0 120 120"><g fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><circle cx="56" cy="54" r="38"/><circle cx="56" cy="54" r="24"/><circle cx="56" cy="54" r="9"/><path d="M94 54c0 28 8 46 20 52"/></g></symbol>
+    <symbol id="d-roller" viewBox="0 0 120 120"><g fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><rect x="14" y="14" width="92" height="14" rx="7"/><path d="M22 28v62h76V28"/><path d="M18 90h84"/><path d="M106 28v44"/></g><circle cx="106" cy="76" r="4" fill="currentColor"/></symbol>
     <symbol id="d-gx53" viewBox="0 0 120 120"><g fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="60" cy="54" rx="44" ry="14"/><path d="M16 54v10c0 8 20 14 44 14s44-6 44-14V54"/><path d="M42 42v-12M78 42v-12"/></g></symbol>
   </defs>
 </svg>
@@ -600,11 +601,11 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
   <div class="catpanel" id="catpanel">
     <button class="btn btn-soft catpanel-close" type="button">Закрыть</button>
     <div class="wrap">
-      <div><h3><a href="#directions">Натяжные потолки</a></h3><ul><li><a href="#directions">Матовые</a></li><li><a href="#directions">Глянцевые</a></li><li><a href="#directions">Сатиновые</a></li><li><a href="#directions">Парящие</a></li><li><a href="#directions">Световые линии</a></li><li><a href="#directions">Профили и закладные</a></li></ul></div>
-      <div><h3><a href="#directions">Монтаж окон</a></h3><ul><li><a href="#directions">Подоконники</a></li><li><a href="#directions">Сэндвич-панели</a></li><li><a href="#directions">Водоотливы</a></li></ul></div>
-      <div><h3><a href="#directions">Освещение и электрика</a></h3><ul><li><a href="#catalog">Люстры</a></li><li><a href="#catalog">Подвесные светильники</a></li><li><a href="#catalog">Точечные светильники</a></li><li><a href="#catalog">Магнитные треки</a></li><li><a href="#catalog">Светодиодные ленты</a></li><li><a href="#catalog">Бра и торшеры</a></li><li><a href="#catalog">Уличный свет</a></li><li><a href="#sockets">Лампы</a></li></ul></div>
-      <div><h3><a href="#directions">Разное</a></h3><ul><li><a href="#directions">Расходные материалы</a></li><li><a href="#directions">Инструменты</a></li><li><a href="#directions">Химия</a></li></ul></div>
-      <div><h3><a href="#directions">Москитные сетки</a></h3><ul><li><a href="#directions">Рамочные</a></li><li><a href="#directions">Дверные</a></li><li><a href="#directions">Плиссе</a></li><li><a href="#directions">Антимошка</a></li><li><a href="#directions">Антикошка</a></li></ul></div>
+      <div><h3><a href="https://svetlamp51.ru/osveshchenie">Освещение</a></h3><ul><li><a href="https://svetlamp51.ru/trekovye-svetilniki">Трековые системы</a></li><li><a href="https://svetlamp51.ru/Ljustry">Люстры</a></li><li><a href="https://svetlamp51.ru/vstraivaemye-svetilniki">Светильники</a></li><li><a href="https://svetlamp51.ru/lampy">Лампы</a></li><li><a href="https://svetlamp51.ru/ulichnoe-osveshhenie">Уличный свет</a></li><li><a href="https://svetlamp51.ru/svetodiodnaja-lenta">Светодиодная лента</a></li><li><a href="#">Блоки питания</a></li></ul></div>
+      <div><h3><a href="https://svetlamp51.ru/elektrika">Электрика</a></h3><ul><li><a href="https://svetlamp51.ru/kabel-i-provod">Кабель и провод</a></li><li><a href="https://svetlamp51.ru/upravlenie-svetom">Управление светом</a></li><li><a href="https://svetlamp51.ru/umnyj-dom">Умный дом</a></li><li><a href="https://svetlamp51.ru/teplyj-po">Тёплый пол</a></li></ul></div>
+      <div><h3><a href="https://svetlamp51.ru/material-dlya-natyazhnyh-potolkov">Натяжные потолки</a></h3><ul><li><a href="https://svetlamp51.ru/karnizy">Карнизы</a></li><li><a href="https://svetlamp51.ru/lyuki">Люки</a></li></ul></div>
+      <div><h3><a href="https://svetlamp51.ru/material-dlya-montazha-okon">Материалы для монтажа окон</a></h3><ul><li><a href="https://svetlamp51.ru/mini-roleta">Мини-рулонные шторы</a></li><li><a href="https://svetlamp51.ru/moskitnaya-setka">Москитные сетки</a></li></ul></div>
+      <div><h3><a href="https://svetlamp51.ru/raznoe-dlya-montazha">Монтаж и ремонт</a></h3><ul><li><a href="https://svetlamp51.ru/germetiki">Герметики, клей, жидкие гвозди, очистители</a></li><li><a href="https://svetlamp51.ru/pena-montazhnaya-klej-pena">Пена монтажная, клей-пена</a></li><li><a href="https://svetlamp51.ru/kosmofeny">Космофены</a></li><li><a href="https://svetlamp51.ru/krepezh">Крепёж</a></li><li><a href="https://svetlamp51.ru/dovodchiki-dvernoj-zvonok-cifry">Доводчики, дверной звонок, цифры</a></li><li><a href="https://svetlamp51.ru/raznoe-dlya-montazha">Разное</a></li></ul></div>
     </div>
   </div>
 </header>
@@ -752,16 +753,17 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
       <h3 class="group-title">Монтаж и ремонт</h3>
       <div class="tiles tiles-compact stagger">
         <a class="tile dark-soft wide" href="https://svetlamp51.ru/material-dlya-natyazhnyh-potolkov" style="--i:0"><div><h3>Натяжные потолки</h3><p>Профили, комплектующие, карнизы</p></div><svg class="pic" aria-hidden="true"><use href="#d-ceiling"/></svg></a>
-        <a class="tile dark-soft wide" href="https://svetlamp51.ru/germetiki" style="--i:1"><div><h3>Герметики, клей, жидкие гвозди, очистители</h3></div><svg class="pic" aria-hidden="true"><use href="#d-sealant"/></svg></a>
-        <a class="tile dark-soft" href="https://svetlamp51.ru/pena-montazhnaya-klej-pena" style="--i:2"><div><h3>Пена монтажная, клей-пена</h3></div><svg class="pic" aria-hidden="true"><use href="#d-foam"/></svg></a>
-        <a class="tile dark-soft" href="https://svetlamp51.ru/kosmofeny" style="--i:3"><div><h3>Космофены</h3></div><svg class="pic" aria-hidden="true"><use href="#d-cosmofen"/></svg></a>
-        <a class="tile dark-soft" href="https://svetlamp51.ru/karnizy" style="--i:4"><div><h3>Карнизы</h3></div><svg class="pic" aria-hidden="true"><use href="#d-cornice"/></svg></a>
-        <a class="tile dark-soft" href="https://svetlamp51.ru/krepezh" style="--i:5"><div><h3>Крепёж</h3></div><svg class="pic" aria-hidden="true"><use href="#d-screw"/></svg></a>
-        <a class="tile dark-soft" href="https://svetlamp51.ru/lyuki" style="--i:6"><div><h3>Люки</h3></div><svg class="pic" aria-hidden="true"><use href="#d-hatch"/></svg></a>
-        <a class="tile dark-soft" href="https://svetlamp51.ru/dovodchiki-dvernoj-zvonok-cifry" style="--i:7"><div><h3>Доводчики, дверной звонок, цифры</h3></div><svg class="pic" aria-hidden="true"><use href="#d-bell"/></svg></a>
-        <a class="tile dark-soft wide" href="https://svetlamp51.ru/material-dlya-montazha-okon" style="--i:8"><div><h3>Монтаж окон</h3><p>Подоконники, сэндвич-панели и водоотливы</p></div><svg class="pic" aria-hidden="true"><use href="#d-window"/></svg></a>
-        <a class="tile dark-soft wide" href="https://svetlamp51.ru/raznoe-dlya-montazha" style="--i:9"><div><h3>Разное</h3><p>Расходные материалы, инструменты и химия</p></div><svg class="pic" aria-hidden="true"><use href="#d-tool"/></svg></a>
-        <a class="tile dark-soft wide" href="https://svetlamp51.ru/moskitnaya-setka" style="--i:10"><div><h3>Москитные сетки</h3><p>Защита от пыли и насекомых</p></div><svg class="pic" aria-hidden="true"><use href="#d-net"/></svg></a>
+        <a class="tile dark-soft wide" href="https://svetlamp51.ru/material-dlya-montazha-okon" style="--i:1"><div><h3>Материалы для монтажа окон</h3><p>Подоконники, сэндвич-панели и водоотливы</p></div><svg class="pic" aria-hidden="true"><use href="#d-window"/></svg></a>
+        <a class="tile dark-soft" href="https://svetlamp51.ru/mini-roleta" style="--i:2"><div><h3>Мини-рулонные шторы</h3></div><svg class="pic" aria-hidden="true"><use href="#d-roller"/></svg></a>
+        <a class="tile dark-soft" href="https://svetlamp51.ru/germetiki" style="--i:3"><div><h3>Герметики, клей, жидкие гвозди, очистители</h3></div><svg class="pic" aria-hidden="true"><use href="#d-sealant"/></svg></a>
+        <a class="tile dark-soft" href="https://svetlamp51.ru/pena-montazhnaya-klej-pena" style="--i:4"><div><h3>Пена монтажная, клей-пена</h3></div><svg class="pic" aria-hidden="true"><use href="#d-foam"/></svg></a>
+        <a class="tile dark-soft" href="https://svetlamp51.ru/kosmofeny" style="--i:5"><div><h3>Космофены</h3></div><svg class="pic" aria-hidden="true"><use href="#d-cosmofen"/></svg></a>
+        <a class="tile dark-soft" href="https://svetlamp51.ru/karnizy" style="--i:6"><div><h3>Карнизы</h3></div><svg class="pic" aria-hidden="true"><use href="#d-cornice"/></svg></a>
+        <a class="tile dark-soft" href="https://svetlamp51.ru/krepezh" style="--i:7"><div><h3>Крепёж</h3></div><svg class="pic" aria-hidden="true"><use href="#d-screw"/></svg></a>
+        <a class="tile dark-soft" href="https://svetlamp51.ru/lyuki" style="--i:8"><div><h3>Люки</h3></div><svg class="pic" aria-hidden="true"><use href="#d-hatch"/></svg></a>
+        <a class="tile dark-soft" href="https://svetlamp51.ru/dovodchiki-dvernoj-zvonok-cifry" style="--i:9"><div><h3>Доводчики, дверной звонок, цифры</h3></div><svg class="pic" aria-hidden="true"><use href="#d-bell"/></svg></a>
+        <a class="tile dark-soft wide" href="https://svetlamp51.ru/raznoe-dlya-montazha" style="--i:10"><div><h3>Разное</h3><p>Расходные материалы, инструменты и химия</p></div><svg class="pic" aria-hidden="true"><use href="#d-tool"/></svg></a>
+        <a class="tile dark-soft wide" href="https://svetlamp51.ru/moskitnaya-setka" style="--i:11"><div><h3>Москитные сетки</h3><p>Защита от пыли и насекомых</p></div><svg class="pic" aria-hidden="true"><use href="#d-net"/></svg></a>
       </div>
     </div>
     </div>
