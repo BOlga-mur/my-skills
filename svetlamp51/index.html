@@ -204,46 +204,21 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 .ticks button:first-child { transform: none; left: 0 !important; }
 .ticks button:last-child { transform: none; left: auto !important; right: 0; }
 
-/* ---------- Directions (tabs) ---------- */
-.tabs { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px; margin-bottom: 24px; }
-.tab {
-  display: flex; flex-direction: column; align-items: flex-start; justify-content: center; gap: 4px; text-align: left;
-  min-height: 84px; padding: 14px 18px; border: 0; border-radius: var(--radius); cursor: pointer;
-  background: #fff; color: var(--ink);
+/* ---------- Directions ---------- */
+.directions { padding-block: 4px 24px; }
+.dirs { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px; }
+.dir {
+  display: flex; flex-direction: column; justify-content: center; gap: 4px;
+  min-height: 76px; padding: 14px 18px; border-radius: var(--radius);
+  background: #fff; color: var(--ink); text-decoration: none;
   transition: background-color 200ms var(--ease), color 200ms var(--ease), transform 160ms var(--ease);
 }
-.tab:hover { background: var(--surface); }
-.tab:active { transform: scale(0.98); }
-.tab-name { font-weight: 600; font-size: 1.0625rem; line-height: 1.2; }
-.tab-desc { font-size: var(--step-small); color: var(--muted); line-height: 1.35; }
-.tab[aria-selected="true"] { background: var(--btn); color: #fff; }
-.tab[aria-selected="true"] .tab-desc { color: #b9c3cb; }
-.tabpanel { display: grid; grid-template-columns: minmax(0, 1fr) minmax(280px, 380px); gap: clamp(20px, 3vw, 40px); align-items: stretch; }
-.tabpanel[hidden] { display: none; }
-.tabpanel.enter .subs li { animation: rise 420ms var(--ease) both; }
-.tabpanel.enter .hint { animation: slide 460ms var(--ease) both; }
+.dir:hover { background: var(--btn); color: #fff; }
+.dir:active { transform: scale(0.98); }
+.dir-name { font-weight: 600; font-size: 1.0625rem; line-height: 1.2; }
+.dir-desc { font-size: var(--step-small); color: var(--muted); line-height: 1.35; transition: color 200ms var(--ease); }
+.dir:hover .dir-desc { color: #d5dadf; }
 @keyframes rise { from { opacity: 0; transform: translateY(14px); } }
-@keyframes slide { from { opacity: 0; transform: translateX(24px); } }
-.subs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; align-content: start; }
-.subs a {
-  display: flex; align-items: center; justify-content: space-between; gap: 16px;
-  min-height: 76px; padding: 16px 20px; border-radius: var(--radius);
-  background: #fff; text-decoration: none; font-weight: 600; font-size: 1.0625rem;
-  transition: background-color 200ms var(--ease), transform 200ms var(--ease);
-}
-.subs a .t span { display: block; font-weight: 400; font-size: 0.9375rem; color: var(--muted); margin-top: 2px; }
-.subs a svg { width: 20px; height: 20px; flex: none; transition: transform 200ms var(--ease); }
-.subs a:hover { background: var(--surface); }
-.subs a:hover svg { transform: translateX(4px); }
-.hint {
-  background: var(--night); color: var(--night-ink); border-radius: 14px; padding: 28px;
-  display: flex; flex-direction: column; gap: 16px;
-}
-.hint-icon { width: 48px; height: 48px; border-radius: 50%; background: var(--night-3); display: grid; place-items: center; color: var(--accent); }
-.hint-icon svg { width: 24px; height: 24px; }
-.hint h3 { font-size: 1.375rem; }
-.hint p { color: var(--night-muted); }
-.hint .btn { margin-top: auto; align-self: flex-start; }
 
 /* ---------- Socket picker ---------- */
 .sockets-sec { background: var(--surface); }
@@ -390,8 +365,7 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
   .header-row .search { grid-column: 1 / -1; }
   .hero .wrap { grid-template-columns: 1fr; min-height: 0; gap: 32px; }
   .lampstage { max-width: 560px; }
-  .tabpanel { grid-template-columns: 1fr; }
-  .tabs { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .dirs { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .section-head { grid-template-columns: 1fr; }
   .section-head p { justify-self: start; }
   .showroom-grid { grid-template-columns: 1fr; }
@@ -413,11 +387,9 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
   .catpanel .wrap { grid-template-columns: 1fr 1fr; gap: 24px; padding-top: 72px; }
   .catpanel-close { display: inline-flex !important; }
   .hero-actions .btn { flex: 1 1 100%; }
-  .subs { grid-template-columns: 1fr; }
-  .tabs { grid-template-columns: 1fr 1fr; gap: 6px; }
-  .tab { min-height: 76px; padding: 12px 14px; }
-  .tab:last-child { grid-column: 1 / -1; }
-  .subs a { min-height: 64px; }
+  .dirs { grid-template-columns: 1fr 1fr; gap: 6px; }
+  .dir { min-height: 72px; padding: 12px 14px; }
+  .dirs li:last-child { grid-column: 1 / -1; }
   .sockets { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; }
   .socket { min-height: 56px; font-size: 1.0625rem; }
   .socket-card { grid-template-columns: 1fr; }
@@ -512,16 +484,29 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
   <div class="catpanel" id="catpanel">
     <button class="btn btn-soft catpanel-close" type="button">Закрыть</button>
     <div class="wrap">
-      <div><h3><a href="#directions" data-tab="light">Освещение</a></h3><ul><li><a href="#catalog">Люстры</a></li><li><a href="#catalog">Подвесные светильники</a></li><li><a href="#catalog">Точечные светильники</a></li><li><a href="#catalog">Магнитные треки</a></li><li><a href="#catalog">Светодиодные ленты</a></li><li><a href="#catalog">Бра и торшеры</a></li><li><a href="#catalog">Уличный свет</a></li><li><a href="#sockets">Лампы</a></li></ul></div>
-      <div><h3><a href="#directions" data-tab="ceil">Натяжные потолки</a></h3><ul><li><a href="#directions">Матовые</a></li><li><a href="#directions">Глянцевые</a></li><li><a href="#directions">Сатиновые</a></li><li><a href="#directions">Парящие</a></li><li><a href="#directions">Световые линии</a></li><li><a href="#directions">Профили и закладные</a></li></ul></div>
-      <div><h3><a href="#directions" data-tab="win">Монтаж окон</a></h3><ul><li><a href="#directions">Окна ПВХ</a></li><li><a href="#directions">Балконные блоки</a></li><li><a href="#directions">Подоконники</a></li><li><a href="#directions">Откосы и отливы</a></li><li><a href="#directions">Фурнитура</a></li></ul></div>
-      <div><h3><a href="#directions" data-tab="net">Москитные сетки</a></h3><ul><li><a href="#directions">Рамочные</a></li><li><a href="#directions">Дверные</a></li><li><a href="#directions">Плиссе</a></li><li><a href="#directions">Антимошка</a></li><li><a href="#directions">Антикошка</a></li></ul></div>
-      <div><h3><a href="#directions" data-tab="tool">Инструмент</a></h3><ul><li><a href="#directions">Электроинструмент</a></li><li><a href="#directions">Ручной инструмент</a></li><li><a href="#directions">Измерительный</a></li><li><a href="#directions">Крепёж</a></li><li><a href="#directions">Электромонтаж</a></li></ul></div>
+      <div><h3><a href="#directions">Освещение</a></h3><ul><li><a href="#catalog">Люстры</a></li><li><a href="#catalog">Подвесные светильники</a></li><li><a href="#catalog">Точечные светильники</a></li><li><a href="#catalog">Магнитные треки</a></li><li><a href="#catalog">Светодиодные ленты</a></li><li><a href="#catalog">Бра и торшеры</a></li><li><a href="#catalog">Уличный свет</a></li><li><a href="#sockets">Лампы</a></li></ul></div>
+      <div><h3><a href="#directions">Натяжные потолки</a></h3><ul><li><a href="#directions">Матовые</a></li><li><a href="#directions">Глянцевые</a></li><li><a href="#directions">Сатиновые</a></li><li><a href="#directions">Парящие</a></li><li><a href="#directions">Световые линии</a></li><li><a href="#directions">Профили и закладные</a></li></ul></div>
+      <div><h3><a href="#directions">Монтаж окон</a></h3><ul><li><a href="#directions">Окна ПВХ</a></li><li><a href="#directions">Балконные блоки</a></li><li><a href="#directions">Подоконники</a></li><li><a href="#directions">Откосы и отливы</a></li><li><a href="#directions">Фурнитура</a></li></ul></div>
+      <div><h3><a href="#directions">Москитные сетки</a></h3><ul><li><a href="#directions">Рамочные</a></li><li><a href="#directions">Дверные</a></li><li><a href="#directions">Плиссе</a></li><li><a href="#directions">Антимошка</a></li><li><a href="#directions">Антикошка</a></li></ul></div>
+      <div><h3><a href="#directions">Инструмент</a></h3><ul><li><a href="#directions">Электроинструмент</a></li><li><a href="#directions">Ручной инструмент</a></li><li><a href="#directions">Измерительный</a></li><li><a href="#directions">Крепёж</a></li><li><a href="#directions">Электромонтаж</a></li></ul></div>
     </div>
   </div>
 </header>
 
 <main>
+<!-- Directions -->
+<nav class="directions" id="directions" aria-label="Направления">
+  <div class="wrap">
+    <ul class="dirs">
+      <li><a class="dir" href="#"><span class="dir-name">Освещение</span><span class="dir-desc">лампы, светильники, лента</span></a></li>
+      <li><a class="dir" href="#"><span class="dir-name">Натяжные потолки</span><span class="dir-desc">профили и комплектующие</span></a></li>
+      <li><a class="dir" href="#"><span class="dir-name">Монтаж окон</span><span class="dir-desc">комплектующие</span></a></li>
+      <li><a class="dir" href="#"><span class="dir-name">Инструмент</span><span class="dir-desc">для монтажа</span></a></li>
+      <li><a class="dir" href="#"><span class="dir-name">Москитные сетки</span><span class="dir-desc">защита от пыли и насекомых</span></a></li>
+    </ul>
+  </div>
+</nav>
+
 <!-- Hero -->
 <section class="hero" aria-labelledby="hero-title">
   <div class="wrap">
@@ -602,105 +587,6 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
   </div>
 </section>
 
-<!-- Directions -->
-<section class="section" id="directions" aria-labelledby="dir-title" style="padding-top:clamp(32px, 4vw, 64px)">
-  <div class="wrap">
-    <h2 id="dir-title" class="visually-hidden">Направления</h2>
-
-    <div class="tabs" role="tablist" aria-label="Направления">
-      <button class="tab" role="tab" id="t-light" aria-controls="p-light" aria-selected="true" data-key="light"><span class="tab-name">Освещение</span><span class="tab-desc">лампы, светильники, лента</span></button>
-      <button class="tab" role="tab" id="t-ceil" aria-controls="p-ceil" aria-selected="false" tabindex="-1" data-key="ceil"><span class="tab-name">Натяжные потолки</span><span class="tab-desc">профили и комплектующие</span></button>
-      <button class="tab" role="tab" id="t-win" aria-controls="p-win" aria-selected="false" tabindex="-1" data-key="win"><span class="tab-name">Монтаж окон</span><span class="tab-desc">комплектующие</span></button>
-      <button class="tab" role="tab" id="t-tool" aria-controls="p-tool" aria-selected="false" tabindex="-1" data-key="tool"><span class="tab-name">Инструмент</span><span class="tab-desc">для монтажа</span></button>
-      <button class="tab" role="tab" id="t-net" aria-controls="p-net" aria-selected="false" tabindex="-1" data-key="net"><span class="tab-name">Москитные сетки</span><span class="tab-desc">защита от пыли и насекомых</span></button>
-    </div>
-
-    <div class="tabpanel" role="tabpanel" id="p-ceil" aria-labelledby="t-ceil" tabindex="0" hidden>
-      <ul class="subs">
-        <li><a href="#"><span class="t">Матовые полотна<span>Без бликов, как ровная побелка</span></span><svg aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
-        <li><a href="#"><span class="t">Глянцевые полотна<span>Отражают свет, комната кажется выше</span></span><svg aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
-        <li><a href="#"><span class="t">Сатиновые полотна<span>Мягкий перламутровый отлив</span></span><svg aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
-        <li><a href="#"><span class="t">Парящие потолки<span>Подсветка по периметру</span></span><svg aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
-        <li><a href="#"><span class="t">Световые линии<span>Профиль со светодиодной лентой внутри</span></span><svg aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
-        <li><a href="#"><span class="t">Профили и закладные<span>Платформы под светильники и люстры</span></span><svg aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
-      </ul>
-      <aside class="hint" aria-label="Подсказка">
-        <span class="hint-icon" aria-hidden="true"><svg><use href="#i-bulb"/></svg></span>
-        <h3>Светильники выбирайте до монтажа</h3>
-        <p>Под каждый спот и люстру в потолок ставят закладную платформу. Мастеру нужен диаметр и тип светильника заранее, иначе полотно придётся резать заново.</p>
-        <a class="btn btn-accent" href="#catalog">К точечным светильникам</a>
-      </aside>
-    </div>
-
-    <div class="tabpanel" role="tabpanel" id="p-win" aria-labelledby="t-win" tabindex="0" hidden>
-      <ul class="subs">
-        <li><a href="#"><span class="t">Окна ПВХ<span>Замер, изготовление и установка</span></span><svg aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
-        <li><a href="#"><span class="t">Балконные блоки<span>Дверь и окно в одной раме</span></span><svg aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
-        <li><a href="#"><span class="t">Подоконники<span>ПВХ разной ширины и цвета</span></span><svg aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
-        <li><a href="#"><span class="t">Откосы<span>Отделка после замены окна</span></span><svg aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
-        <li><a href="#"><span class="t">Отливы<span>Под цвет фасада</span></span><svg aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
-        <li><a href="#"><span class="t">Фурнитура и уплотнители<span>Ручки, петли, регулировка</span></span><svg aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
-      </ul>
-      <aside class="hint" aria-label="Подсказка">
-        <span class="hint-icon" aria-hidden="true"><svg><use href="#i-bulb"/></svg></span>
-        <h3>Окно меняйте до потолка</h3>
-        <p>Сначала окна и откосы, потом натяжной потолок. Так пыль от демонтажа не осядет на новом полотне.</p>
-        <a class="btn btn-accent" href="tel:+79113007887">Позвонить и записаться на замер</a>
-      </aside>
-    </div>
-
-    <div class="tabpanel" role="tabpanel" id="p-light" aria-labelledby="t-light" tabindex="0">
-      <ul class="subs">
-        <li><a href="#catalog"><span class="t">Люстры<span>Потолочные и на подвесе</span></span><svg aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
-        <li><a href="#catalog"><span class="t">Точечные светильники<span>Встраиваемые и накладные</span></span><svg aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
-        <li><a href="#catalog"><span class="t">Магнитные треки<span>Шинопровод и модули</span></span><svg aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
-        <li><a href="#catalog"><span class="t">Светодиодные ленты<span>Ленты, профили, блоки питания</span></span><svg aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
-        <li><a href="#catalog"><span class="t">Бра и торшеры<span>Свет для чтения</span></span><svg aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
-        <li><a href="#sockets"><span class="t">Лампы<span>Подбор по цоколю</span></span><svg aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
-      </ul>
-      <aside class="hint" aria-label="Подсказка">
-        <span class="hint-icon" aria-hidden="true"><svg><use href="#i-bulb"/></svg></span>
-        <h3>Смотрите на люмены, а не на ватты</h3>
-        <p>Светодиодная лампа на 9–10 Вт даёт около 800 лм. Это примерно лампа накаливания на 60–75 Вт. В комнату 15 м² для общего света берите от 2000 лм.</p>
-        <a class="btn btn-accent" href="#sockets">Подобрать лампу</a>
-      </aside>
-    </div>
-
-    <div class="tabpanel" role="tabpanel" id="p-net" aria-labelledby="t-net" tabindex="0" hidden>
-      <ul class="subs">
-        <li><a href="#"><span class="t">Рамочные сетки<span>На обычное створчатое окно</span></span><svg aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
-        <li><a href="#"><span class="t">Дверные сетки<span>Для балкона и частного дома</span></span><svg aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
-        <li><a href="#"><span class="t">Плиссе<span>Складываются гармошкой</span></span><svg aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
-        <li><a href="#"><span class="t">Антимошка<span>Мелкая ячейка от мошки</span></span><svg aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
-        <li><a href="#"><span class="t">Антикошка<span>Усиленное полотно</span></span><svg aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
-        <li><a href="#"><span class="t">Крепления и ручки<span>Z-крепления, уголки, ручки</span></span><svg aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
-      </ul>
-      <aside class="hint" aria-label="Подсказка">
-        <span class="hint-icon" aria-hidden="true"><svg><use href="#i-bulb"/></svg></span>
-        <h3>Заказывайте сетки в мае</h3>
-        <p>В Мурманске мошка появляется в июне. Сетку делают по размеру проёма, поэтому замер лучше сделать до начала сезона.</p>
-        <a class="btn btn-accent" href="tel:+79113007887">Позвонить</a>
-      </aside>
-    </div>
-
-    <div class="tabpanel" role="tabpanel" id="p-tool" aria-labelledby="t-tool" tabindex="0" hidden>
-      <ul class="subs">
-        <li><a href="#"><span class="t">Электроинструмент<span>Дрели, перфораторы, шуруповёрты</span></span><svg aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
-        <li><a href="#"><span class="t">Ручной инструмент<span>Отвёртки, ключи, ножи</span></span><svg aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
-        <li><a href="#"><span class="t">Измерительный<span>Рулетки, уровни, дальномеры</span></span><svg aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
-        <li><a href="#"><span class="t">Электромонтаж<span>Клеммы, индикаторы, изолента</span></span><svg aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
-        <li><a href="#"><span class="t">Крепёж<span>Дюбели, анкеры, саморезы</span></span><svg aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
-        <li><a href="#"><span class="t">Расходники<span>Свёрла, биты, диски</span></span><svg aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
-      </ul>
-      <aside class="hint" aria-label="Подсказка">
-        <span class="hint-icon" aria-hidden="true"><svg><use href="#i-bulb"/></svg></span>
-        <h3>Меняете люстру сами?</h3>
-        <p>Выключите автомат и проверьте провода индикаторной отвёрткой. Клеммы WAGO надёжнее скрутки и не требуют пайки.</p>
-        <a class="btn btn-accent" href="#catalog">Смотреть электромонтаж</a>
-      </aside>
-    </div>
-  </div>
-</section>
 
 <!-- Socket picker -->
 <section class="section sockets-sec" id="sockets" aria-labelledby="sock-title">
@@ -921,39 +807,6 @@ document.documentElement.classList.add('js');
   input.addEventListener('pointerdown', () => cancelAnimationFrame(input._raf));
   set(input.value);
 })();
-
-/* ---------- Tabs ---------- */
-const tabApi = (function () {
-  const tabs = Array.from(document.querySelectorAll('.tab'));
-  function select(tab, focus) {
-    tabs.forEach(t => {
-      const on = t === tab;
-      t.setAttribute('aria-selected', on);
-      t.tabIndex = on ? 0 : -1;
-      const p = document.getElementById(t.getAttribute('aria-controls'));
-      p.hidden = !on;
-      if (on) {
-        p.classList.remove('enter'); void p.offsetWidth; p.classList.add('enter');
-        p.querySelectorAll('.subs li').forEach((li, i) => li.style.animationDelay = (i * 40) + 'ms');
-      }
-    });
-    if (focus) tab.focus();
-    tab.scrollIntoView({ block: 'nearest', inline: 'nearest' });
-  }
-  tabs.forEach((t, i) => {
-    t.addEventListener('click', () => select(t));
-    t.addEventListener('keydown', e => {
-      let n = null;
-      if (e.key === 'ArrowRight') n = tabs[(i + 1) % tabs.length];
-      if (e.key === 'ArrowLeft') n = tabs[(i - 1 + tabs.length) % tabs.length];
-      if (e.key === 'Home') n = tabs[0];
-      if (e.key === 'End') n = tabs[tabs.length - 1];
-      if (n) { e.preventDefault(); select(n, true); }
-    });
-  });
-  return { byKey: k => { const t = tabs.find(x => x.dataset.key === k); if (t) select(t); } };
-})();
-document.querySelectorAll('[data-tab]').forEach(a => a.addEventListener('click', () => tabApi.byKey(a.dataset.tab)));
 
 /* ---------- Sockets ---------- */
 (function () {
