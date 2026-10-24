@@ -1,12 +1,5 @@
 <?php echo $header; ?>
-<?php
-require_once __DIR__ . '/svetlamp_links.php';
-
-// Set by the SvetLamp home controller; the page still works with the stock one
-if (!isset($sl_links)) $sl_links = array();
-if (!isset($sl_recommended)) $sl_recommended = array();
-$sl_search = 'index.php?route=product/search&search=';
-?>
+<?php if (!isset($sl_recommended)) $sl_recommended = array(); // set by the SvetLamp home controller ?>
 <main class="sl sl-home">
 <!-- Hero -->
 <section class="hero" aria-labelledby="hero-title">
@@ -94,6 +87,71 @@ $sl_search = 'index.php?route=product/search&search=';
 (function () { var h = document.querySelector('.sl .hero'); if (h) document.documentElement.style.setProperty('--above', Math.round(h.getBoundingClientRect().top + window.scrollY) + 'px'); })();
 </script>
 
+<!-- Catalog -->
+<section class="section" id="catalog" aria-labelledby="cat-title" style="padding-top:clamp(32px, 3.5vw, 56px)">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <h2 id="cat-title">Каталог</h2>
+    </div>
+    <div class="cat-group">
+      <h3 class="group-title">Свет и электрика</h3>
+      <div class="tiles stagger">
+        <a class="tile big" href="trekovye-svetilniki" style="--i:0">
+          <div>
+            <h3>Трековые системы</h3>
+            <p>Шинопровод и светильники для него: споты, линейные и поворотные модули. Свет направляете туда, где он нужен.</p>
+          </div>
+          <svg class="pic" viewBox="0 0 520 200" aria-hidden="true">
+            <g fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M10 30h500M10 44h500"/>
+              <rect x="60" y="44" width="34" height="22" rx="3"/>
+              <path d="M77 66v14"/>
+              <rect x="58" y="80" width="38" height="56" rx="4"/>
+              <rect x="170" y="44" width="150" height="16" rx="3"/>
+              <rect x="390" y="44" width="34" height="22" rx="3"/>
+              <path d="M407 66l14 22"/>
+              <rect x="404" y="86" width="40" height="52" rx="4" transform="rotate(-28 424 112)"/>
+            </g>
+            <path d="M60 136 L30 196 L124 196 L96 136Z" fill="#ffd38a" opacity=".38"/>
+            <rect x="170" y="56" width="150" height="4" fill="#f3ad3c"/>
+            <path d="M170 60 L140 196 L350 196 L320 60Z" fill="#ffd38a" opacity=".2"/>
+          </svg>
+          <span class="more">Смотреть трековые системы<svg aria-hidden="true"><use href="#i-arrow"/></svg></span>
+        </a>
+        <a class="tile" href="svetodiodnaja-lenta" style="--i:1"><div><h3>Светодиодная лента</h3></div><svg class="pic" aria-hidden="true"><use href="#d-strip"/></svg></a>
+        <a class="tile" href="bloki-pitanija" style="--i:2"><div><h3>Блоки питания</h3></div><svg class="pic" aria-hidden="true"><use href="#d-psu"/></svg></a>
+        <a class="tile wide" href="vstraivaemye-svetilniki" style="--i:3"><div><h3>Светильники</h3><p>Встраиваемые и накладные</p></div><svg class="pic" aria-hidden="true"><use href="#d-spot"/></svg></a>
+        <a class="tile" href="lampy" style="--i:4"><div><h3>Лампы</h3><p>Все цоколи из подбора</p></div><svg class="pic" aria-hidden="true"><use href="#d-bulb"/></svg></a>
+        <a class="tile" href="Ljustry" style="--i:5"><div><h3>Люстры</h3></div><svg class="pic" aria-hidden="true"><use href="#d-chandelier"/></svg></a>
+        <a class="tile" href="ulichnoe-osveshhenie" style="--i:6"><div><h3>Уличный свет</h3><p>Фасад, крыльцо, участок</p></div><svg class="pic" aria-hidden="true"><use href="#d-street"/></svg></a>
+        <a class="tile" href="umnyj-dom" style="--i:7"><div><h3>Умный дом</h3><p>Реле, датчики, умные розетки</p></div><svg class="pic" aria-hidden="true"><use href="#d-smart"/></svg></a>
+        <a class="tile" href="upravlenie-svetom" style="--i:8"><div><h3>Управление светом</h3><p>Выключатели, диммеры, датчики движения</p></div><svg class="pic" aria-hidden="true"><use href="#d-switch"/></svg></a>
+        <a class="tile" href="elektrika" style="--i:9"><div><h3>Электрика</h3><p>Кабель, розетки, автоматы</p></div><svg class="pic" aria-hidden="true"><use href="#d-electric"/></svg></a>
+        <a class="tile" href="kabel-i-provod" style="--i:10"><div><h3>Кабель и провод</h3></div><svg class="pic" aria-hidden="true"><use href="#d-cable"/></svg></a>
+        <a class="tile" href="teplyj-po" style="--i:11"><div><h3>Тёплый пол</h3><p>Кабель, маты, терморегуляторы</p></div><svg class="pic" aria-hidden="true"><use href="#d-floor"/></svg></a>
+      </div>
+    </div>
+    <div class="cat-group">
+      <h3 class="group-title">Монтаж и ремонт</h3>
+      <div class="tiles tiles-compact stagger">
+        <a class="tile dark-soft wide" href="material-dlya-natyazhnyh-potolkov" style="--i:0"><div><h3>Материалы для монтажа натяжных потолков</h3><p>Профили, комплектующие, карнизы</p></div><svg class="pic" aria-hidden="true"><use href="#d-ceiling"/></svg></a>
+        <a class="tile dark-soft wide" href="material-dlya-montazha-okon" style="--i:1"><div><h3>Материалы для монтажа окон</h3><p>Подоконники, сэндвич-панели и водоотливы</p></div><svg class="pic" aria-hidden="true"><use href="#d-window"/></svg></a>
+        <a class="tile dark-soft" href="germetiki" style="--i:2"><div><h3>Герметики, клей, жидкие гвозди, очистители</h3></div><svg class="pic" aria-hidden="true"><use href="#d-sealant"/></svg></a>
+        <a class="tile dark-soft" href="pena-montazhnaya-klej-pena" style="--i:3"><div><h3>Пена монтажная, клей-пена</h3></div><svg class="pic" aria-hidden="true"><use href="#d-foam"/></svg></a>
+        <a class="tile dark-soft" href="kosmofeny" style="--i:4"><div><h3>Космофены</h3></div><svg class="pic" aria-hidden="true"><use href="#d-cosmofen"/></svg></a>
+        <a class="tile dark-soft" href="karnizy" style="--i:5"><div><h3>Карнизы</h3></div><svg class="pic" aria-hidden="true"><use href="#d-cornice"/></svg></a>
+        <a class="tile dark-soft" href="krepezh" style="--i:6"><div><h3>Крепёж</h3></div><svg class="pic" aria-hidden="true"><use href="#d-screw"/></svg></a>
+        <a class="tile dark-soft" href="lyuki" style="--i:7"><div><h3>Люки</h3></div><svg class="pic" aria-hidden="true"><use href="#d-hatch"/></svg></a>
+        <a class="tile dark-soft" href="dovodchiki-dvernoj-zvonok-cifry" style="--i:8"><div><h3>Доводчики, дверной звонок, цифры</h3></div><svg class="pic" aria-hidden="true"><use href="#d-bell"/></svg></a>
+        <a class="tile dark-soft" href="mini-roleta" style="--i:9"><div><h3>Мини Ролеты</h3></div><svg class="pic" aria-hidden="true"><use href="#d-roller"/></svg></a>
+        <a class="tile dark-soft wide" href="raznoe-dlya-montazha" style="--i:10"><div><h3>Разное</h3><p>Расходные материалы, инструменты и химия</p></div><svg class="pic" aria-hidden="true"><use href="#d-tool"/></svg></a>
+        <a class="tile dark-soft wide" href="moskitnaya-setka" style="--i:11"><div><h3>Москитные сетки</h3><p>Защита от пыли и насекомых</p></div><svg class="pic" aria-hidden="true"><use href="#d-net"/></svg></a>
+      </div>
+    </div>
+    </div>
+  </div>
+</section>
+
 <!-- Socket picker -->
 <section class="section sockets-sec" id="sockets" aria-labelledby="sock-title">
   <div class="wrap">
@@ -124,60 +182,15 @@ $sl_search = 'index.php?route=product/search&search=';
         <div><dt>Какие лампы</dt><dd id="slamps">Таблетка ⌀ 75 мм</dd></div>
         <div><dt>Напряжение</dt><dd id="svolt">220 В</dd></div>
         </dl>
-        <a class="sl-btn sl-btn-ink" id="slink" href="<?php echo $sl_search; ?>GX53" data-search="<?php echo $sl_search; ?>">Лампы GX53<svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+        <a class="sl-btn sl-btn-ink" id="slink" href="index.php?route=product/search&amp;search=GX53" data-search="index.php?route=product/search&amp;search=">Лампы GX53<svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
       </div>
-    </div>
-  </div>
-</section>
-
-<!-- Catalog -->
-<section class="section" id="catalog" aria-labelledby="cat-title">
-  <div class="wrap">
-    <div class="section-head reveal">
-      <h2 id="cat-title">Каталог</h2>
-    </div>
-    <div class="tiles stagger">
-      <a class="tile big" href="<?php echo sl_link($sl_links, $sl_search, array('Магнитные треки', 'магнитные', 'трековые', 'треки')); ?>" style="--i:0">
-        <div>
-          <h3>Магнитные треки</h3>
-          <p>Шинопровод в потолке и модули на магнитах: споты, линейные и поворотные. Переставляете свет рукой, без электрика.</p>
-        </div>
-        <svg class="pic" viewBox="0 0 520 200" aria-hidden="true">
-          <g fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M10 30h500M10 44h500"/>
-            <rect x="60" y="44" width="34" height="22" rx="3"/>
-            <path d="M77 66v14"/>
-            <rect x="58" y="80" width="38" height="56" rx="4"/>
-            <rect x="170" y="44" width="150" height="16" rx="3"/>
-            <rect x="390" y="44" width="34" height="22" rx="3"/>
-            <path d="M407 66l14 22"/>
-            <rect x="404" y="86" width="40" height="52" rx="4" transform="rotate(-28 424 112)"/>
-          </g>
-          <path d="M60 136 L30 196 L124 196 L96 136Z" fill="#ffd38a" opacity=".38"/>
-          <rect x="170" y="56" width="150" height="4" fill="#f3ad3c"/>
-          <path d="M170 60 L140 196 L350 196 L320 60Z" fill="#ffd38a" opacity=".2"/>
-        </svg>
-        <span class="more">Смотреть треки и модули<svg aria-hidden="true"><use href="#i-arrow"/></svg></span>
-      </a>
-      <a class="tile" href="<?php echo sl_link($sl_links, $sl_search, array('Люстры', 'люстра')); ?>" style="--i:1"><div><h3>Люстры</h3><p>Потолочные и подвесные</p></div><svg class="pic" aria-hidden="true"><use href="#d-chandelier"/></svg></a>
-      <a class="tile" href="<?php echo sl_link($sl_links, $sl_search, array('Подвесные светильники', 'подвесные')); ?>" style="--i:2"><div><h3>Подвесные светильники</h3><p>Над столом и стойкой</p></div><svg class="pic" aria-hidden="true"><use href="#d-pendant"/></svg></a>
-      <a class="tile" href="<?php echo sl_link($sl_links, $sl_search, array('Точечные светильники', 'точечные', 'споты')); ?>" style="--i:3"><div><h3>Точечные светильники</h3><p>Под натяжной потолок</p></div><svg class="pic" aria-hidden="true"><use href="#d-spot"/></svg></a>
-      <a class="tile" href="<?php echo sl_link($sl_links, $sl_search, array('Лампы', 'лампочки'), '#sockets'); ?>" style="--i:4"><div><h3>Лампы</h3><p>Все цоколи из подбора</p></div><svg class="pic" aria-hidden="true"><use href="#d-bulb"/></svg></a>
-      <a class="tile" href="<?php echo sl_link($sl_links, $sl_search, array('Светодиодные ленты', 'светодиодная лента', 'ленты')); ?>" style="--i:5"><div><h3>Светодиодные ленты</h3><p>Ленты, профили, блоки питания</p></div><svg class="pic" aria-hidden="true"><use href="#d-strip"/></svg></a>
-      <a class="tile" href="<?php echo sl_link($sl_links, $sl_search, array('Бра и торшеры', 'бра', 'торшеры')); ?>" style="--i:6"><div><h3>Бра и торшеры</h3><p>Свет для чтения</p></div><svg class="pic" aria-hidden="true"><use href="#d-sconce"/></svg></a>
-      <a class="tile" href="<?php echo sl_link($sl_links, $sl_search, array('Уличный свет', 'уличные светильники', 'уличное освещение', 'уличные')); ?>" style="--i:7"><div><h3>Уличный свет</h3><p>Фасад, крыльцо, участок</p></div><svg class="pic" aria-hidden="true"><use href="#d-street"/></svg></a>
-      <a class="tile" href="<?php echo sl_link($sl_links, $sl_search, array('Блоки питания', 'блок питания', 'трансформаторы', 'драйверы')); ?>" style="--i:8"><div><h3>Блоки питания</h3><p>Для лент, треков и ламп на 12, 24 и 48&nbsp;В</p></div><svg class="pic" aria-hidden="true"><use href="#d-psu"/></svg></a>
-      <a class="tile dark-soft" href="material-dlya-natyazhnyh-potolkov" style="--i:9"><div><h3>Натяжные потолки</h3><p>Профили, комплектующие, карнизы</p></div><svg class="pic" aria-hidden="true"><use href="#d-ceiling"/></svg></a>
-      <a class="tile dark-soft" href="material-dlya-montazha-okon" style="--i:10"><div><h3>Монтаж окон</h3><p>Подоконники, сэндвич-панели и водоотливы</p></div><svg class="pic" aria-hidden="true"><use href="#d-window"/></svg></a>
-      <a class="tile dark-soft" href="moskitnaya-setka" style="--i:11"><div><h3>Москитные сетки</h3><p>По размеру проёма</p></div><svg class="pic" aria-hidden="true"><use href="#d-net"/></svg></a>
-      <a class="tile dark-soft" href="raznoe-dlya-montazha" style="--i:12"><div><h3>Разное</h3><p>Расходные материалы, инструменты и химия</p></div><svg class="pic" aria-hidden="true"><use href="#d-tool"/></svg></a>
     </div>
   </div>
 </section>
 
 <?php if ($sl_recommended) { ?>
 <!-- Recommended: products from the "Рекомендуемые" module on the home page layout -->
-<section class="section" id="recommended" aria-labelledby="rec-title" style="padding-top:0">
+<section class="section" id="recommended" aria-labelledby="rec-title">
   <div class="wrap">
     <div class="section-head reveal">
       <h2 id="rec-title">Рекомендуем</h2>

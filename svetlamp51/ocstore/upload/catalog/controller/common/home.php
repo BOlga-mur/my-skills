@@ -16,57 +16,10 @@ class ControllerCommonHome extends Controller {
 		$data['footer'] = $this->load->controller('common/footer');
 		$data['header'] = $this->load->controller('common/header');
 
-		// SvetLamp theme: links to the catalog by category name and the "Рекомендуем" block
-		$data['sl_links'] = $this->getCategoryLinks();
+		// SvetLamp theme: the "Рекомендуем" block
 		$data['sl_recommended'] = $this->getRecommended();
 
 		$this->response->setOutput($this->load->view('common/home', $data));
-	}
-
-	// Every category up to the third level, keyed by its name in lower case.
-	protected function getCategoryLinks() {
-		// The 'category.' prefix lets the shop clear this cache whenever a category is edited
-		$cache_key = 'category.svetlamp.links.' . (int)$this->config->get('config_language_id') . '.' . (int)$this->config->get('config_store_id');
-
-		$links = $this->cache->get($cache_key);
-
-		if (is_array($links)) {
-			return $links;
-		}
-
-		$this->load->model('catalog/category');
-
-		$links = array();
-
-		foreach ($this->model_catalog_category->getCategories(0) as $category_1) {
-			$this->addLink($links, $category_1['name'], $category_1['category_id']);
-
-			foreach ($this->model_catalog_category->getCategories($category_1['category_id']) as $category_2) {
-				$path_2 = $category_1['category_id'] . '_' . $category_2['category_id'];
-
-				$this->addLink($links, $category_2['name'], $path_2);
-
-				foreach ($this->model_catalog_category->getCategories($category_2['category_id']) as $category_3) {
-					$this->addLink($links, $category_3['name'], $path_2 . '_' . $category_3['category_id']);
-				}
-			}
-		}
-
-		$this->cache->set($cache_key, $links);
-
-		return $links;
-	}
-
-	// The upper level wins when two categories share a name.
-	protected function addLink(&$links, $name, $path) {
-		$key = html_entity_decode($name, ENT_QUOTES, 'UTF-8');
-		$key = utf8_strtolower(trim($key));
-		$key = str_replace('ё', 'е', $key);
-		$key = preg_replace('/\s+/u', ' ', $key);
-
-		if (!isset($links[$key])) {
-			$links[$key] = $this->url->link('product/category', 'path=' . $path);
-		}
 	}
 
 	// Products of the "Рекомендуемые" (featured) modules placed on the home page layout.

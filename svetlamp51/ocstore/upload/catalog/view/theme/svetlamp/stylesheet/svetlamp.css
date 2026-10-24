@@ -132,8 +132,10 @@ body.common-home { background: var(--bg); }
   display: none;
 }
 .sl .catpanel.open { display: block; animation: drop 260ms var(--ease) both; }
+/* A long menu scrolls inside itself instead of running past the screen */
+.sl .catpanel { max-height: calc(100vh - 140px); max-height: calc(100svh - 140px); overflow-y: auto; overscroll-behavior: contain; }
 @keyframes drop { from { opacity: 0; transform: translateY(-8px); } }
-.sl .catpanel .wrap { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 32px; padding-block: 32px 40px; }
+.sl .catpanel .wrap { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 32px; padding-block: 32px 40px; }
 .sl .catpanel h3 { font-size: 17px; margin-bottom: 12px; }
 .sl .catpanel h3 a { text-decoration: none; }
 .sl .catpanel li a { display: block; padding: 5px 0; color: var(--muted); text-decoration: none; }
@@ -261,6 +263,13 @@ body.common-home { background: var(--bg); }
 .sl .tile.big:hover .more svg { transform: translateX(4px); }
 .sl .tile.dark-soft { background: var(--surface); }
 .sl .tile.dark-soft:hover { background: var(--surface-2); }
+.sl .tiles { grid-auto-flow: dense; }
+.sl .tile.wide { grid-column: span 2; }
+.sl #catalog .section-head { margin-bottom: clamp(16px, 2vw, 28px); }
+.sl .cat-group + .cat-group { margin-top: clamp(40px, 5vw, 72px); }
+.sl .cat-group .group-title { font-size: clamp(20px, 17.6px + 0.6vw, 26px); margin-bottom: 16px; }
+.sl .tiles-compact { grid-auto-rows: minmax(160px, auto); }
+.sl .tiles-compact .tile .pic { width: 44%; max-width: 110px; }
 
 /* ---------- Recommended ---------- */
 .sl .cards { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
@@ -340,6 +349,9 @@ body.common-home { background: var(--bg); }
 @media (max-width: 1100px) {
   .sl .catpanel .wrap { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .sl .tiles { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .sl .tile.big { grid-column: 1 / -1; grid-row: auto; }
+  .sl .tile.big .pic { max-width: 560px; align-self: center; }
+  .sl .tiles-compact .tile.wide { grid-column: auto; }
   .sl .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .sl .sockets { grid-template-columns: repeat(4, minmax(0, 1fr)); }
   .sl .socket-card { grid-template-columns: minmax(180px, 0.7fr) minmax(0, 1.3fr); }
@@ -376,7 +388,7 @@ body.common-home { background: var(--bg); }
   .sl .search-field { min-height: 52px; }
   .sl .search input { height: 48px; font-size: 16px; }
   .sl .search .sl-btn { display: none; }
-  .sl .catpanel { position: fixed; top: 0; bottom: 0; overflow-y: auto; z-index: 50; }
+  .sl .catpanel { position: fixed; top: 0; bottom: 0; max-height: none; overflow-y: auto; z-index: 50; }
   .sl .catpanel .wrap { grid-template-columns: 1fr 1fr; gap: 24px; padding-top: 72px; }
   .sl .catpanel-close { display: inline-flex !important; }
   .sl .topbar .tb-long, .sl .topbar .tb-mail { display: none; }
@@ -422,6 +434,12 @@ body.common-home { background: var(--bg); }
   .sl .tile p { display: none; }
   .sl .tile.big { grid-column: 1 / -1; grid-row: auto; }
   .sl .tile.big p { display: block; }
+  /* Phone: short tiles, name on the left and the drawing on the right, so 18 tiles stay one scroll */
+.sl .tiles, .sl .tiles-compact { grid-auto-rows: minmax(84px, auto); }
+  .sl .tile:not(.big) { flex-direction: row; align-items: center; gap: 8px; padding: 12px 12px 12px 14px; }
+  .sl .tile:not(.big) h3 { font-size: 15px; line-height: 1.2; }
+  .sl .tile:not(.big) .pic { align-self: center; flex: none; width: 48px; height: 48px; max-width: none; }
+  .sl .tiles-compact .tile.wide { grid-column: 1 / -1; }
   .sl .cards { grid-template-columns: 1fr; }
   .sl .card { display: grid; grid-template-columns: 120px minmax(0, 1fr); }
   .sl .card-pic { aspect-ratio: auto; padding: 18px; }

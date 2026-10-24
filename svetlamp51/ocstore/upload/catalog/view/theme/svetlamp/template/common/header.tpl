@@ -52,18 +52,6 @@
 <?php } ?>
 </head>
 <body class="<?php echo $class; ?> sl-body">
-<?php
-require_once __DIR__ . '/svetlamp_links.php';
-
-// Name, caption, link: the shop's address of the section (SEO Pro), relative to <base>
-$sl_directions = array(
-	array('Натяжные потолки', 'профили, комплектующие, карнизы', 'material-dlya-natyazhnyh-potolkov'),
-	array('Монтаж окон', 'подоконники, сэндвич-панели и водоотливы', 'material-dlya-montazha-okon'),
-	array('Освещение и электрика', 'лампы, светильники, лента, кабель, управление светом', 'osveshchenie'),
-	array('Разное', 'расходные материалы, инструменты и химия', 'raznoe-dlya-montazha'),
-	array('Москитные сетки', 'защита от пыли и насекомых', 'moskitnaya-setka')
-);
-?>
 <div class="sl sl-top">
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <defs>
@@ -90,6 +78,19 @@ $sl_directions = array(
     <symbol id="d-tool" viewBox="0 0 120 120"><g fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 40h46l8 10v12H20Z"/><path d="M74 54h18M92 50v8"/><path d="M36 62l-4 40h22l6-40"/><path d="M48 62v14"/></g></symbol>
     <symbol id="d-track" viewBox="0 0 120 120"><g fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M6 24h108"/><path d="M6 32h108"/><path d="M24 32v16h14V32ZM68 32v10h28v-10"/><path d="M31 48v12a10 10 0 0 0 0 0"/><rect x="22" y="58" width="18" height="30" rx="2"/></g><g fill="currentColor"><rect x="68" y="42" width="28" height="6" rx="1"/></g></symbol>
     <symbol id="d-psu" viewBox="0 0 120 120"><g fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><rect x="14" y="40" width="92" height="44" rx="4"/><path d="M28 52v20M38 52v20M48 52v20M58 52v20"/><path d="M106 54h8M106 70h8M6 54h8M6 70h8"/><path d="M82 52l-6 10h8l-6 10"/></g></symbol>
+    <symbol id="d-smart" viewBox="0 0 120 120"><g fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M16 58L60 22l44 36"/><path d="M28 50v56h64V50"/><path d="M42 76a26 26 0 0 1 36 0"/><path d="M50 85a14 14 0 0 1 20 0"/></g><circle cx="60" cy="94" r="3.5" fill="currentColor"/></symbol>
+    <symbol id="d-switch" viewBox="0 0 120 120"><g fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><rect x="22" y="18" width="76" height="84" rx="8"/><rect x="44" y="36" width="32" height="48" rx="5"/><path d="M44 60h32"/><path d="M52 48h16" stroke-width="2"/></g></symbol>
+    <symbol id="d-electric" viewBox="0 0 120 120"><g fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M44 14v20M76 14v20"/><path d="M32 34h56v16a28 28 0 0 1-56 0Z"/><path d="M60 78v10c0 12 8 18 22 18h24"/></g></symbol>
+    <symbol id="d-floor" viewBox="0 0 120 120"><g fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M8 92h104"/><path d="M14 106h84a7 7 0 0 0 0-14"/><path d="M38 70c-6-7 6-13 0-20s6-13 0-20M60 70c-6-7 6-13 0-20s6-13 0-20M82 70c-6-7 6-13 0-20s6-13 0-20"/></g></symbol>
+    <symbol id="d-sealant" viewBox="0 0 120 120"><g fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><rect x="12" y="42" width="66" height="36" rx="4"/><path d="M26 42v36"/><path d="M78 48l28 10v4l-28 10"/></g></symbol>
+    <symbol id="d-foam" viewBox="0 0 120 120"><g fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><rect x="38" y="40" width="40" height="70" rx="8"/><path d="M46 40V30h24v10"/><path d="M58 30V20h24l14 6"/><path d="M38 60h40" stroke-width="2"/></g></symbol>
+    <symbol id="d-cosmofen" viewBox="0 0 120 120"><g fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M16 46l8 14-8 14h64V46Z"/><path d="M80 52h12v16H80"/><path d="M92 56h16v8H92"/></g></symbol>
+    <symbol id="d-cornice" viewBox="0 0 120 120"><g fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M8 22h104"/><path d="M28 30c-4 28 4 50 0 80M48 30c4 28-4 50 0 80M72 30c-4 28 4 50 0 80M92 30c4 28-4 50 0 80"/></g><g fill="currentColor"><circle cx="8" cy="22" r="5"/><circle cx="112" cy="22" r="5"/></g></symbol>
+    <symbol id="d-screw" viewBox="0 0 120 120"><g fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M38 18h44l-8 14H46Z"/><path d="M50 32v56l10 18 10-18V32"/><path d="M50 44l20 7M50 58l20 7M50 72l20 7"/></g></symbol>
+    <symbol id="d-hatch" viewBox="0 0 120 120"><g fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><rect x="14" y="14" width="92" height="92" rx="3"/><rect x="28" y="28" width="64" height="64" rx="2"/></g><circle cx="80" cy="60" r="4" fill="currentColor"/></symbol>
+    <symbol id="d-bell" viewBox="0 0 120 120"><g fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M60 14v8"/><path d="M34 80V56a26 26 0 0 1 52 0v24l10 10H24Z"/><path d="M50 98a10 10 0 0 0 20 0"/></g></symbol>
+    <symbol id="d-cable" viewBox="0 0 120 120"><g fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><circle cx="56" cy="54" r="38"/><circle cx="56" cy="54" r="24"/><circle cx="56" cy="54" r="9"/><path d="M94 54c0 28 8 46 20 52"/></g></symbol>
+    <symbol id="d-roller" viewBox="0 0 120 120"><g fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><rect x="14" y="14" width="92" height="14" rx="7"/><path d="M22 28v62h76V28"/><path d="M18 90h84"/><path d="M106 28v44"/></g><circle cx="106" cy="76" r="4" fill="currentColor"/></symbol>
     <symbol id="d-gx53" viewBox="0 0 120 120"><g fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="60" cy="54" rx="44" ry="14"/><path d="M16 54v10c0 8 20 14 44 14s44-6 44-14V54"/><path d="M42 42v-12M78 42v-12"/></g></symbol>
   </defs>
 </svg>
@@ -121,28 +122,23 @@ $sl_directions = array(
   <div class="catpanel" id="catpanel">
     <button class="sl-btn sl-btn-soft catpanel-close" type="button">Закрыть</button>
     <div class="wrap">
-      <?php foreach ($categories as $category) { ?>
-      <div>
-        <h3><a href="<?php echo $category['href']; ?>"><?php echo sl_name($category['name']); ?></a></h3>
-        <?php if (!empty($category['children'])) { ?>
-        <ul>
-          <?php foreach ($category['children'] as $child) { ?>
-          <li><a href="<?php echo $child['href']; ?>"><?php echo sl_name($child['name']); ?></a></li>
-          <?php } ?>
-        </ul>
-        <?php } ?>
-      </div>
-      <?php } ?>
+      <div><h3><a href="osveshchenie">Освещение</a></h3><ul><li><a href="trekovye-svetilniki">Трековые системы</a></li><li><a href="svetodiodnaja-lenta">Светодиодная лента</a></li><li><a href="bloki-pitanija">Блоки питания</a></li><li><a href="vstraivaemye-svetilniki">Светильники</a></li><li><a href="lampy">Лампы</a></li><li><a href="Ljustry">Люстры</a></li><li><a href="ulichnoe-osveshhenie">Уличный свет</a></li><li><a href="umnyj-dom">Умный дом</a></li><li><a href="upravlenie-svetom">Управление светом</a></li><li><a href="elektrika">Электрика</a></li></ul></div>
+      <div><h3><a href="material-dlya-natyazhnyh-potolkov">Материалы для монтажа натяжных потолков</a></h3><ul><li><a href="baget">Багет</a></li><li><a href="komplektuyushchie-dlya-profilya">Комплектующие для профиля</a></li><li><a href="lenta-maskirovochnaya">Лента маскировочная</a></li><li><a href="platformy">Платформы</a></li><li><a href="termokolca-termokvadraty">Термокольца, термоквадраты</a></li><li><a href="obvody-dlya-trub">Обводы для труб</a></li><li><a href="plastikovye-listy">Пластиковые листы</a></li><li><a href="karnizy">Карнизы</a></li></ul></div>
+      <div><h3><a href="material-dlya-montazha-okon">Материалы для монтажа окон</a></h3><ul><li><a href="podokonnik-pvh">Подоконник ПВХ</a></li><li><a href="podokonnik-myoller">Подоконник Moeller</a></li><li><a href="sendvich-paneli">Сэндвич-панели</a></li><li><a href="vodootlivy-dlya-okon">Водоотливы для окон</a></li><li><a href="torcevye-nakladki">Торцевые накладки</a></li><li><a href="plastikovye-ugolki-na-okna">Пластиковые уголки на окна</a></li><li><a href="nashchelnik">Нащельник</a></li><li><a href="uplotnitel-dlya-okon">Уплотнитель для окон</a></li><li><a href="furnitura-dlya-okon">Фурнитура для окон</a></li><li><a href="lenta-dlya-montazha-okon-po-gostu">Лента для монтажа окон по ГОСТу</a></li><li><a href="mini-roleta">Мини Ролеты</a></li><li><a href="moskitnaya-setka">Москитные сетки</a></li></ul></div>
+      <div><h3><a href="raznoe-dlya-montazha">Монтаж и ремонт</a></h3><ul><li><a href="germetiki">Герметики, клей, жидкие гвозди, очистители</a></li><li><a href="pena-montazhnaya-klej-pena">Пена монтажная, клей-пена</a></li><li><a href="kosmofeny">Космофены</a></li><li><a href="krepezh">Крепёж</a></li><li><a href="dovodchiki-dvernoj-zvonok-cifry">Доводчики, дверной звонок, цифры</a></li><li><a href="lyuki">Люки</a></li><li><a href="kabel-i-provod">Кабель и провод</a></li><li><a href="teplyj-po">Тёплый пол</a></li><li><a href="raznoe-dlya-montazha">Разное</a></li></ul></div>
     </div>
   </div>
 </header>
 
+<!-- Directions -->
 <nav class="directions" id="directions" aria-label="Направления">
   <div class="wrap">
     <ul class="dirs">
-      <?php foreach ($sl_directions as $direction_item) { ?>
-      <li><a class="dir" href="<?php echo $direction_item[2]; ?>"><span class="dir-name"><?php echo $direction_item[0]; ?></span><span class="dir-desc"><?php echo $direction_item[1]; ?></span></a></li>
-      <?php } ?>
+      <li><a class="dir" href="material-dlya-natyazhnyh-potolkov"><span class="dir-name">Натяжные потолки</span><span class="dir-desc">профили, комплектующие, карнизы</span></a></li>
+      <li><a class="dir" href="material-dlya-montazha-okon"><span class="dir-name">Монтаж окон</span><span class="dir-desc">подоконники, сэндвич-панели и водоотливы</span></a></li>
+      <li><a class="dir" href="osveshchenie"><span class="dir-name">Освещение и электрика</span><span class="dir-desc">лампы, светильники, лента, кабель, управление светом</span></a></li>
+      <li><a class="dir" href="raznoe-dlya-montazha"><span class="dir-name">Разное</span><span class="dir-desc">расходные материалы, инструменты и химия</span></a></li>
+      <li><a class="dir" href="moskitnaya-setka"><span class="dir-name">Москитные сетки</span><span class="dir-desc">защита от пыли и насекомых</span></a></li>
     </ul>
   </div>
 </nav>
