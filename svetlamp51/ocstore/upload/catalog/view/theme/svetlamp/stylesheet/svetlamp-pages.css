@@ -87,10 +87,16 @@ body.sl-body .sl-subcat { display: flex; flex-direction: column; justify-content
 body.sl-body .sl-subcat:hover { background: #fbfaf7; }
 body.sl-body .sl-subcat svg { align-self: flex-end; width: 20px; height: 20px; color: #8a5300; transition: transform 200ms var(--ease); }
 body.sl-body .sl-subcat:hover svg { transform: translateX(4px); }
+body.sl-body .sl-subcat.has-pic { min-height: 168px; }
+body.sl-body .sl-subcat img { align-self: flex-end; width: 84px; height: 84px; object-fit: contain; transition: transform 320ms var(--ease); }
+body.sl-body .sl-subcat:hover img { transform: translateY(-4px) scale(1.03); }
 @media (max-width: 767px) {
   body.sl-body .sl-subcats { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
   body.sl-body .sl-subcat { min-height: 84px; padding: 14px; font-size: 15px; gap: 8px; }
   body.sl-body .sl-subcat svg { width: 18px; height: 18px; }
+  /* Phone: picture above the name, long words like "Вентиляционная" keep the full width */
+  body.sl-body .sl-subcat.has-pic { min-height: 112px; justify-content: flex-start; gap: 10px; }
+  body.sl-body .sl-subcat img { order: -1; align-self: flex-start; width: 44px; height: 44px; }
   /* Sorting and page size each get a full row, so the select text is readable */
   body.sl-body #content .col-xs-6:has(#input-sort), body.sl-body #content .col-xs-6:has(#input-limit) { width: 100%; }
 }

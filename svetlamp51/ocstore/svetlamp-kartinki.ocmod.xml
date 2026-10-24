@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<modification>
+  <name>СветЛамп: картинки в плитках подкатегорий</name>
+  <code>svetlamp_subcategory_images</code>
+  <version>1.0</version>
+  <author>СветЛамп</author>
+  <link>https://svetlamp51.ru</link>
+  <file path="catalog/controller/product/category.php">
+    <operation>
+      <search><![CDATA['href' => $this->url->link('product/category', 'path=' . $this->request->get['path'] . '_' . $result['category_id'] . $url)]]></search>
+      <add position="after"><![CDATA[					, 'thumb' => $result['image'] ? $this->model_tool_image->resize($result['image'], 240, 240) : '']]></add>
+    </operation>
+  </file>
+</modification>
