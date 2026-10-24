@@ -28,7 +28,7 @@ body.sl-body #content h1,
 body.sl-body #content h2,
 body.sl-body #content h3,
 body.sl-body #content h4 { font-family: var(--font); color: var(--ink); font-weight: 600; letter-spacing: -0.02em; }
-body.sl-body #content h1 { font-size: clamp(26px, 18px + 1.8vw, 42px); line-height: 1.1; margin: 8px 0 20px; }
+body.sl-body #content h1 { font-size: clamp(24px, 16px + 1.3vw, 34px); line-height: 1.15; margin: 8px 0 20px; }
 body.sl-body #content h2 { font-size: clamp(22px, 17px + 1vw, 30px); line-height: 1.15; }
 body.sl-body #content h3 { font-size: 20px; line-height: 1.2; margin: 24px 0 12px; }
 body.sl-body #content a { color: #8a5300; }

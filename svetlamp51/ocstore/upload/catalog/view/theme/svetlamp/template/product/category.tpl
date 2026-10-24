@@ -22,7 +22,6 @@ $column_left = ''; ?>
       <hr>
       <?php } ?>
       <?php if ($categories) { ?>
-      <h3><?php echo $text_refine; ?></h3>
       <div class="sl-subcats">
         <?php foreach ($categories as $category) { ?>
         <a class="sl-subcat<?php echo !empty($category['thumb']) ? ' has-pic' : ''; ?>" href="<?php echo $category['href']; ?>"><span><?php echo $category['name']; ?></span><?php if (!empty($category['thumb'])) { ?><img src="<?php echo $category['thumb']; ?>" alt="" width="120" height="120" loading="lazy"><?php } else { ?><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><?php } ?></a>
