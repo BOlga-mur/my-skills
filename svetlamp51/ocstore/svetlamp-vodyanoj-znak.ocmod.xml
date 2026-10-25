@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<modification>
+  <name>СветЛамп: водяной знак на фото товаров</name>
+  <code>svetlamp_watermark</code>
+  <version>1.0</version>
+  <author>СветЛамп</author>
+  <link>https://svetlamp51.ru</link>
+  <!--
+    The watermark goes only on the copies the shop makes for the storefront (image/cache).
+    Original photos in image/catalog are never changed. Only product photos get it;
+    category pictures, banners and the logo stay clean.
+    Watermarked copies get their own file names (-sl), so old copies without the mark
+    are simply no longer used and nothing has to be cleared by hand.
+  -->
+  <file path="catalog/model/tool/image.php">
+    <operation>
+      <search><![CDATA[class ModelToolImage extends Model {]]></search>
+      <add position="after"><![CDATA[
+	// SvetLamp watermark: file names of all product photos, loaded once per page
+	private static $sl_product_images = null;
+
+	private function slIsProductImage($filename) {
+		if (self::$sl_product_images === null) {
+			self::$sl_product_images = array();
+
+			$query = $this->db->query("SELECT image FROM `" . DB_PREFIX . "product` WHERE image <> '' UNION SELECT image FROM `" . DB_PREFIX . "product_image` WHERE image <> ''");
+
+			foreach ($query->rows as $row) {
+				self::$sl_product_images[$row['image']] = true;
+			}
+		}
+
+		return isset(self::$sl_product_images[$filename]) && is_file(DIR_IMAGE . 'svetlamp-watermark.png');
+	}
+
+	// Lays the diagonal «СветЛамп51» over the picture, scaled to its shorter side
+	private function slWatermark($image) {
+		$width = $image->getWidth();
+		$height = $image->getHeight();
+		$side = min($width, $height);
+
+		// Tiny previews (cart, compare) stay clean: the text would be unreadable there
+		if ($side < 120 || !function_exists('imagecreatefrompng')) {
+			return;
+		}
+
+		$canvas = $image->getImage();
+		$mark = imagecreatefrompng(DIR_IMAGE . 'svetlamp-watermark.png');
+
+		if (!$canvas || !$mark) {
+			return;
+		}
+
+		imagealphablending($canvas, true);
+		imagecopyresampled($canvas, $mark, (int)(($width - $side) / 2), (int)(($height - $side) / 2), 0, 0, $side, $side, imagesx($mark), imagesy($mark));
+		imagedestroy($mark);
+	}
+]]></add>
+    </operation>
+    <operation>
+      <search><![CDATA[$image_new = 'cache/' . utf8_substr($filename, 0, utf8_strrpos($filename, '.')) . '-' . (int)$width . 'x' . (int)$height . '.' . $extension;]]></search>
+      <add position="after"><![CDATA[
+		$sl_watermark = $this->slIsProductImage($filename);
+
+		if ($sl_watermark) {
+			$image_new = 'cache/' . utf8_substr($filename, 0, utf8_strrpos($filename, '.')) . '-' . (int)$width . 'x' . (int)$height . '-sl.' . $extension;
+		}
+]]></add>
+    </operation>
+    <operation>
+      <search><![CDATA[$image->save(DIR_IMAGE . $image_new);]]></search>
+      <add position="before"><![CDATA[				if ($sl_watermark) {
+					$this->slWatermark($image);
+				}
+]]></add>
+    </operation>
+    <operation>
+      <search><![CDATA[copy(DIR_IMAGE . $image_old, DIR_IMAGE . $image_new);]]></search>
+      <add position="replace"><![CDATA[if ($sl_watermark) {
+					$image = new Image(DIR_IMAGE . $image_old);
+					$this->slWatermark($image);
+					$image->save(DIR_IMAGE . $image_new);
+				} else {
+					copy(DIR_IMAGE . $image_old, DIR_IMAGE . $image_new);
+				}]]></add>
+    </operation>
+  </file>
+</modification>
