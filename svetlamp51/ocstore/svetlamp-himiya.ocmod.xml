@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<modification>
+  <name>СветЛамп: подкатегории «Химии» в разделе «Разное»</name>
+  <code>svetlamp_himiya_in_raznoe</code>
+  <version>1.0</version>
+  <author>СветЛамп</author>
+  <link>https://svetlamp51.ru</link>
+  <file path="catalog/controller/product/category.php">
+    <operation>
+      <search><![CDATA[$data['products'] = array();]]></search>
+      <add position="before"><![CDATA[
+			// SvetLamp: on «Разное» the «Химия» tile is replaced by its subcategories, placed right after «Крепёж»
+			$sl_ids = array();
+
+			$sl_query = $this->db->query("SELECT `query`, LOWER(`keyword`) AS keyword FROM `" . DB_PREFIX . "url_alias` WHERE LOWER(`keyword`) IN ('raznoe-dlya-montazha', 'himiya', 'krepezh')");
+
+			foreach ($sl_query->rows as $sl_row) {
+				if (strpos($sl_row['query'], 'category_id=') === 0) {
+					$sl_ids[$sl_row['keyword']] = (int)substr($sl_row['query'], strlen('category_id='));
+				}
+			}
+
+			if (isset($sl_ids['raznoe-dlya-montazha'], $sl_ids['himiya']) && $category_id == $sl_ids['raznoe-dlya-montazha']) {
+				$sl_chem = array();
+
+				foreach ($this->model_catalog_category->getCategories($sl_ids['himiya']) as $sl_result) {
+					$sl_path = array();
+
+					foreach ($this->db->query("SELECT path_id FROM `" . DB_PREFIX . "category_path` WHERE category_id = '" . (int)$sl_result['category_id'] . "' ORDER BY level")->rows as $sl_row) {
+						$sl_path[] = $sl_row['path_id'];
+					}
+
+					$sl_filter = array(
+						'filter_category_id'  => $sl_result['category_id'],
+						'filter_sub_category' => true
+					);
+
+					$sl_chem[] = array(
+						'name'  => $sl_result['name'] . ($this->config->get('config_product_count') ? ' (' . $this->model_catalog_product->getTotalProducts($sl_filter) . ')' : ''),
+						'href'  => $this->url->link('product/category', 'path=' . implode('_', $sl_path) . $url),
+						'thumb' => $sl_result['image'] ? $this->model_tool_image->resize($sl_result['image'], 240, 240) : ''
+					);
+				}
+
+				// $data['categories'] was built from $results in the same order, so the indexes match
+				$sl_tiles = array();
+				$sl_placed = false;
+
+				foreach (array_values($results) as $sl_i => $sl_result) {
+					if ($sl_result['category_id'] == $sl_ids['himiya']) {
+						continue;
+					}
+
+					$sl_tiles[] = $data['categories'][$sl_i];
+
+					if (isset($sl_ids['krepezh']) && $sl_result['category_id'] == $sl_ids['krepezh']) {
+						$sl_tiles = array_merge($sl_tiles, $sl_chem);
+						$sl_placed = true;
+					}
+				}
+
+				if (!$sl_placed) {
+					$sl_tiles = array_merge($sl_tiles, $sl_chem);
+				}
+
+				$data['categories'] = $sl_tiles;
+			}
+]]></add>
+    </operation>
+  </file>
+</modification>
