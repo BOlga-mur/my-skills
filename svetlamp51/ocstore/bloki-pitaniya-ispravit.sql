@@ -1,6 +1,7 @@
 -- СветЛамп: блоки питания — напряжение и мощность по названию товара.
--- • «Напряжение»: ставится выходное напряжение из названия (12V, 24 В, DC12V…). Если в атрибуте
---   записано другое (например, 220 или пусто), оно заменяется. Учитываются только 5, 12, 24, 36 и 48 В,
+-- • «Напряжение»: ставится выходное напряжение из названия (12V, 24 В, DC12V…), а если в названии его нет —
+--   часть записанного значения до косой черты («12/220» → 12). Если в атрибуте записано другое
+--   (12/220, 220, 12V или пусто), оно заменяется простым числом. Учитываются только 5, 12, 24, 36 и 48 В,
 --   поэтому входное «220В» или «AC100-240V» из названия не попадёт.
 -- • «Мощность»: заполняется только там, где её нет (60W, 100 Вт, 150Вт…). Заполненную мощность не трогает.
 -- Затрагивает только товары в «Блоках питания» (bloki-pitanija) и их подкатегориях.
@@ -66,6 +67,14 @@ UPDATE sl_psu_found f JOIN (
 ) found ON found.product_id = f.product_id
 SET f.power = found.v;
 
+-- Если в названии напряжения нет, оно берётся из уже записанного значения вида «12/220» или «24V/220V»:
+-- выходное напряжение — то, что до косой черты
+UPDATE sl_psu_found f
+JOIN oc_product_attribute pa ON pa.product_id = f.product_id AND pa.attribute_id = @sl_volt AND pa.language_id = 1
+SET f.volt = REPLACE(REPLACE(REPLACE(UPPER(TRIM(SUBSTRING_INDEX(pa.text, '/', 1))), 'V', ''), 'В', ''), ' ', '')
+WHERE f.volt IS NULL
+  AND REPLACE(REPLACE(REPLACE(UPPER(TRIM(SUBSTRING_INDEX(pa.text, '/', 1))), 'V', ''), 'В', ''), ' ', '') IN ('5', '12', '24', '36', '48');
+
 -- Что было (для отчёта и отмены)
 DROP TABLE IF EXISTS sl_psu_backup;
 CREATE TABLE sl_psu_backup AS
@@ -101,7 +110,7 @@ DROP TABLE sl_psu_found;
 -- Отчёт: что изменилось. Внизу — блоки, где в названии нет напряжения или мощности: их стоит заполнить вручную
 SELECT name AS `Блок питания`,
        IFNULL(volt_old, '—') AS `Напряжение было`,
-       CASE WHEN volt_new IS NULL THEN '— нет в названии —'
+       CASE WHEN volt_new IS NULL THEN '— не найдено —'
             WHEN TRIM(IFNULL(volt_old, '')) = volt_new THEN volt_new
             ELSE CONCAT(volt_new, '  ← изменено') END AS `Напряжение стало`,
        IFNULL(power_old, '—') AS `Мощность была`,
