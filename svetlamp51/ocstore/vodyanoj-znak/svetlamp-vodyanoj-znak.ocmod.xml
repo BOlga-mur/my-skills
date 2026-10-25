@@ -2,31 +2,91 @@
 <modification>
   <name>СветЛамп: водяной знак на фото товаров</name>
   <code>svetlamp_watermark</code>
-  <version>1.0</version>
+  <version>2.0</version>
   <author>СветЛамп</author>
   <link>https://svetlamp51.ru</link>
   <!--
-    The watermark goes only on the copies the shop makes for the storefront (image/cache).
-    Original photos in image/catalog are never changed. Only product photos get it;
-    category pictures, banners and the logo stay clean.
-    Watermarked copies get their own file names (-sl), so old copies without the mark
-    are simply no longer used and nothing has to be cleared by hand.
+    The product form gets a «Водяной знак» checkbox (Данные tab, above Статус).
+    Photos of checked products get the diagonal «СветЛамп51», including extra photos.
+    The mark goes only on the storefront copies in image/cache; originals are never changed.
+    The sl_watermark column in the product table is created the first time a product
+    form is opened; until then no product has the mark.
   -->
+
+  <!-- Admin: checkbox in the product form -->
+  <file path="admin/controller/catalog/product.php">
+    <operation>
+      <search><![CDATA[$this->response->setOutput($this->load->view('catalog/product_form', $data));]]></search>
+      <add position="before"><![CDATA[		// SvetLamp watermark: the column is added on first use
+		$sl_column = $this->db->query("SHOW COLUMNS FROM `" . DB_PREFIX . "product` LIKE 'sl_watermark'");
+
+		if (!$sl_column->num_rows) {
+			$this->db->query("ALTER TABLE `" . DB_PREFIX . "product` ADD `sl_watermark` TINYINT(1) NOT NULL DEFAULT '0'");
+		}
+
+		if (isset($this->request->post['sl_watermark_sent'])) {
+			$data['sl_watermark'] = !empty($this->request->post['sl_watermark']);
+		} elseif (!empty($product_info) && isset($product_info['sl_watermark'])) {
+			$data['sl_watermark'] = (bool)$product_info['sl_watermark'];
+		} else {
+			$data['sl_watermark'] = false;
+		}
+]]></add>
+    </operation>
+  </file>
+  <file path="admin/view/template/catalog/product_form.tpl">
+    <operation>
+      <search><![CDATA[<label class="col-sm-2 control-label" for="input-status"><?php echo $entry_status; ?></label>]]></search>
+      <add position="before" offset="1"><![CDATA[              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-sl-watermark">Водяной знак</label>
+                <div class="col-sm-10">
+                  <input type="hidden" name="sl_watermark_sent" value="1" />
+                  <div class="checkbox">
+                    <label><input type="checkbox" name="sl_watermark" value="1" id="input-sl-watermark"<?php echo !empty($sl_watermark) ? ' checked="checked"' : ''; ?> /> ставить «СветЛамп51» на фото этого товара</label>
+                  </div>
+                </div>
+              </div>]]></add>
+    </operation>
+  </file>
+  <file path="admin/model/catalog/product.php">
+    <operation>
+      <search><![CDATA[$product_id = $this->db->getLastId();]]></search>
+      <add position="after"><![CDATA[
+		if (isset($data['sl_watermark_sent'])) {
+			$this->db->query("UPDATE " . DB_PREFIX . "product SET sl_watermark = '" . (empty($data['sl_watermark']) ? 0 : 1) . "' WHERE product_id = '" . (int)$product_id . "'");
+		}
+]]></add>
+    </operation>
+    <operation>
+      <search><![CDATA[public function editProduct($product_id, $data) {]]></search>
+      <add position="after"><![CDATA[		// Only the product form sends sl_watermark_sent, so other modules saving a product leave the mark as it is
+		if (isset($data['sl_watermark_sent'])) {
+			$this->db->query("UPDATE " . DB_PREFIX . "product SET sl_watermark = '" . (empty($data['sl_watermark']) ? 0 : 1) . "' WHERE product_id = '" . (int)$product_id . "'");
+		}
+]]></add>
+    </operation>
+  </file>
+
+  <!-- Storefront: the mark on photo copies of checked products -->
   <file path="catalog/model/tool/image.php">
     <operation>
       <search><![CDATA[class ModelToolImage extends Model {]]></search>
       <add position="after"><![CDATA[
-	// SvetLamp watermark: file names of all product photos, loaded once per page
+	// SvetLamp watermark: photo file names of products with the checkbox on, loaded once per page
 	private static $sl_product_images = null;
 
 	private function slIsProductImage($filename) {
 		if (self::$sl_product_images === null) {
 			self::$sl_product_images = array();
 
-			$query = $this->db->query("SELECT image FROM `" . DB_PREFIX . "product` WHERE image <> '' UNION SELECT image FROM `" . DB_PREFIX . "product_image` WHERE image <> ''");
+			$column = $this->db->query("SHOW COLUMNS FROM `" . DB_PREFIX . "product` LIKE 'sl_watermark'");
 
-			foreach ($query->rows as $row) {
-				self::$sl_product_images[$row['image']] = true;
+			if ($column->num_rows) {
+				$query = $this->db->query("SELECT p.image FROM `" . DB_PREFIX . "product` p WHERE p.sl_watermark = '1' AND p.image <> '' UNION SELECT pi.image FROM `" . DB_PREFIX . "product_image` pi LEFT JOIN `" . DB_PREFIX . "product` p ON (p.product_id = pi.product_id) WHERE p.sl_watermark = '1' AND pi.image <> ''");
+
+				foreach ($query->rows as $row) {
+					self::$sl_product_images[$row['image']] = true;
+				}
 			}
 		}
 
@@ -60,6 +120,7 @@
     <operation>
       <search><![CDATA[$image_new = 'cache/' . utf8_substr($filename, 0, utf8_strrpos($filename, '.')) . '-' . (int)$width . 'x' . (int)$height . '.' . $extension;]]></search>
       <add position="after"><![CDATA[
+		// Copies with the mark get their own names, so ticking or unticking the box takes effect at once
 		$sl_watermark = $this->slIsProductImage($filename);
 
 		if ($sl_watermark) {
