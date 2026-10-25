@@ -83,7 +83,9 @@ body.sl-body .sl-chips a { display: inline-block; padding: 9px 16px; border-radi
 body.sl-body .sl-chips a:hover { background: var(--btn); color: #fff !important; }
 
 /* Power filter above the products */
-body.sl-body .sl-power { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; margin: 0 0 24px; }
+body.sl-body .sl-power { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; margin: 0 0 12px; }
+body.sl-body .sl-power-label { min-width: 104px; }
+body.sl-body .sl-filters { margin-bottom: 24px; }
 body.sl-body .sl-power-label { font-family: var(--font); font-weight: 600; font-size: 15px; color: var(--ink); }
 body.sl-body .sl-power .sl-chips { margin: 0; }
 body.sl-body .sl-power .sl-chips a.active { background: var(--btn); color: #fff !important; }
