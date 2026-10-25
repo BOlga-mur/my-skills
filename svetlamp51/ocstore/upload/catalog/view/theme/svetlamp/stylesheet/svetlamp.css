@@ -106,7 +106,7 @@ button[onclick*="cart.add"], input[onclick*="cart.add"] { display: none !importa
 .sl .logo-mark { width: 44px; height: 44px; border-radius: var(--radius); background: var(--night); display: grid; place-items: center; }
 .sl .logo-mark svg { width: 28px; height: 28px; }
 .sl .logo-text { font-size: 24px; font-weight: 700; letter-spacing: -0.03em; line-height: 1; }
-.sl .logo-text small { display: block; font-size: 13px; font-weight: 500; letter-spacing: 0; color: var(--muted); margin-top: 5px; }
+.sl .logo-text small { display: block; font-size: 13px; font-weight: 500; letter-spacing: 0; color: var(--muted); margin-top: 5px; max-width: 248px; line-height: 1.3; }
 
 .sl .catalog-btn { min-height: 56px; padding-inline: 22px 26px; }
 .sl .catalog-btn .burger { width: 20px; height: 14px; position: relative; }

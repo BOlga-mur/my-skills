@@ -113,7 +113,7 @@
       <span class="logo-mark" aria-hidden="true">
         <svg viewBox="0 0 28 28"><path d="M14 2v6" stroke="#eef2f4" stroke-width="2" stroke-linecap="round"/><path d="M5 18c0-5 4-9 9-9s9 4 9 9Z" fill="#eef2f4"/><circle cx="14" cy="21" r="3.5" fill="#f3ad3c"/></svg>
       </span>
-      <span class="logo-text">СветЛамп<small>свет, потолки и окна в Мурманске</small></span>
+      <span class="logo-text">СветЛамп<small>всё для монтажа натяжных потолков и окон в Мурманске</small></span>
     </a>
     <button class="sl-btn sl-btn-ink catalog-btn" type="button" aria-expanded="false" aria-controls="catpanel">
       <span class="burger" aria-hidden="true"><i></i><i></i><i></i></span>Каталог

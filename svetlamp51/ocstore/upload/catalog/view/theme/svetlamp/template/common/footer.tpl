@@ -3,7 +3,7 @@
   <div class="wrap">
     <div class="footer-grid">
       <div>
-        <span class="logo-text">СветЛамп<small>свет, потолки и окна в Мурманске</small></span>
+        <span class="logo-text">СветЛамп<small>всё для монтажа натяжных потолков и окон в Мурманске</small></span>
       </div>
       <div>
         <h2>Телефон и часы</h2>
