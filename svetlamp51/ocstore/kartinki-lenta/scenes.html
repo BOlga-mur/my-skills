@@ -1,0 +1,129 @@
+<!doctype html><html><head><meta charset="utf-8"><style>body{margin:0;background:#222}svg{display:block}</style></head><body>
+<!-- 1. Bedroom: LED strip in the ceiling cove and behind the headboard -->
+<svg id="s1" width="1200" height="900" viewBox="0 0 1200 900" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="w1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3a2a20"/><stop offset="1" stop-color="#1c1410"/></linearGradient>
+    <linearGradient id="c1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2a1d16"/><stop offset="1" stop-color="#4a3424"/></linearGradient>
+    <linearGradient id="glowDown" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffd38a" stop-opacity=".85"/><stop offset=".35" stop-color="#ffb860" stop-opacity=".35"/><stop offset="1" stop-color="#ff9a40" stop-opacity="0"/></linearGradient>
+    <linearGradient id="glowUp" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#ffe2a8" stop-opacity=".9"/><stop offset=".5" stop-color="#ffbf70" stop-opacity=".3"/><stop offset="1" stop-color="#ffbf70" stop-opacity="0"/></linearGradient>
+    <linearGradient id="floor1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4b3526"/><stop offset="1" stop-color="#2a1d15"/></linearGradient>
+    <radialGradient id="pend" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#fff1cf" stop-opacity=".9"/><stop offset="1" stop-color="#ffcf80" stop-opacity="0"/></radialGradient>
+    <filter id="blur8"><feGaussianBlur stdDeviation="8"/></filter>
+  </defs>
+  <rect width="1200" height="900" fill="url(#w1)"/>
+  <!-- ceiling with slats -->
+  <path d="M0 0H1200V150L1000 210H200L0 150Z" fill="url(#c1)"/>
+  <g stroke="#6b4a32" stroke-width="10" opacity=".9">
+    <path d="M120 0L250 210M240 0L330 210M360 0L410 210M480 0L490 210M600 0L570 210M720 0L650 210M840 0L730 210M960 0L810 210M1080 0L890 210"/>
+  </g>
+  <!-- cove glow -->
+  <rect x="200" y="206" width="800" height="10" fill="#fff0c8"/>
+  <rect x="200" y="214" width="800" height="200" fill="url(#glowDown)"/>
+  <path d="M0 150L200 210V218L0 160Z M1200 150L1000 210V218L1200 160Z" fill="#ffe3a6" opacity=".9"/>
+  <!-- window wall on the left -->
+  <path d="M0 160L200 218V720L0 860Z" fill="#2a3440"/>
+  <g stroke="#1a2028" stroke-width="8"><path d="M70 182V780M140 202V740"/></g>
+  <path d="M0 160L200 218V720L0 860Z" fill="#7aa0c0" opacity=".12"/>
+  <!-- back wall panels -->
+  <rect x="200" y="216" width="800" height="504" fill="#3d2b1f"/>
+  <g stroke="#2a1c13" stroke-width="3"><path d="M360 216V720M520 216V720M680 216V720M840 216V720"/></g>
+  <!-- headboard panel with glow behind -->
+  <rect x="300" y="470" width="600" height="14" fill="#fff0c8"/>
+  <rect x="300" y="330" width="600" height="150" fill="url(#glowUp)"/>
+  <rect x="300" y="484" width="600" height="120" fill="#5a4030"/>
+  <!-- tv on the wall -->
+  <rect x="690" y="330" width="170" height="100" rx="4" fill="#15181c"/>
+  <rect x="698" y="338" width="154" height="84" fill="#3c5a78" opacity=".55"/>
+  <!-- floor -->
+  <path d="M0 860L200 720H1000L1200 860V900H0Z" fill="url(#floor1)"/>
+  <!-- bed -->
+  <path d="M320 600H880L960 720H240Z" fill="#e9e2d6"/>
+  <path d="M240 720H960V760H240Z" fill="#cfc6b6"/>
+  <rect x="360" y="560" width="200" height="50" rx="16" fill="#f5efe4"/>
+  <rect x="640" y="560" width="200" height="50" rx="16" fill="#f5efe4"/>
+  <path d="M240 680H960V720H240Z" fill="#6b4c3a" opacity=".55"/>
+  <!-- pendant lamp -->
+  <path d="M1040 216V420" stroke="#1a1410" stroke-width="3"/>
+  <ellipse cx="1040" cy="460" rx="140" ry="90" fill="url(#pend)"/>
+  <path d="M990 420H1090L1110 470H970Z" fill="#e8dccb"/>
+  <ellipse cx="1040" cy="470" rx="70" ry="10" fill="#fff4d6"/>
+  <!-- bedside -->
+  <rect x="930" y="640" width="140" height="80" fill="#2e211a"/>
+</svg>
+
+<!-- 2. Open kitchen drawer lit by a strip along its inner edge -->
+<svg id="s2" width="1200" height="900" viewBox="0 0 1200 900" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg2" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1d2226"/><stop offset="1" stop-color="#0f1214"/></linearGradient>
+    <linearGradient id="wood2" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#8a5a34"/><stop offset="1" stop-color="#b47a48"/></linearGradient>
+    <linearGradient id="in2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff6e2"/><stop offset=".5" stop-color="#e8d7bc"/><stop offset="1" stop-color="#a98a66"/></linearGradient>
+    <linearGradient id="beam2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff" stop-opacity=".9"/><stop offset="1" stop-color="#d8ecff" stop-opacity="0"/></linearGradient>
+  </defs>
+  <rect width="1200" height="900" fill="url(#bg2)"/>
+  <!-- cabinet fronts behind -->
+  <g fill="#6e4a2e"><path d="M640 120L1200 60V300L640 330Z"/><path d="M640 560L1200 560V900H640Z"/></g>
+  <g fill="#c9ccd0"><rect x="1000" y="160" width="120" height="14" rx="7"/><rect x="900" y="700" width="160" height="14" rx="7"/></g>
+  <!-- countertop with plates -->
+  <path d="M0 0H700L640 120H0Z" fill="#2b3036"/>
+  <g fill="#d9dde2" stroke="#9aa1a8" stroke-width="3"><ellipse cx="220" cy="70" rx="150" ry="40"/><ellipse cx="220" cy="55" rx="150" ry="40"/><ellipse cx="220" cy="40" rx="150" ry="40"/></g>
+  <!-- the open drawer: inner bottom, side walls, front -->
+  <path d="M90 250L640 170L900 520L250 680Z" fill="url(#in2)"/>
+  <path d="M90 250L640 170L640 220L110 300Z" fill="#c9a77e"/>
+  <!-- LED strip along the back inner edge and its light -->
+  <path d="M110 296L636 218" stroke="#ffffff" stroke-width="7" stroke-linecap="round"/>
+  <path d="M110 296L636 218L760 420L210 520Z" fill="url(#beam2)" opacity=".7"/>
+  <!-- cutlery tray -->
+  <g fill="none" stroke="#9c7650" stroke-width="10" stroke-linejoin="round">
+    <path d="M170 360L600 300L780 520L300 600Z"/><path d="M290 340L440 560M410 323L580 540M510 309L690 525"/>
+  </g>
+  <g stroke="#7d8790" stroke-width="9" stroke-linecap="round">
+    <path d="M220 400L330 560M250 395L350 550"/><path d="M450 350L540 500"/><path d="M560 330L660 480M590 330L690 470"/>
+  </g>
+  <!-- front panel of the drawer -->
+  <path d="M250 680L900 520L940 600L280 780Z" fill="url(#wood2)"/>
+  <path d="M280 780L940 600L960 660L300 850Z" fill="#5d3c22"/>
+  <rect x="520" y="660" width="170" height="16" rx="8" fill="#c9ccd0" transform="rotate(-14 605 668)"/>
+</svg>
+
+<!-- 3. Kitchen: strip under the wall cabinets lights the worktop and splashback -->
+<svg id="s3" width="1200" height="900" viewBox="0 0 1200 900" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg3" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3b2c22"/><stop offset="1" stop-color="#20170f"/></linearGradient>
+    <linearGradient id="splash3" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffe0a8"/><stop offset=".45" stop-color="#c98c52"/><stop offset="1" stop-color="#6e4a2c"/></linearGradient>
+    <linearGradient id="island3" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3c5468"/><stop offset="1" stop-color="#1e2c38"/></linearGradient>
+    <linearGradient id="top3" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e9d6b8"/><stop offset="1" stop-color="#b8956c"/></linearGradient>
+    <radialGradient id="lamp3" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#fff0c8" stop-opacity=".8"/><stop offset="1" stop-color="#ffc070" stop-opacity="0"/></radialGradient>
+  </defs>
+  <rect width="1200" height="900" fill="url(#bg3)"/>
+  <!-- wall cabinets -->
+  <rect x="80" y="80" width="1040" height="220" fill="#4a3628"/>
+  <g stroke="#33251b" stroke-width="4"><path d="M340 80V300M600 80V300M860 80V300"/></g>
+  <!-- strip under the cabinets -->
+  <rect x="80" y="300" width="1040" height="8" fill="#fff4d6"/>
+  <!-- lit splashback -->
+  <rect x="80" y="308" width="1040" height="170" fill="url(#splash3)"/>
+  <!-- things on the worktop -->
+  <g fill="#3a2a1e"><rect x="150" y="380" width="70" height="100" rx="6"/><rect x="235" y="400" width="50" height="80" rx="6"/></g>
+  <g fill="#e8e0d2"><rect x="820" y="420" width="60" height="60" rx="8"/><rect x="895" y="410" width="60" height="70" rx="8"/></g>
+  <path d="M990 480C990 420 1060 410 1070 360" stroke="#4b6b3a" stroke-width="10" fill="none"/>
+  <circle cx="1070" cy="360" r="26" fill="#5d8a46"/>
+  <!-- worktop -->
+  <rect x="60" y="478" width="1080" height="22" fill="url(#top3)"/>
+  <rect x="60" y="500" width="1080" height="160" fill="#2f2219"/>
+  <!-- island in front -->
+  <rect x="160" y="600" width="880" height="26" fill="#3a5266"/>
+  <rect x="180" y="626" width="840" height="274" fill="url(#island3)"/>
+  <rect x="160" y="596" width="880" height="6" fill="#ffd9a0" opacity=".6"/>
+  <!-- bread and a bowl on the island -->
+  <ellipse cx="460" cy="592" rx="110" ry="14" fill="#7a5532"/>
+  <ellipse cx="460" cy="584" rx="80" ry="18" fill="#c58a4c"/>
+  <path d="M700 596H800L790 570H710Z" fill="#e7ddcd"/>
+  <!-- pendant over the island -->
+  <path d="M600 0V150" stroke="#14100c" stroke-width="3"/>
+  <ellipse cx="600" cy="200" rx="200" ry="120" fill="url(#lamp3)"/>
+  <path d="M550 150H650L680 200H520Z" fill="#c8a070"/>
+  <!-- stools -->
+  <g fill="#1a1410"><rect x="300" y="700" width="16" height="200"/><rect x="880" y="700" width="16" height="200"/></g>
+  <g fill="#5a3e2a"><ellipse cx="308" cy="700" rx="60" ry="14"/><ellipse cx="888" cy="700" rx="60" ry="14"/></g>
+</svg>
+</body></html>
