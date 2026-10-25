@@ -142,6 +142,8 @@ button[onclick*="cart.add"], input[onclick*="cart.add"] { display: none !importa
 .sl .catpanel .wrap { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 32px; padding-block: 32px 40px; }
 .sl .catpanel h3 { font-size: 17px; margin-bottom: 12px; }
 .sl .catpanel h3 a { text-decoration: none; }
+.sl .catpanel ul + h3 { margin-top: 24px; }
+.sl .catpanel h3 + h3 { margin-top: 14px; }
 .sl .catpanel li a { display: block; padding: 5px 0; color: var(--muted); text-decoration: none; }
 .sl .catpanel li a:hover { color: var(--ink); }
 
