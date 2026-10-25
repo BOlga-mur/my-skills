@@ -28,6 +28,20 @@ $column_left = ''; ?>
         <?php } ?>
       </div>
       <?php } ?>
+      <?php if (!empty($sl_power_options)) { ?>
+      <!-- Power filter: filled by the «СветЛамп: фильтр по мощности ламп» modification -->
+      <div class="sl-power" role="group" aria-label="Мощность">
+        <span class="sl-power-label">Мощность</span>
+        <ul class="sl-chips">
+          <?php foreach ($sl_power_options as $sl_option) { ?>
+          <li><a href="<?php echo $sl_option['href']; ?>"<?php echo $sl_option['active'] ? ' class="active" aria-current="true"' : ''; ?>><?php echo $sl_option['name']; ?> <span class="sl-chip-count"><?php echo $sl_option['total']; ?></span></a></li>
+          <?php } ?>
+          <?php if (!empty($sl_power_reset)) { ?>
+          <li><a class="sl-chip-reset" href="<?php echo $sl_power_reset; ?>">Сбросить</a></li>
+          <?php } ?>
+        </ul>
+      </div>
+      <?php } ?>
       <?php if ($products) { ?>
       <div class="row">
         <div class="col-md-2 col-sm-6 hidden-xs">
