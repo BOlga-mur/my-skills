@@ -128,7 +128,7 @@
         <a class="tile" href="upravlenie-svetom" style="--i:8"><div><h3>Управление светом</h3><p>Выключатели, диммеры, датчики движения</p></div><svg class="pic" aria-hidden="true"><use href="#d-switch"/></svg></a>
         <a class="tile" href="elektrika" style="--i:9"><div><h3>Электрика</h3><p>Кабель, розетки, автоматы</p></div><svg class="pic" aria-hidden="true"><use href="#d-electric"/></svg></a>
         <a class="tile" href="kabel-i-provod" style="--i:10"><div><h3>Кабель и провод</h3></div><svg class="pic" aria-hidden="true"><use href="#d-cable"/></svg></a>
-        <a class="tile" href="teplyj-po" style="--i:11"><div><h3>Тёплый пол</h3><p>Кабель, маты, терморегуляторы</p></div><svg class="pic" aria-hidden="true"><use href="#d-floor"/></svg></a>
+        <a class="tile" href="teplyj-pol" style="--i:11"><div><h3>Тёплый пол</h3><p>Кабель, маты, терморегуляторы</p></div><svg class="pic" aria-hidden="true"><use href="#d-floor"/></svg></a>
       </div>
     </div>
     <div class="cat-group">
