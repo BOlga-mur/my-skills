@@ -32,6 +32,24 @@ $column_left = ''; ?>
       <!-- Filter rows: filled by the «СветЛамп: фильтр по мощности и напряжению» modification -->
       <div class="sl-filters">
       <?php foreach ($sl_filters as $sl_filter_row) { ?>
+      <?php if (isset($sl_filter_row['type']) && $sl_filter_row['type'] == 'range') { ?>
+      <?php $sl_vals = $sl_filter_row['values']; $sl_fmt = function ($v) { return str_replace('.', ',', rtrim(rtrim(number_format($v, 2, '.', ''), '0'), '.')); }; ?>
+      <div class="sl-power sl-range" data-base="<?php echo $sl_filter_row['base']; ?>" data-param="<?php echo $sl_filter_row['param']; ?>" data-unit="<?php echo $sl_filter_row['unit']; ?>" data-values="<?php echo htmlspecialchars(json_encode($sl_vals)); ?>">
+        <span class="sl-power-label" id="sl-range-<?php echo $sl_filter_row['param']; ?>"><?php echo $sl_filter_row['label']; ?></span>
+        <div class="sl-range-box">
+          <output class="sl-range-out">от <?php echo $sl_fmt($sl_vals[$sl_filter_row['from']]); ?> до <?php echo $sl_fmt($sl_vals[$sl_filter_row['to']]); ?> <?php echo $sl_filter_row['unit']; ?></output>
+          <div class="sl-range-track">
+            <div class="sl-range-fill"></div>
+            <input type="range" class="sl-range-from" min="0" max="<?php echo count($sl_vals) - 1; ?>" step="1" value="<?php echo $sl_filter_row['from']; ?>" aria-label="<?php echo $sl_filter_row['label']; ?> от" />
+            <input type="range" class="sl-range-to" min="0" max="<?php echo count($sl_vals) - 1; ?>" step="1" value="<?php echo $sl_filter_row['to']; ?>" aria-label="<?php echo $sl_filter_row['label']; ?> до" />
+          </div>
+          <div class="sl-range-ends"><span><?php echo $sl_fmt($sl_vals[0]); ?></span><span><?php echo $sl_fmt($sl_vals[count($sl_vals) - 1]); ?></span></div>
+        </div>
+        <?php if ($sl_filter_row['reset']) { ?>
+        <a class="sl-chip-reset" href="<?php echo $sl_filter_row['reset']; ?>">Сбросить</a>
+        <?php } ?>
+      </div>
+      <?php continue; } ?>
       <div class="sl-power" role="group" aria-label="<?php echo $sl_filter_row['label']; ?>">
         <span class="sl-power-label"><?php echo $sl_filter_row['label']; ?></span>
         <ul class="sl-chips">
@@ -45,6 +63,40 @@ $column_left = ''; ?>
       </div>
       <?php } ?>
       </div>
+      <script>
+      // Power slider: the handles step over the values that exist; letting go opens the filtered list
+      document.querySelectorAll('.sl-range').forEach(function (box) {
+        var values = JSON.parse(box.dataset.values), from = box.querySelector('.sl-range-from'), to = box.querySelector('.sl-range-to');
+        var out = box.querySelector('.sl-range-out'), fill = box.querySelector('.sl-range-fill'), last = values.length - 1;
+        function fmt(v) { return String(Math.round(v * 100) / 100).replace('.', ','); }
+        function draw(moved) {
+          if (+from.value > +to.value) { if (moved === from) { from.value = to.value; } else { to.value = from.value; } }
+          out.textContent = 'от ' + fmt(values[from.value]) + ' до ' + fmt(values[to.value]) + ' ' + box.dataset.unit;
+          fill.style.left = (from.value / last * 100) + '%';
+          fill.style.right = (100 - to.value / last * 100) + '%';
+          // both handles at the right end: the left one stays on top, so it can still be pulled back
+          from.style.zIndex = +from.value === last ? 3 : '';
+        }
+        var timer;
+        function go() {
+          // a short pause, so several arrow-key steps make one request
+          clearTimeout(timer);
+          timer = setTimeout(open, 700);
+        }
+        function open() {
+          var url = box.dataset.base;
+          if (+from.value > 0 || +to.value < last) {
+            url += (url.indexOf('?') < 0 ? '?' : '&') + box.dataset.param + '_from=' + values[from.value] + '&' + box.dataset.param + '_to=' + values[to.value];
+          }
+          location.href = url;
+        }
+        [from, to].forEach(function (input) {
+          input.addEventListener('input', function () { draw(input); });
+          input.addEventListener('change', go);
+        });
+        draw();
+      });
+      </script>
       <?php } ?>
       <?php if ($products) { ?>
       <div class="row">

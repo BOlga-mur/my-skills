@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="utf-8"?>
+<modification>
+  <name>СветЛамп: фильтр по мощности и напряжению</name>
+  <code>svetlamp_power_filter</code>
+  <version>4.0</version>
+  <author>СветЛамп</author>
+  <link>https://svetlamp51.ru</link>
+  <!--
+    Rows of buttons above the products of a category, one row per product attribute below
+    (lamp power, power supply power, voltage). A row is shown only where the category has
+    at least two different values of that attribute. Several buttons in a row can be on at
+    once; rows combine. The choice travels in the address (?power=7,9.5&wt=60&volt=24) and
+    survives sorting and paging. Counts take the other rows' choice into account.
+    Values are compared without units and spaces, so «220», «220В» and «220 V» are one button,
+    as are «10», «10W» and «10 Вт».
+    A power row with more than 8 values becomes a slider «от … до …» over the values that exist
+    (?wt_from=6&wt_to=14.4).
+  -->
+  <file path="catalog/controller/product/category.php">
+    <operation>
+      <search><![CDATA[$data['products'] = array();]]></search>
+      <add position="before"><![CDATA[			// SvetLamp filter: attribute name in the shop => address parameter, row title, unit,
+			// and whether the row turns into a slider when it has many values
+			$sl_groups = array(
+				'Мощность лампы' => array('param' => 'power', 'label' => 'Мощность', 'unit' => 'Вт', 'slider' => true),
+				'Мощность'       => array('param' => 'wt',    'label' => 'Мощность', 'unit' => 'Вт', 'slider' => true),
+				'Напряжение'     => array('param' => 'volt',  'label' => 'Напряжение', 'unit' => 'В', 'slider' => false)
+			);
+
+			// The choice in each row: a list of values (buttons) or a range (slider)
+			$sl_filter = array();
+
+			foreach ($sl_groups as $sl_name => $sl_group) {
+				$sl_param = $sl_group['param'];
+
+				if (isset($this->request->get[$sl_param . '_from']) && isset($this->request->get[$sl_param . '_to']) && is_numeric($this->request->get[$sl_param . '_from']) && is_numeric($this->request->get[$sl_param . '_to'])) {
+					$sl_filter[$sl_name] = array('from' => (float)$this->request->get[$sl_param . '_from'], 'to' => (float)$this->request->get[$sl_param . '_to']);
+				} elseif (!empty($this->request->get[$sl_param])) {
+					$sl_list = array();
+
+					foreach (explode(',', $this->request->get[$sl_param]) as $sl_value) {
+						$sl_value = trim($sl_value);
+
+						if ($sl_value !== '' && !in_array($sl_value, $sl_list)) {
+							$sl_list[] = $sl_value;
+						}
+					}
+
+					if ($sl_list) {
+						$sl_filter[$sl_name] = array('in' => $sl_list);
+					}
+				}
+			}
+
+			// Sorting and page size stay in the filter links, the page number starts again
+			$sl_url = '';
+
+			foreach (array('sort', 'order', 'limit') as $sl_key) {
+				if (isset($this->request->get[$sl_key])) {
+					$sl_url .= '&' . $sl_key . '=' . $this->request->get[$sl_key];
+				}
+			}
+
+			$data['sl_filters'] = array();
+
+			foreach ($sl_groups as $sl_name => $sl_group) {
+				// Count products under the other rows' choice
+				$sl_where = '';
+
+				foreach ($sl_filter as $sl_other => $sl_choice) {
+					if ($sl_other != $sl_name) {
+						$sl_where .= $this->slChoiceSql($sl_other, $sl_choice);
+					}
+				}
+
+				$sl_rows = $this->db->query("SELECT " . $this->slNormSql('pa.text') . " AS text, COUNT(DISTINCT p.product_id) AS total FROM `" . DB_PREFIX . "product_attribute` pa LEFT JOIN `" . DB_PREFIX . "attribute_description` ad ON (ad.attribute_id = pa.attribute_id AND ad.language_id = pa.language_id) LEFT JOIN `" . DB_PREFIX . "product_to_category` p2c ON (p2c.product_id = pa.product_id) LEFT JOIN `" . DB_PREFIX . "product` p ON (p.product_id = pa.product_id) LEFT JOIN `" . DB_PREFIX . "product_to_store` p2s ON (p2s.product_id = p.product_id) WHERE ad.name = '" . $this->db->escape($sl_name) . "' AND p2c.category_id = '" . (int)$category_id . "' AND pa.language_id = '" . (int)$this->config->get('config_language_id') . "' AND TRIM(pa.text) <> '' AND p.status = '1' AND p.date_available <= NOW() AND p2s.store_id = '" . (int)$this->config->get('config_store_id') . "'" . $sl_where . " GROUP BY " . $this->slNormSql('pa.text') . " ORDER BY CAST(" . $this->slNormSql('pa.text') . " AS DECIMAL(10,2)), " . $this->slNormSql('pa.text'))->rows;
+
+				$sl_choice = isset($sl_filter[$sl_name]) ? $sl_filter[$sl_name] : array();
+
+				// A row with a single value filters nothing, unless it is already in use
+				if (count($sl_rows) < 2 && !$sl_choice) {
+					continue;
+				}
+
+				// Links without this row's choice: the base for the slider and the reset link
+				$sl_next = $sl_filter;
+				unset($sl_next[$sl_name]);
+				$sl_base = $this->url->link('product/category', 'path=' . $this->request->get['path'] . $sl_url . $this->slFilterUrl($sl_groups, $sl_next));
+
+				// Many numeric values: a slider over the values that exist
+				$sl_numbers = array();
+
+				foreach ($sl_rows as $sl_row) {
+					if (is_numeric($sl_row['text'])) {
+						$sl_numbers[] = (float)$sl_row['text'];
+					}
+				}
+
+				if ($sl_group['slider'] && count($sl_numbers) > 8 && count($sl_numbers) == count($sl_rows)) {
+					$sl_from = 0;
+					$sl_to = count($sl_numbers) - 1;
+
+					if (isset($sl_choice['from'])) {
+						foreach ($sl_numbers as $sl_i => $sl_number) {
+							if ($sl_number < $sl_choice['from']) {
+								$sl_from = $sl_i + 1;
+							}
+
+							if ($sl_number <= $sl_choice['to']) {
+								$sl_to = $sl_i;
+							}
+						}
+
+						$sl_from = min($sl_from, $sl_to);
+					}
+
+					$data['sl_filters'][] = array(
+						'type'   => 'range',
+						'label'  => $sl_group['label'],
+						'unit'   => $sl_group['unit'],
+						'param'  => $sl_group['param'],
+						'values' => $sl_numbers,
+						'from'   => $sl_from,
+						'to'     => $sl_to,
+						'base'   => $sl_base,
+						'reset'  => $sl_choice ? $sl_base : ''
+					);
+
+					continue;
+				}
+
+				// Otherwise buttons
+				$sl_chosen = isset($sl_choice['in']) ? $sl_choice['in'] : array();
+				$sl_options = array();
+
+				foreach ($sl_rows as $sl_row) {
+					$sl_active = in_array($sl_row['text'], $sl_chosen);
+					$sl_next = $sl_filter;
+					$sl_list = $sl_active ? array_values(array_diff($sl_chosen, array($sl_row['text']))) : array_merge($sl_chosen, array($sl_row['text']));
+
+					if ($sl_list) {
+						$sl_next[$sl_name] = array('in' => $sl_list);
+					} else {
+						unset($sl_next[$sl_name]);
+					}
+
+					// A number or a range gets its unit: «24» → «24 В», «9.5» → «9,5 Вт», «100-240» → «100-240 В»
+					$sl_label = str_replace('.', ',', $sl_row['text']);
+
+					if (preg_match('/^[0-9]+([.][0-9]+)?(-[0-9]+([.][0-9]+)?)?$/', $sl_row['text'])) {
+						$sl_label .= ' ' . $sl_group['unit'];
+					}
+
+					$sl_options[] = array(
+						'name'   => $sl_label,
+						'total'  => (int)$sl_row['total'],
+						'active' => $sl_active,
+						'href'   => $this->url->link('product/category', 'path=' . $this->request->get['path'] . $sl_url . $this->slFilterUrl($sl_groups, $sl_next))
+					);
+				}
+
+				$data['sl_filters'][] = array(
+					'type'    => 'buttons',
+					'label'   => $sl_group['label'],
+					'options' => $sl_options,
+					'reset'   => $sl_choice ? $sl_base : ''
+				);
+			}
+]]></add>
+    </operation>
+    <operation>
+      <search><![CDATA['filter_filter'      => $filter,]]></search>
+      <add position="after"><![CDATA[				'filter_sl'          => $sl_filter,]]></add>
+    </operation>
+    <operation>
+      <!-- sorting, page size and paging links keep the chosen values -->
+      <search index="2,3,4"><![CDATA[if (isset($this->request->get['filter'])) {]]></search>
+      <add position="before"><![CDATA[			foreach (array('power', 'power_from', 'power_to', 'wt', 'wt_from', 'wt_to', 'volt') as $sl_key) {
+				if (isset($this->request->get[$sl_key]) && $this->request->get[$sl_key] !== '') {
+					$url .= '&' . $sl_key . '=' . urlencode($this->request->get[$sl_key]);
+				}
+			}
+]]></add>
+    </operation>
+    <operation>
+      <search><![CDATA[class ControllerProductCategory extends Controller {]]></search>
+      <add position="after"><![CDATA[	// SvetLamp filter: a value without units and spaces, decimal point — «220 В» → 220, «9,5Вт» → 9.5
+	private function slNormSql($column) {
+		return "REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(TRIM(" . $column . "), 'Вт', ''), 'вт', ''), 'ВТ', ''), 'W', ''), 'w', ''), 'V', ''), 'v', ''), 'В', ''), 'в', ''), ' ', ''), ',', '.')";
+	}
+
+	// SvetLamp filter: the address part for the chosen values, «&wt=60,100&volt=24» or «&wt_from=6&wt_to=14.4»
+	private function slFilterUrl($groups, $filter) {
+		$url = '';
+
+		foreach ($groups as $name => $group) {
+			if (isset($filter[$name]['from'])) {
+				$url .= '&' . $group['param'] . '_from=' . $filter[$name]['from'] . '&' . $group['param'] . '_to=' . $filter[$name]['to'];
+			} elseif (!empty($filter[$name]['in'])) {
+				$url .= '&' . $group['param'] . '=' . urlencode(implode(',', $filter[$name]['in']));
+			}
+		}
+
+		return $url;
+	}
+
+	// SvetLamp filter: «AND the product has this value / a value in this range» for one attribute
+	private function slChoiceSql($name, $choice) {
+		$value = $this->slNormSql('pa2.text');
+
+		if (isset($choice['from'])) {
+			$test = "CAST(" . $value . " AS DECIMAL(10,2)) BETWEEN '" . (float)$choice['from'] . "' AND '" . (float)$choice['to'] . "'";
+		} else {
+			$test = $value . " IN ('" . implode("','", array_map(array($this->db, 'escape'), $choice['in'])) . "')";
+		}
+
+		return " AND p.product_id IN (SELECT pa2.product_id FROM `" . DB_PREFIX . "product_attribute` pa2 LEFT JOIN `" . DB_PREFIX . "attribute_description` ad2 ON (ad2.attribute_id = pa2.attribute_id AND ad2.language_id = pa2.language_id) WHERE ad2.name = '" . $this->db->escape($name) . "' AND pa2.language_id = '" . (int)$this->config->get('config_language_id') . "' AND " . $test . ")";
+	}
+]]></add>
+    </operation>
+  </file>
+  <file path="catalog/model/catalog/product.php">
+    <operation>
+      <search><![CDATA[if (!empty($data['filter_manufacturer_id'])) {]]></search>
+      <add position="before"><![CDATA[		// SvetLamp filter: products having one of the chosen values or a value in the chosen range, for each attribute
+		if (!empty($data['filter_sl'])) {
+			foreach ($data['filter_sl'] as $sl_name => $sl_choice) {
+				$sl_value = "REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(TRIM(pa.text), 'Вт', ''), 'вт', ''), 'ВТ', ''), 'W', ''), 'w', ''), 'V', ''), 'v', ''), 'В', ''), 'в', ''), ' ', ''), ',', '.')";
+
+				if (isset($sl_choice['from'])) {
+					$sl_test = "CAST(" . $sl_value . " AS DECIMAL(10,2)) BETWEEN '" . (float)$sl_choice['from'] . "' AND '" . (float)$sl_choice['to'] . "'";
+				} elseif (!empty($sl_choice['in'])) {
+					$sl_list = array();
+
+					foreach ($sl_choice['in'] as $sl_item) {
+						$sl_list[] = "'" . $this->db->escape($sl_item) . "'";
+					}
+
+					$sl_test = $sl_value . " IN (" . implode(',', $sl_list) . ")";
+				} else {
+					continue;
+				}
+
+				$sql .= " AND p.product_id IN (SELECT pa.product_id FROM `" . DB_PREFIX . "product_attribute` pa LEFT JOIN `" . DB_PREFIX . "attribute_description` ad ON (ad.attribute_id = pa.attribute_id AND ad.language_id = pa.language_id) WHERE ad.name = '" . $this->db->escape($sl_name) . "' AND pa.language_id = '" . (int)$this->config->get('config_language_id') . "' AND " . $sl_test . ")";
+			}
+		}
+]]></add>
+    </operation>
+  </file>
+</modification>
