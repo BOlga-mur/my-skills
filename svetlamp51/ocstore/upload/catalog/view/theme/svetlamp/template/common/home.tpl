@@ -203,18 +203,6 @@
         <div class="card-body">
           <span class="card-cat"><?php echo $product['caption']; ?></span>
           <h3><?php echo $product['name']; ?></h3>
-          <ul class="tags">
-            <?php foreach ($product['tags'] as $tag) { ?>
-            <?php
-            // Colour temperature tags get the colour of their light
-            $tag_class = '';
-            if (preg_match('/(\d{4})\s*[KК]/u', $tag, $kelvin)) {
-              $tag_class = $kelvin[1] < 3500 ? 'warm' : ($kelvin[1] <= 5000 ? 'neutral' : 'cool');
-            }
-            ?>
-            <li<?php echo $tag_class ? ' class="' . $tag_class . '"' : ''; ?>><?php echo $tag; ?></li>
-            <?php } ?>
-          </ul>
         </div>
       </a></li>
       <?php } ?>

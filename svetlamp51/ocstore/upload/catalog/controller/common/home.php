@@ -75,54 +75,11 @@ class ControllerCommonHome extends Controller {
 					'name'       => $product_info['name'],
 					'caption'    => $product_info['manufacturer'],
 					'thumb'      => $thumb,
-					'tags'       => $this->getTags($product_info),
 					'href'       => $this->url->link('product/product', 'product_id=' . $product_info['product_id'])
 				);
 			}
 		}
 
 		return $products;
-	}
-
-	// Tags under the card: product attributes, three at most, each short enough for one row.
-	// A bare number gets its attribute name («Мощность 10»), values with units (3000K, IP65) stay as they are,
-	// «да/нет» values are skipped.
-	protected function getTags($product_info) {
-		$tags = array();
-
-		foreach ($this->model_catalog_product->getProductAttributes($product_info['product_id']) as $attribute_group) {
-			foreach ($attribute_group['attribute'] as $attribute) {
-				$text = trim(strip_tags(html_entity_decode($attribute['text'], ENT_QUOTES, 'UTF-8')));
-
-				if ($text === '' || in_array(utf8_strtolower($text), array('нет', 'да', 'есть', '-', '—'))) {
-					continue;
-				}
-
-				if (!preg_match('/[a-zа-яё]/iu', preg_replace('/(^|\s)(до|от)(\s|$)/u', ' ', $text))) {
-					$text = trim(strip_tags(html_entity_decode($attribute['name'], ENT_QUOTES, 'UTF-8'))) . ' ' . $text;
-				}
-
-				if (utf8_strlen($text) > 22) {
-					continue;
-				}
-
-				$tag = htmlspecialchars($text, ENT_QUOTES, 'UTF-8');
-
-				if (!in_array($tag, $tags)) {
-					$tags[] = $tag;
-				}
-
-				if (count($tags) == 3) {
-					return $tags;
-				}
-			}
-		}
-
-		// No usable attributes: the model, when it is short and is not just the product name again
-		if (!$tags && $product_info['model'] && utf8_strlen($product_info['model']) <= 22 && utf8_strtolower($product_info['model']) != utf8_strtolower($product_info['name'])) {
-			$tags[] = htmlspecialchars($product_info['model'], ENT_QUOTES, 'UTF-8');
-		}
-
-		return $tags;
 	}
 }
