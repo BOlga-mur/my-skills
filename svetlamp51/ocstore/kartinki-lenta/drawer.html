@@ -1,0 +1,63 @@
+<!doctype html><html><head><meta charset="utf-8"><style>body{margin:0}svg{display:block}</style></head><body>
+<!-- Kitchen base unit, the top drawer pulled out; a strip under the worktop edge lights its contents -->
+<svg id="s" width="1200" height="900" viewBox="0 0 1200 900" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="wall" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2c2620"/><stop offset="1" stop-color="#3a3029"/></linearGradient>
+    <linearGradient id="top" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4a4f55"/><stop offset="1" stop-color="#2f3338"/></linearGradient>
+    <linearGradient id="body" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5e4230"/><stop offset="1" stop-color="#3c2a1e"/></linearGradient>
+    <linearGradient id="inside" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff3d8"/><stop offset=".55" stop-color="#ecd3a8"/><stop offset="1" stop-color="#b98f5e"/></linearGradient>
+    <linearGradient id="side" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#a77b52"/><stop offset="1" stop-color="#d9b285"/></linearGradient>
+    <linearGradient id="side2" x1="1" y1="0" x2="0" y2="0"><stop offset="0" stop-color="#a77b52"/><stop offset="1" stop-color="#d9b285"/></linearGradient>
+    <linearGradient id="front" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9a6b42"/><stop offset="1" stop-color="#7a5232"/></linearGradient>
+    <linearGradient id="spill" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffe7b8" stop-opacity=".55"/><stop offset="1" stop-color="#ffe7b8" stop-opacity="0"/></linearGradient>
+    <radialGradient id="plate" cx=".45" cy=".4" r=".6"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#dcd6cc"/></radialGradient>
+  </defs>
+  <rect width="1200" height="900" fill="url(#wall)"/>
+  <!-- worktop -->
+  <path d="M0 120H1200V200H0Z" fill="url(#top)"/>
+  <rect x="0" y="200" width="1200" height="26" fill="#23272b"/>
+  <!-- LED strip under the worktop edge -->
+  <rect x="0" y="226" width="1200" height="6" fill="#fff6dc"/>
+  <!-- cabinet body -->
+  <rect x="0" y="232" width="1200" height="668" fill="url(#body)"/>
+  <rect x="0" y="232" width="1200" height="140" fill="url(#spill)"/>
+  <!-- dark opening the drawer came out of -->
+  <rect x="230" y="262" width="740" height="40" fill="#1a130e"/>
+  <!-- drawer sides -->
+  <path d="M230 302L120 640H180L262 302Z" fill="url(#side)"/>
+  <path d="M970 302L1080 640H1020L938 302Z" fill="url(#side2)"/>
+  <!-- lit inside -->
+  <path d="M262 302H938L1020 640H180Z" fill="url(#inside)"/>
+  <!-- strip along the back of the drawer -->
+  <rect x="262" y="302" width="676" height="5" fill="#ffffff"/>
+  <!-- stacks of plates -->
+  <g>
+    <ellipse cx="400" cy="470" rx="120" ry="66" fill="#bfb6a8"/>
+    <ellipse cx="400" cy="458" rx="120" ry="66" fill="#d8d0c4"/>
+    <ellipse cx="400" cy="446" rx="120" ry="66" fill="url(#plate)"/>
+    <ellipse cx="400" cy="446" rx="72" ry="40" fill="none" stroke="#cfc6b8" stroke-width="3"/>
+  </g>
+  <g>
+    <ellipse cx="680" cy="420" rx="96" ry="52" fill="#bfb6a8"/>
+    <ellipse cx="680" cy="410" rx="96" ry="52" fill="url(#plate)"/>
+    <ellipse cx="680" cy="410" rx="56" ry="30" fill="none" stroke="#cfc6b8" stroke-width="3"/>
+  </g>
+  <!-- bowls -->
+  <g>
+    <ellipse cx="820" cy="540" rx="80" ry="44" fill="#3f6d86"/>
+    <ellipse cx="820" cy="534" rx="66" ry="34" fill="#6a9ab4"/>
+    <ellipse cx="640" cy="565" rx="70" ry="38" fill="#3f6d86"/>
+    <ellipse cx="640" cy="560" rx="56" ry="28" fill="#6a9ab4"/>
+  </g>
+  <!-- drawer front, pulled out -->
+  <rect x="110" y="640" width="980" height="120" rx="4" fill="url(#front)"/>
+  <rect x="110" y="640" width="980" height="6" fill="#b98858"/>
+  <rect x="480" y="690" width="240" height="14" rx="7" fill="#d4d7da"/>
+  <!-- closed drawer below -->
+  <rect x="230" y="780" width="740" height="120" fill="#5b402e"/>
+  <rect x="230" y="780" width="740" height="4" fill="#6b4c37"/>
+  <rect x="520" y="830" width="160" height="12" rx="6" fill="#c9ccd0"/>
+  <!-- shadow under the pulled-out front -->
+  <rect x="110" y="760" width="980" height="20" fill="#000" opacity=".25"/>
+</svg>
+</body></html>
