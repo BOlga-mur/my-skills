@@ -30,7 +30,7 @@ def shop(html):
                   lambda m: 'class="sl-btn ' + ' '.join('sl-' + t if t.startswith('btn-') else t for t in m.group(1).split()) + '"',
                   html)
     # Shop links relative to <base href="https://svetlamp51.ru/">
-    return html.replace('href="' + SITE, 'href="')
+    return html.replace('href="' + SITE, 'href="').replace('data-href="' + SITE, 'data-href="')
 
 
 # ---------- header.tpl ----------
@@ -55,9 +55,6 @@ sockets = between('<!-- Socket picker -->', '<!-- Recommended -->')
 showroom = between('<!-- Showroom -->', '</main>')
 recommended = open(os.path.join(TOOLS, 'theme_recommended.tpl'), encoding='utf-8').read()
 
-old = '<a class="btn btn-ink" id="slink" href="#catalog">'
-assert old in sockets
-sockets = sockets.replace(old, '<a class="btn btn-ink" id="slink" href="index.php?route=product/search&amp;search=GX53" data-search="index.php?route=product/search&amp;search=">')
 showroom = showroom.replace('<p class="lead">', '<p class="lead showroom-lead">')
 
 fit = '''<script>
@@ -87,8 +84,7 @@ def block(title):
 parts = [
     block('Hero fits').replace("  const hero = document.querySelector('.hero');\n", "  const hero = document.querySelector('.sl .hero');\n  if (!hero) return;\n"),
     block('Colour temperature').replace("  const input = document.getElementById('kelvin');\n", "  const input = document.getElementById('kelvin');\n  if (!input) return;\n"),
-    block('Sockets').replace("  const card = document.querySelector('.socket-card');\n", "  const card = document.querySelector('.socket-card');\n  if (!card) return;\n")
-        .replace("$('slink').firstChild.textContent = 'Лампы ' + key;", "$('slink').firstChild.textContent = 'Лампы ' + key;\n    $('slink').href = $('slink').dataset.search + encodeURIComponent(key);"),
+    block('Sockets').replace("  const card = document.querySelector('.socket-card');\n", "  const card = document.querySelector('.socket-card');\n  if (!card) return;\n"),
     block('Catalog panel').replace("  const panel = document.getElementById('catpanel');\n", "  const panel = document.getElementById('catpanel');\n  if (!btn || !panel) return;\n"),
     block('Reveal on scroll'),
 ]

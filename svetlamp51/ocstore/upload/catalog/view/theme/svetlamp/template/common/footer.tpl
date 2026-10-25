@@ -32,5 +32,5 @@
 <?php if (!empty($scripts)) { foreach ($scripts as $script) { ?>
 <script src="<?php echo $script; ?>" type="text/javascript"></script>
 <?php } } ?>
-<script src="catalog/view/theme/svetlamp/javascript/svetlamp.js?v=3"></script>
+<script src="catalog/view/theme/svetlamp/javascript/svetlamp.js?v=4"></script>
 </body></html>

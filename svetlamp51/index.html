@@ -851,14 +851,14 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
       <p>Именно цоколь становится причиной многих ошибок при покупке. Выберите свой или принесите старую лампу в зал.</p>
     </div>
     <div class="sockets" role="group" aria-label="Цоколи">
-      <button class="socket" type="button" aria-pressed="true" data-s="GX53">GX53</button>
-      <button class="socket" type="button" aria-pressed="false" data-s="GU5.3">GU5.3</button>
-      <button class="socket" type="button" aria-pressed="false" data-s="GU10">GU10</button>
-      <button class="socket" type="button" aria-pressed="false" data-s="E14">E14</button>
-      <button class="socket" type="button" aria-pressed="false" data-s="E27">E27</button>
-      <button class="socket" type="button" aria-pressed="false" data-s="G9">G9</button>
-      <button class="socket" type="button" aria-pressed="false" data-s="G4">G4</button>
-      <button class="socket" type="button" aria-pressed="false" data-s="T8">T8</button>
+      <button class="socket" type="button" aria-pressed="true" data-s="GX53" data-href="https://svetlamp51.ru/lampy/cokol-gx53">GX53</button>
+      <button class="socket" type="button" aria-pressed="false" data-s="GU5.3" data-href="https://svetlamp51.ru/lampy/cokol-GU53">GU5.3</button>
+      <button class="socket" type="button" aria-pressed="false" data-s="GU10" data-href="https://svetlamp51.ru/lampy/cokol-gu10">GU10</button>
+      <button class="socket" type="button" aria-pressed="false" data-s="E14" data-href="https://svetlamp51.ru/lampy/cokol-e14">E14</button>
+      <button class="socket" type="button" aria-pressed="false" data-s="E27" data-href="https://svetlamp51.ru/lampy/cokol-e27">E27</button>
+      <button class="socket" type="button" aria-pressed="false" data-s="G9" data-href="https://svetlamp51.ru/lampy/cokol-g9">G9</button>
+      <button class="socket" type="button" aria-pressed="false" data-s="G4" data-href="https://svetlamp51.ru/lampy/cokol-g4">G4</button>
+      <button class="socket" type="button" aria-pressed="false" data-s="T8" data-href="https://svetlamp51.ru/lampy/cokol-g13">T8</button>
     </div>
     <div class="socket-card" aria-live="polite">
       <div class="socket-figure" id="sfig"></div>
@@ -873,7 +873,7 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
         <div><dt>Какие лампы</dt><dd id="slamps">Таблетка ⌀ 75 мм</dd></div>
         <div><dt>Напряжение</dt><dd id="svolt">220 В</dd></div>
         </dl>
-        <a class="btn btn-ink" id="slink" href="#catalog">Лампы GX53<svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+        <a class="btn btn-ink" id="slink" href="https://svetlamp51.ru/lampy/cokol-gx53">Лампы GX53<svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
       </div>
     </div>
   </div>
@@ -1075,6 +1075,9 @@ document.documentElement.classList.add('js');
     $('slamps').textContent = d.lamps;
     $('svolt').textContent = d.volt;
     $('slink').firstChild.textContent = 'Лампы ' + key;
+    // Each socket button carries the address of its lamp page
+    const btn = [...btns].find(b => b.dataset.s === key);
+    if (btn && btn.dataset.href) $('slink').href = btn.dataset.href;
     btns.forEach(b => b.setAttribute('aria-pressed', b.dataset.s === key));
     if (animate) { card.classList.remove('swap'); void card.offsetWidth; card.classList.add('swap'); }
   }

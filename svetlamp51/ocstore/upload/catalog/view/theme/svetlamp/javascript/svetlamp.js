@@ -113,7 +113,9 @@
     $('slamps').textContent = d.lamps;
     $('svolt').textContent = d.volt;
     $('slink').firstChild.textContent = 'Лампы ' + key;
-    $('slink').href = $('slink').dataset.search + encodeURIComponent(key);
+    // Each socket button carries the address of its lamp page
+    const btn = [...btns].find(b => b.dataset.s === key);
+    if (btn && btn.dataset.href) $('slink').href = btn.dataset.href;
     btns.forEach(b => b.setAttribute('aria-pressed', b.dataset.s === key));
     if (animate) { card.classList.remove('swap'); void card.offsetWidth; card.classList.add('swap'); }
   }

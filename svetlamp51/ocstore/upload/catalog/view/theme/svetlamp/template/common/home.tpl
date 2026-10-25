@@ -160,14 +160,14 @@
       <p>Именно цоколь становится причиной многих ошибок при покупке. Выберите свой или принесите старую лампу в зал.</p>
     </div>
     <div class="sockets" role="group" aria-label="Цоколи">
-      <button class="socket" type="button" aria-pressed="true" data-s="GX53">GX53</button>
-      <button class="socket" type="button" aria-pressed="false" data-s="GU5.3">GU5.3</button>
-      <button class="socket" type="button" aria-pressed="false" data-s="GU10">GU10</button>
-      <button class="socket" type="button" aria-pressed="false" data-s="E14">E14</button>
-      <button class="socket" type="button" aria-pressed="false" data-s="E27">E27</button>
-      <button class="socket" type="button" aria-pressed="false" data-s="G9">G9</button>
-      <button class="socket" type="button" aria-pressed="false" data-s="G4">G4</button>
-      <button class="socket" type="button" aria-pressed="false" data-s="T8">T8</button>
+      <button class="socket" type="button" aria-pressed="true" data-s="GX53" data-href="lampy/cokol-gx53">GX53</button>
+      <button class="socket" type="button" aria-pressed="false" data-s="GU5.3" data-href="lampy/cokol-GU53">GU5.3</button>
+      <button class="socket" type="button" aria-pressed="false" data-s="GU10" data-href="lampy/cokol-gu10">GU10</button>
+      <button class="socket" type="button" aria-pressed="false" data-s="E14" data-href="lampy/cokol-e14">E14</button>
+      <button class="socket" type="button" aria-pressed="false" data-s="E27" data-href="lampy/cokol-e27">E27</button>
+      <button class="socket" type="button" aria-pressed="false" data-s="G9" data-href="lampy/cokol-g9">G9</button>
+      <button class="socket" type="button" aria-pressed="false" data-s="G4" data-href="lampy/cokol-g4">G4</button>
+      <button class="socket" type="button" aria-pressed="false" data-s="T8" data-href="lampy/cokol-g13">T8</button>
     </div>
     <div class="socket-card" aria-live="polite">
       <div class="socket-figure" id="sfig"></div>
@@ -182,7 +182,7 @@
         <div><dt>Какие лампы</dt><dd id="slamps">Таблетка ⌀ 75 мм</dd></div>
         <div><dt>Напряжение</dt><dd id="svolt">220 В</dd></div>
         </dl>
-        <a class="sl-btn sl-btn-ink" id="slink" href="index.php?route=product/search&amp;search=GX53" data-search="index.php?route=product/search&amp;search=">Лампы GX53<svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+        <a class="sl-btn sl-btn-ink" id="slink" href="lampy/cokol-gx53">Лампы GX53<svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
       </div>
     </div>
   </div>
