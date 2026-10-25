@@ -11,9 +11,8 @@
       <li style="--i:<?php echo $i; ?>"><a class="card" href="<?php echo $product['href']; ?>">
         <div class="card-pic"><img src="<?php echo $product['thumb']; ?>" alt="<?php echo $product['name']; ?>" loading="lazy" /></div>
         <div class="card-body">
-          <?php if ($product['caption']) { ?><span class="card-cat"><?php echo $product['caption']; ?></span><?php } ?>
+          <span class="card-cat"><?php echo $product['caption']; ?></span>
           <h3><?php echo $product['name']; ?></h3>
-          <?php if ($product['tags']) { ?>
           <ul class="tags">
             <?php foreach ($product['tags'] as $tag) { ?>
             <?php
@@ -26,7 +25,6 @@
             <li<?php echo $tag_class ? ' class="' . $tag_class . '"' : ''; ?>><?php echo $tag; ?></li>
             <?php } ?>
           </ul>
-          <?php } ?>
         </div>
       </a></li>
       <?php } ?>

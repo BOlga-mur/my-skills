@@ -285,9 +285,15 @@ button[onclick*="cart.add"], input[onclick*="cart.add"] { display: none !importa
 .sl .card-pic { background: var(--surface); aspect-ratio: 4 / 3; display: grid; place-items: center; padding: 16%; }
 .sl .card-pic svg { width: 100%; height: 100%; color: var(--ink); }
 .sl .card-body { padding: 18px 20px 22px; display: flex; flex-direction: column; gap: 12px; flex: 1; }
-.sl .card-cat { font-size: var(--step-small); color: var(--muted); }
-.sl .card h3 { font-size: 18px; line-height: 1.25; letter-spacing: -0.01em; }
-.sl .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: auto; }
+/* Cards keep one height whatever the product: the grid cell is filled, the brand line is
+   always there, long names stop at three lines, tags stay on one row at the bottom */
+.sl .cards > li { display: flex; }
+.sl .cards > li > .card { flex: 1; }
+.sl .card-cat { font-size: var(--step-small); color: var(--muted); line-height: 1.4; min-height: 1.4em; }
+.sl .card h3 { font-size: 18px; line-height: 1.25; letter-spacing: -0.01em; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; min-height: 3.75em; }
+/* One row of tags: a tag that does not fit wraps to a second row, which is cut off, so no tag is shown half */
+.sl .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: auto; height: 30px; overflow: hidden; }
+.sl .tags li { white-space: nowrap; }
 .sl .tags li { font-size: var(--step-small); font-weight: 600; padding: 5px 10px; border-radius: 6px; background: var(--surface); line-height: 1.3; }
 .sl .tags li.warm { background: #ffe6c4; }
 .sl .tags li.cool { background: #dde7f4; }
