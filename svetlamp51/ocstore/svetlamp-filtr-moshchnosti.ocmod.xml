@@ -2,7 +2,7 @@
 <modification>
   <name>СветЛамп: фильтр по мощности и напряжению</name>
   <code>svetlamp_power_filter</code>
-  <version>2.0</version>
+  <version>3.0</version>
   <author>СветЛамп</author>
   <link>https://svetlamp51.ru</link>
   <!--
@@ -11,6 +11,8 @@
     at least two different values of that attribute. Several buttons in a row can be on at
     once; rows combine. The choice travels in the address (?power=7,9.5&wt=60&volt=24) and
     survives sorting and paging. Counts take the other rows' choice into account.
+    Values are compared without units and spaces, so «220», «220В» and «220 V» are one button,
+    as are «10», «10W» and «10 Вт».
   -->
   <file path="catalog/controller/product/category.php">
     <operation>
@@ -54,11 +56,11 @@
 
 				foreach ($sl_filter as $sl_other => $sl_values) {
 					if ($sl_other != $sl_name) {
-						$sl_where .= " AND p.product_id IN (SELECT pa2.product_id FROM `" . DB_PREFIX . "product_attribute` pa2 LEFT JOIN `" . DB_PREFIX . "attribute_description` ad2 ON (ad2.attribute_id = pa2.attribute_id AND ad2.language_id = pa2.language_id) WHERE ad2.name = '" . $this->db->escape($sl_other) . "' AND pa2.language_id = '" . (int)$this->config->get('config_language_id') . "' AND pa2.text IN ('" . implode("','", array_map(array($this->db, 'escape'), $sl_values)) . "'))";
+						$sl_where .= " AND p.product_id IN (SELECT pa2.product_id FROM `" . DB_PREFIX . "product_attribute` pa2 LEFT JOIN `" . DB_PREFIX . "attribute_description` ad2 ON (ad2.attribute_id = pa2.attribute_id AND ad2.language_id = pa2.language_id) WHERE ad2.name = '" . $this->db->escape($sl_other) . "' AND pa2.language_id = '" . (int)$this->config->get('config_language_id') . "' AND " . $this->slNormSql('pa2.text') . " IN ('" . implode("','", array_map(array($this->db, 'escape'), $sl_values)) . "'))";
 					}
 				}
 
-				$sl_rows = $this->db->query("SELECT pa.text, COUNT(DISTINCT p.product_id) AS total FROM `" . DB_PREFIX . "product_attribute` pa LEFT JOIN `" . DB_PREFIX . "attribute_description` ad ON (ad.attribute_id = pa.attribute_id AND ad.language_id = pa.language_id) LEFT JOIN `" . DB_PREFIX . "product_to_category` p2c ON (p2c.product_id = pa.product_id) LEFT JOIN `" . DB_PREFIX . "product` p ON (p.product_id = pa.product_id) LEFT JOIN `" . DB_PREFIX . "product_to_store` p2s ON (p2s.product_id = p.product_id) WHERE ad.name = '" . $this->db->escape($sl_name) . "' AND p2c.category_id = '" . (int)$category_id . "' AND pa.language_id = '" . (int)$this->config->get('config_language_id') . "' AND TRIM(pa.text) <> '' AND p.status = '1' AND p.date_available <= NOW() AND p2s.store_id = '" . (int)$this->config->get('config_store_id') . "'" . $sl_where . " GROUP BY pa.text ORDER BY CAST(REPLACE(pa.text, ',', '.') AS DECIMAL(10,2)), pa.text")->rows;
+				$sl_rows = $this->db->query("SELECT " . $this->slNormSql('pa.text') . " AS text, COUNT(DISTINCT p.product_id) AS total FROM `" . DB_PREFIX . "product_attribute` pa LEFT JOIN `" . DB_PREFIX . "attribute_description` ad ON (ad.attribute_id = pa.attribute_id AND ad.language_id = pa.language_id) LEFT JOIN `" . DB_PREFIX . "product_to_category` p2c ON (p2c.product_id = pa.product_id) LEFT JOIN `" . DB_PREFIX . "product` p ON (p.product_id = pa.product_id) LEFT JOIN `" . DB_PREFIX . "product_to_store` p2s ON (p2s.product_id = p.product_id) WHERE ad.name = '" . $this->db->escape($sl_name) . "' AND p2c.category_id = '" . (int)$category_id . "' AND pa.language_id = '" . (int)$this->config->get('config_language_id') . "' AND TRIM(pa.text) <> '' AND p.status = '1' AND p.date_available <= NOW() AND p2s.store_id = '" . (int)$this->config->get('config_store_id') . "'" . $sl_where . " GROUP BY " . $this->slNormSql('pa.text') . " ORDER BY CAST(" . $this->slNormSql('pa.text') . " AS DECIMAL(10,2)), " . $this->slNormSql('pa.text'))->rows;
 
 				$sl_chosen = isset($sl_filter[$sl_name]) ? $sl_filter[$sl_name] : array();
 
@@ -74,10 +76,10 @@
 					$sl_next = $sl_filter;
 					$sl_next[$sl_name] = $sl_active ? array_values(array_diff($sl_chosen, array($sl_row['text']))) : array_merge($sl_chosen, array($sl_row['text']));
 
-					// A bare number gets its unit: «24» → «24 В», «9.5» → «9,5 Вт»; «12V» stays as it is
+					// A number or a range gets its unit: «24» → «24 В», «9.5» → «9,5 Вт», «100-240» → «100-240 В»
 					$sl_label = str_replace('.', ',', $sl_row['text']);
 
-					if (preg_match('/^[0-9]+([.,][0-9]+)?$/', trim($sl_row['text']))) {
+					if (preg_match('/^[0-9]+([.][0-9]+)?(-[0-9]+([.][0-9]+)?)?$/', $sl_row['text'])) {
 						$sl_label .= ' ' . $sl_group['unit'];
 					}
 
@@ -116,7 +118,12 @@
     </operation>
     <operation>
       <search><![CDATA[class ControllerProductCategory extends Controller {]]></search>
-      <add position="after"><![CDATA[	// SvetLamp filter: the address part for the chosen values, «&wt=60,100&volt=24»
+      <add position="after"><![CDATA[	// SvetLamp filter: a value without units and spaces, decimal point — «220 В» → 220, «9,5Вт» → 9.5
+	private function slNormSql($column) {
+		return "REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(TRIM(" . $column . "), 'Вт', ''), 'вт', ''), 'ВТ', ''), 'W', ''), 'w', ''), 'V', ''), 'v', ''), 'В', ''), 'в', ''), ' ', ''), ',', '.')";
+	}
+
+	// SvetLamp filter: the address part for the chosen values, «&wt=60,100&volt=24»
 	private function slFilterUrl($groups, $filter) {
 		$url = '';
 
@@ -144,7 +151,7 @@
 				}
 
 				if ($sl_list) {
-					$sql .= " AND p.product_id IN (SELECT pa.product_id FROM `" . DB_PREFIX . "product_attribute` pa LEFT JOIN `" . DB_PREFIX . "attribute_description` ad ON (ad.attribute_id = pa.attribute_id AND ad.language_id = pa.language_id) WHERE ad.name = '" . $this->db->escape($sl_name) . "' AND pa.language_id = '" . (int)$this->config->get('config_language_id') . "' AND pa.text IN (" . implode(',', $sl_list) . "))";
+					$sql .= " AND p.product_id IN (SELECT pa.product_id FROM `" . DB_PREFIX . "product_attribute` pa LEFT JOIN `" . DB_PREFIX . "attribute_description` ad ON (ad.attribute_id = pa.attribute_id AND ad.language_id = pa.language_id) WHERE ad.name = '" . $this->db->escape($sl_name) . "' AND pa.language_id = '" . (int)$this->config->get('config_language_id') . "' AND REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(TRIM(pa.text), 'Вт', ''), 'вт', ''), 'ВТ', ''), 'W', ''), 'w', ''), 'V', ''), 'v', ''), 'В', ''), 'в', ''), ' ', ''), ',', '.') IN (" . implode(',', $sl_list) . "))";
 				}
 			}
 		}
