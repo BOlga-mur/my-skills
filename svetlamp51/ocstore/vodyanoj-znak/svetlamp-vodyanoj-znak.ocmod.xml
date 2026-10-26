@@ -2,12 +2,13 @@
 <modification>
   <name>СветЛамп: водяной знак на фото товаров</name>
   <code>svetlamp_watermark</code>
-  <version>3.0</version>
+  <version>3.1</version>
   <author>СветЛамп</author>
   <link>https://svetlamp51.ru</link>
   <!--
     v3: the text is drawn with the Onest font from the theme (fonts/onest-semibold.ttf); copies are
-    named -sl2, so copies made by older versions are not reused.
+    named -sl3, so copies made by older versions are not reused. v3.1: near-white background is
+    made pure white before the text goes on.
     The product form gets a «Водяной знак» checkbox (Данные tab, above Статус).
     Photos of checked products get the diagonal «СветЛамп51», including extra photos.
     The mark goes only on the storefront copies in image/cache; originals are never changed.
@@ -115,6 +116,20 @@
 			return;
 		}
 
+		// Near-white background (supplier photos are often 252–254 with JPEG streaks) becomes pure white,
+		// so the photo blends into the white card; opaque pixels only, transparent PNG areas stay as they are
+		$white = imagecolorallocatealpha($canvas, 255, 255, 255, 0);
+
+		for ($py = 0; $py < $height; $py++) {
+			for ($px = 0; $px < $width; $px++) {
+				$c = imagecolorat($canvas, $px, $py);
+
+				if (($c & 0x7F000000) == 0 && ($c & 0xFFFFFF) != 0xFFFFFF && (($c >> 16) & 255) >= 246 && (($c >> 8) & 255) >= 246 && ($c & 255) >= 246) {
+					imagesetpixel($canvas, $px, $py, $white);
+				}
+			}
+		}
+
 		$text = 'СветЛамп51';
 
 		// Font size so the text runs corner to corner of the central square
@@ -152,7 +167,7 @@
 		$sl_watermark = $this->slIsProductImage($filename);
 
 		if ($sl_watermark) {
-			$image_new = 'cache/' . utf8_substr($filename, 0, utf8_strrpos($filename, '.')) . '-' . (int)$width . 'x' . (int)$height . '-sl2.' . $extension;
+			$image_new = 'cache/' . utf8_substr($filename, 0, utf8_strrpos($filename, '.')) . '-' . (int)$width . 'x' . (int)$height . '-sl3.' . $extension;
 		}
 ]]></add>
     </operation>
