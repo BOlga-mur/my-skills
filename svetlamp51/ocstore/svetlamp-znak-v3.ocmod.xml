@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<modification>
+  <name>СветЛамп: водяной знак на фото товаров</name>
+  <code>svetlamp_watermark</code>
+  <version>3.0</version>
+  <author>СветЛамп</author>
+  <link>https://svetlamp51.ru</link>
+  <!--
+    v3: the text is drawn with the Onest font from the theme (fonts/onest-semibold.ttf); copies are
+    named -sl2, so copies made by older versions are not reused.
+    The product form gets a «Водяной знак» checkbox (Данные tab, above Статус).
+    Photos of checked products get the diagonal «СветЛамп51», including extra photos.
+    The mark goes only on the storefront copies in image/cache; originals are never changed.
+    The sl_watermark column in the product table is created the first time a product
+    form is opened; until then no product has the mark.
+  -->
+
+  <!-- Admin: checkbox in the product form -->
+  <file path="admin/controller/catalog/product.php">
+    <operation>
+      <search><![CDATA[$this->response->setOutput($this->load->view('catalog/product_form', $data));]]></search>
+      <add position="before"><![CDATA[		// SvetLamp watermark: the column is added on first use
+		$sl_column = $this->db->query("SHOW COLUMNS FROM `" . DB_PREFIX . "product` LIKE 'sl_watermark'");
+
+		if (!$sl_column->num_rows) {
+			$this->db->query("ALTER TABLE `" . DB_PREFIX . "product` ADD `sl_watermark` TINYINT(1) NOT NULL DEFAULT '0'");
+		}
+
+		if (isset($this->request->post['sl_watermark_sent'])) {
+			$data['sl_watermark'] = !empty($this->request->post['sl_watermark']);
+		} elseif (!empty($product_info) && isset($product_info['sl_watermark'])) {
+			$data['sl_watermark'] = (bool)$product_info['sl_watermark'];
+		} else {
+			$data['sl_watermark'] = false;
+		}
+]]></add>
+    </operation>
+  </file>
+  <file path="admin/view/template/catalog/product_form.tpl">
+    <operation>
+      <search><![CDATA[<label class="col-sm-2 control-label" for="input-status"><?php echo $entry_status; ?></label>]]></search>
+      <add position="before" offset="1"><![CDATA[              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-sl-watermark">Водяной знак</label>
+                <div class="col-sm-10">
+                  <input type="hidden" name="sl_watermark_sent" value="1" />
+                  <div class="checkbox">
+                    <label><input type="checkbox" name="sl_watermark" value="1" id="input-sl-watermark"<?php echo !empty($sl_watermark) ? ' checked="checked"' : ''; ?> /> ставить «СветЛамп51» на фото этого товара</label>
+                  </div>
+                </div>
+              </div>]]></add>
+    </operation>
+  </file>
+  <file path="admin/model/catalog/product.php">
+    <operation>
+      <search><![CDATA[$product_id = $this->db->getLastId();]]></search>
+      <add position="after"><![CDATA[
+		if (isset($data['sl_watermark_sent'])) {
+			$this->db->query("UPDATE " . DB_PREFIX . "product SET sl_watermark = '" . (empty($data['sl_watermark']) ? 0 : 1) . "' WHERE product_id = '" . (int)$product_id . "'");
+		}
+]]></add>
+    </operation>
+    <operation>
+      <search><![CDATA[public function editProduct($product_id, $data) {]]></search>
+      <add position="after"><![CDATA[		// Only the product form sends sl_watermark_sent, so other modules saving a product leave the mark as it is
+		if (isset($data['sl_watermark_sent'])) {
+			$this->db->query("UPDATE " . DB_PREFIX . "product SET sl_watermark = '" . (empty($data['sl_watermark']) ? 0 : 1) . "' WHERE product_id = '" . (int)$product_id . "'");
+		}
+]]></add>
+    </operation>
+  </file>
+
+  <!-- Storefront: the mark on photo copies of checked products -->
+  <file path="catalog/model/tool/image.php">
+    <operation>
+      <search><![CDATA[class ModelToolImage extends Model {]]></search>
+      <add position="after"><![CDATA[
+	// SvetLamp watermark: photo file names of products with the checkbox on, loaded once per page
+	private static $sl_product_images = null;
+
+	private function slIsProductImage($filename) {
+		if (self::$sl_product_images === null) {
+			self::$sl_product_images = array();
+
+			$column = $this->db->query("SHOW COLUMNS FROM `" . DB_PREFIX . "product` LIKE 'sl_watermark'");
+
+			if ($column->num_rows) {
+				$query = $this->db->query("SELECT p.image FROM `" . DB_PREFIX . "product` p WHERE p.sl_watermark = '1' AND p.image <> '' UNION SELECT pi.image FROM `" . DB_PREFIX . "product_image` pi LEFT JOIN `" . DB_PREFIX . "product` p ON (p.product_id = pi.product_id) WHERE p.sl_watermark = '1' AND pi.image <> ''");
+
+				foreach ($query->rows as $row) {
+					self::$sl_product_images[$row['image']] = true;
+				}
+			}
+		}
+
+		return isset(self::$sl_product_images[$filename]) && is_file(DIR_APPLICATION . 'view/theme/svetlamp/fonts/onest-semibold.ttf');
+	}
+
+	// Writes the diagonal «СветЛамп51» straight onto the picture with the site font, sized to its shorter side.
+	// Drawing the text (instead of scaling a transparent picture onto the photo) leaves the background
+	// exactly as it was: no faint grey streaks on white.
+	private function slWatermark($image) {
+		$width = $image->getWidth();
+		$height = $image->getHeight();
+		$side = min($width, $height);
+		$font = DIR_APPLICATION . 'view/theme/svetlamp/fonts/onest-semibold.ttf';
+
+		// Tiny previews (cart, compare) stay clean: the text would be unreadable there
+		if ($side < 120 || !function_exists('imagettftext')) {
+			return;
+		}
+
+		$canvas = $image->getImage();
+
+		if (!$canvas) {
+			return;
+		}
+
+		$text = 'СветЛамп51';
+
+		// Font size so the text runs corner to corner of the central square
+		$box = imagettfbbox(100, 0, $font, $text);
+		$size = 100 * 0.98 * $side / max(1, $box[2] - $box[0]);
+		$box = imagettfbbox($size, 0, $font, $text);
+		$text_width = $box[2] - $box[0];
+		$text_height = -$box[5];
+
+		// Start of the baseline so the middle of the text sits in the middle of the picture, at 45°
+		$cos = cos(deg2rad(45));
+		$sin = sin(deg2rad(45));
+		$x = $width / 2 - $cos * ($box[0] + $text_width / 2) + $sin * $text_height / 2;
+		$y = $height / 2 + $sin * ($box[0] + $text_width / 2) + $cos * $text_height / 2;
+
+		imagealphablending($canvas, true);
+
+		// A thin light edge keeps the text visible on dark photos, the dark fill on light ones (alpha 127 = invisible)
+		$edge = imagecolorallocatealpha($canvas, 255, 255, 255, 121);
+		$fill = imagecolorallocatealpha($canvas, 17, 25, 33, 121);
+		$shift = max(1, round($side / 400));
+
+		foreach (array(array(-1, -1), array(1, -1), array(-1, 1), array(1, 1)) as $offset) {
+			imagettftext($canvas, $size, 45, (int)round($x + $offset[0] * $shift), (int)round($y + $offset[1] * $shift), $edge, $font, $text);
+		}
+
+		imagettftext($canvas, $size, 45, (int)round($x), (int)round($y), $fill, $font, $text);
+	}
+]]></add>
+    </operation>
+    <operation>
+      <search><![CDATA[$image_new = 'cache/' . utf8_substr($filename, 0, utf8_strrpos($filename, '.')) . '-' . (int)$width . 'x' . (int)$height . '.' . $extension;]]></search>
+      <add position="after"><![CDATA[
+		// Copies with the mark get their own names, so ticking or unticking the box takes effect at once
+		$sl_watermark = $this->slIsProductImage($filename);
+
+		if ($sl_watermark) {
+			$image_new = 'cache/' . utf8_substr($filename, 0, utf8_strrpos($filename, '.')) . '-' . (int)$width . 'x' . (int)$height . '-sl2.' . $extension;
+		}
+]]></add>
+    </operation>
+    <operation>
+      <search><![CDATA[$image->save(DIR_IMAGE . $image_new);]]></search>
+      <add position="before"><![CDATA[				if ($sl_watermark) {
+					$this->slWatermark($image);
+				}
+]]></add>
+    </operation>
+    <operation>
+      <search><![CDATA[copy(DIR_IMAGE . $image_old, DIR_IMAGE . $image_new);]]></search>
+      <add position="replace"><![CDATA[if ($sl_watermark) {
+					$image = new Image(DIR_IMAGE . $image_old);
+					$this->slWatermark($image);
+					$image->save(DIR_IMAGE . $image_new);
+				} else {
+					copy(DIR_IMAGE . $image_old, DIR_IMAGE . $image_new);
+				}]]></add>
+    </operation>
+  </file>
+</modification>
