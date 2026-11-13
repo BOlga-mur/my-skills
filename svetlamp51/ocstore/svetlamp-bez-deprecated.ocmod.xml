@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<modification>
+  <name>СветЛамп: не показывать предупреждения Deprecated</name>
+  <code>svetlamp_hide_deprecated</code>
+  <version>1.0</version>
+  <author>СветЛамп</author>
+  <link>https://svetlamp51.ru</link>
+  <!--
+    ocStore 2.3 was written for PHP 5.6–7.x. On PHP 8.x the engine raises «Deprecated» notices
+    (dynamic properties in system/engine/proxy.php, round(null) and the like) on every page, and the
+    shop's error handler prints them as «Unknown: …». They are not errors: the code works the same.
+    This makes the handler skip them, on the site and in the admin; real warnings and errors are
+    still shown or logged as the settings say.
+  -->
+  <file path="catalog/controller/startup/error.php">
+    <operation>
+      <search><![CDATA[if (error_reporting() === 0) {]]></search>
+      <add position="before"><![CDATA[		// SvetLamp: PHP 8 «Deprecated» notices are neither shown nor logged
+		if ((defined('E_DEPRECATED') && $code == E_DEPRECATED) || (defined('E_USER_DEPRECATED') && $code == E_USER_DEPRECATED)) {
+			return true;
+		}
+]]></add>
+    </operation>
+  </file>
+  <file path="admin/controller/startup/error.php">
+    <operation>
+      <search><![CDATA[if (error_reporting() === 0) {]]></search>
+      <add position="before"><![CDATA[		// SvetLamp: PHP 8 «Deprecated» notices are neither shown nor logged
+		if ((defined('E_DEPRECATED') && $code == E_DEPRECATED) || (defined('E_USER_DEPRECATED') && $code == E_USER_DEPRECATED)) {
+			return true;
+		}
+]]></add>
+    </operation>
+  </file>
+</modification>
